@@ -18,6 +18,7 @@
  */
 package bbct.android.common.activity;
 
+import android.annotation.TargetApi;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -46,6 +47,7 @@ import bbct.android.common.provider.SQLHelperFactory;
  *
  * TODO: Make list fancier
  */
+@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class BaseballCardList extends ListActivity {
 
     /**
@@ -90,15 +92,17 @@ public class BaseballCardList extends ListActivity {
                 }
             });
             listView.addHeaderView(this.headerView);
-
-            this.adapter = new CheckedCursorAdapter(this, R.layout.row, null,
-                    ROW_PROJECTION, ROW_TEXT_VIEWS);
         } catch (SQLHelperCreationException ex) {
             // TODO Show a dialog and exit app
             Toast.makeText(this, R.string.database_error, Toast.LENGTH_LONG)
                     .show();
             Log.e(TAG, ex.getMessage(), ex);
         }
+    }
+    
+    protected void FillBaseballCardsListOnCreate() {
+        this.adapter = new CheckedCursorAdapter(this, R.layout.row, null,
+                ROW_PROJECTION, ROW_TEXT_VIEWS);
     }
 
     /**
@@ -379,7 +383,7 @@ public class BaseballCardList extends ListActivity {
                 .findViewById(R.id.player_name_text_view);
         String player = nameCol.getText().toString();
 
-        return new BaseballCard("", year, number, 0, 0, player, "", "");
+        return new BaseballCard("", year, number, 0, 0, player, "", "", "", "");
     }
 
     @SuppressWarnings("deprecation")
@@ -394,19 +398,21 @@ public class BaseballCardList extends ListActivity {
     private static final String[] ROW_PROJECTION = {
             BaseballCardContract.BRAND_COL_NAME,
             BaseballCardContract.YEAR_COL_NAME,
-            BaseballCardContract.NUMBER_COL_NAME,
-            BaseballCardContract.PLAYER_NAME_COL_NAME };
+            BaseballCardContract.PLAYER_NAME_COL_NAME,
+            BaseballCardContract.NUMBER_COL_NAME
+            };
 
     private static final int[] ROW_TEXT_VIEWS = { R.id.brand_text_view,
             R.id.year_text_view, R.id.number_text_view,
-            R.id.player_name_text_view };
+            R.id.player_name_text_view
+            };
 
     private static final String TAG = BaseballCardList.class.getName();
     private static final int DEFAULT_INT_EXTRA = -1;
     private static boolean[] savedSelection;
     TextView emptyList = null;
     private BaseballCardSQLHelper sqlHelper = null;
-    private CheckedCursorAdapter adapter = null;
+    protected CheckedCursorAdapter adapter = null;
     private int filterRequest = R.id.no_filter;
     private Bundle filterParams = null;
     private View headerView;

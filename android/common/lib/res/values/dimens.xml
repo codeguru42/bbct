@@ -23,4 +23,7 @@
     <dimen name="year_col_width">25dp</dimen>
     <dimen name="number_col_width">40dp</dimen>
     <dimen name="player_name_col_width">60dp</dimen>
+    
+    <!-- Dimensions used in card details -->
+    <dimen name="image_width">120dp</dimen>
 </resources>

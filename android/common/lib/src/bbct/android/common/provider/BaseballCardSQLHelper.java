@@ -18,6 +18,7 @@
  */
 package bbct.android.common.provider;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -34,6 +35,7 @@ import java.util.List;
  *
  * TODO: Write JUnit tests.
  */
+@SuppressLint("NewApi")
 public class BaseballCardSQLHelper extends SQLiteOpenHelper {
 
     /**
@@ -43,7 +45,7 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
     /**
      * Current schema version.
      */
-    public static final int SCHEMA_VERSION = 3;
+    public static final int SCHEMA_VERSION = 4;
     /**
      * Original schema version.
      */
@@ -57,6 +59,10 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
      * Schema version which correctly added the team field.
      */
     public static final int TEAM_SCHEMA = 3;
+    /**
+     * Schema versions to add the path to the picture of the card.
+     */
+    public static final int PICTURE_PATH_SCHEMA = 4;
 
     /**
      * Create a new {@link BaseballCardSQLHelper} with the given Android
@@ -79,6 +85,8 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
                 + BaseballCardContract.TABLE_NAME + "("
                 + BaseballCardContract.ID_COL_NAME
                 + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + BaseballCardContract.PATH_TO_PICTURE_FRONT + " VARCHAR(50), "
+                + BaseballCardContract.PATH_TO_PICTURE_BACK + " VARCHAR(50), "
                 + BaseballCardContract.BRAND_COL_NAME + " VARCHAR(10), "
                 + BaseballCardContract.YEAR_COL_NAME + " INTEGER, "
                 + BaseballCardContract.NUMBER_COL_NAME + " INTEGER, "
@@ -97,12 +105,25 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if ((oldVersion == ORIGINAL_SCHEMA || oldVersion == BAD_TEAM_SCHEMA)
-                && newVersion == TEAM_SCHEMA) {
-            String sqlUpgrade = "ALTER TABLE "
-                    + BaseballCardContract.TABLE_NAME + " ADD COLUMN "
-                    + BaseballCardContract.TEAM_COL_NAME + " VARCHAR(50)";
-            db.execSQL(sqlUpgrade);
+        if (oldVersion == ORIGINAL_SCHEMA 
+                || oldVersion == BAD_TEAM_SCHEMA
+                || oldVersion == TEAM_SCHEMA) {
+            if (newVersion == TEAM_SCHEMA) {
+                String sqlUpgrade = "ALTER TABLE "
+                        + BaseballCardContract.TABLE_NAME + " ADD COLUMN "
+                        + BaseballCardContract.TEAM_COL_NAME + " VARCHAR(50)";
+                db.execSQL(sqlUpgrade);
+            }
+            else if (newVersion == PICTURE_PATH_SCHEMA) {
+                String sqlUpgrade = "ALTER TABLE "
+                        + BaseballCardContract.TABLE_NAME + " ADD COLUMN ";
+                if (oldVersion < TEAM_SCHEMA) {
+                    sqlUpgrade += BaseballCardContract.TEAM_COL_NAME + " VARCHAR(50), ";
+                }
+                sqlUpgrade += BaseballCardContract.PATH_TO_PICTURE_FRONT + " VARCHAR(50), "
+                              + BaseballCardContract.PATH_TO_PICTURE_BACK + " VARCHAR(50)";
+                db.execSQL(sqlUpgrade); 
+            }
         }
     }
 
@@ -353,6 +374,10 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
      *         given {@link Cursor}.
      */
     public BaseballCard getBaseballCardFromCursor(Cursor cursor) {
+        String pathToPictureFront = cursor.getString(cursor
+                .getColumnIndex(BaseballCardContract.PATH_TO_PICTURE_FRONT));
+        String pathToPictureBack = cursor.getString(cursor
+                .getColumnIndex(BaseballCardContract.PATH_TO_PICTURE_BACK));
         String brand = cursor.getString(cursor
                 .getColumnIndex(BaseballCardContract.BRAND_COL_NAME));
         int year = cursor.getInt(cursor
@@ -371,7 +396,7 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
                 .getColumnIndex(BaseballCardContract.PLAYER_POSITION_COL_NAME));
 
         return new BaseballCard(brand, year, number, value, count, name, team,
-                position);
+                position, pathToPictureFront, pathToPictureBack);
     }
 
     /**

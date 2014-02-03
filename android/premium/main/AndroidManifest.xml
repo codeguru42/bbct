@@ -22,9 +22,13 @@
           android:versionCode="7"
           android:versionName="@string/version_number"
 >
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-sdk android:targetSdkVersion="17"
               android:minSdkVersion="7"
     />
+    <uses-feature android:name="android.hardware.camera"
+                  android:required="false"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="bbct.android.lite.permission.READ" />
     <permission android:name="bbct.android.premium.permission.READ"
                 android:label="@string/read_permission_label"
@@ -39,7 +43,7 @@
     <application android:label="@string/app_name"
                  android:icon="@drawable/baseball"
     >
-        <activity android:name="bbct.android.common.activity.BaseballCardList"
+        <activity android:name="bbct.android.premium.BaseballCardList"
                   android:label="@string/app_name"
         >
             <intent-filter>
@@ -47,7 +51,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="bbct.android.common.activity.BaseballCardDetails">
+        <activity android:name="bbct.android.premium.BaseballCardDetailsPremium">
             <intent-filter>
                 <action android:name="android.intent.action.EDIT" />
                 <category android:name="android.intent.category.DEFAULT" />

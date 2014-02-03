@@ -66,6 +66,16 @@ public final class BaseballCardContract {
     public static final String ID_COL_NAME = "_id";
 
     /**
+     * The column name for the path to picture of the front of the card.
+     */
+    public static final String PATH_TO_PICTURE_FRONT = "picture_front_path";
+
+    /**
+     * The column name for the path to picture of the back of the card.
+     */
+    public static final String PATH_TO_PICTURE_BACK = "picture_back_path";
+    
+    /**
      * The column name for the card brand.
      */
     public static final String BRAND_COL_NAME = "brand";
@@ -111,7 +121,8 @@ public final class BaseballCardContract {
      */
     public static final String[] PROJECTION = { ID_COL_NAME, BRAND_COL_NAME,
             YEAR_COL_NAME, NUMBER_COL_NAME, VALUE_COL_NAME, COUNT_COL_NAME,
-            PLAYER_NAME_COL_NAME, TEAM_COL_NAME, PLAYER_POSITION_COL_NAME };
+            PLAYER_NAME_COL_NAME, TEAM_COL_NAME, PLAYER_POSITION_COL_NAME,
+            PATH_TO_PICTURE_FRONT, PATH_TO_PICTURE_BACK };
 
     private static final String INT_SELECTION_FORMAT = "%s = ?";
 
@@ -166,6 +177,10 @@ public final class BaseballCardContract {
         cv.put(BaseballCardContract.TEAM_COL_NAME, card.getTeam());
         cv.put(BaseballCardContract.PLAYER_POSITION_COL_NAME,
                 card.getPlayerPosition());
+        cv.put(BaseballCardContract.PATH_TO_PICTURE_FRONT, 
+                card.getPathToPictureFront());
+        cv.put(BaseballCardContract.PATH_TO_PICTURE_BACK, 
+                card.getPathToPictureBack());
         return cv;
     }
 }

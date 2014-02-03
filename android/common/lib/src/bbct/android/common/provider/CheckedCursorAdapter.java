@@ -18,6 +18,13 @@
  */
 package bbct.android.common.provider;
 
+import bbct.android.common.BbctPictureHelper;
+
+import android.graphics.Bitmap;
+
+import android.widget.ImageView;
+
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Context;
@@ -36,6 +43,7 @@ import bbct.android.common.R;
  * {@link SimpleCursorAdapter}. It enables {@link CheckedTextView}
  * to toggle its' state.
  */
+@SuppressLint("NewApi")
 public class CheckedCursorAdapter extends SimpleCursorAdapter {
 
     @SuppressWarnings("deprecation")
@@ -136,6 +144,13 @@ public class CheckedCursorAdapter extends SimpleCursorAdapter {
                 curActivity.getListView().setAdapter(CheckedCursorAdapter.this);
             }
         });
+    }
+    
+    @Override
+    public void setViewImage(ImageView view, String value) {
+        BbctPictureHelper pictureHelper = new BbctPictureHelper();
+        Bitmap imageBitmap = pictureHelper.ScaleImageFromPath(value, view.getWidth(), view.getHeight());
+        view.setImageBitmap(imageBitmap);
     }
 
     private boolean[] selection;
