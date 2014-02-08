@@ -18,22 +18,11 @@
  */
 package bbct.android.common.activity;
 
-import android.widget.ImageButton;
 
-import android.view.View.OnClickListener;
-
-import android.os.Build;
-
-import android.view.ViewTreeObserver;
-
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -46,7 +35,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
-import bbct.android.common.BbctPictureHelper;
 import bbct.android.common.R;
 import bbct.android.common.activity.util.DialogUtil;
 import bbct.android.common.data.BaseballCard;
@@ -55,8 +43,6 @@ import bbct.android.common.provider.BaseballCardContract;
 import bbct.android.common.provider.BaseballCardSQLHelper;
 import bbct.android.common.provider.SQLHelperFactory;
 import bbct.android.common.provider.SingleColumnCursorAdapter;
-import java.io.File;
-import java.io.IOException;
 
 /**
  * Allows user to add a new card or view and edit details of an existing card.

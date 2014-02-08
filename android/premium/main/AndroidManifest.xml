@@ -58,6 +58,7 @@
                 <data android:mimeType="vnd.android.cursor.item/baseball_card" />
             </intent-filter>
         </activity>
+        <activity android:name="bbct.android.premium.ChangeCardImage" />
         <activity android:name="bbct.android.common.activity.FilterOptions"/>
         <activity android:name="bbct.android.common.activity.filter.YearFilter"/>
         <activity android:name="bbct.android.common.activity.filter.NumberFilter"/>

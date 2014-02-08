@@ -59,6 +59,7 @@
     <string name="player_position_col">Player Position</string>
     <string name="image_front_desc">Card Front Image</string>
     <string name="image_back_desc">Card Back Image</string>
+    <string name="image_desc">Card Image</string>
 
     <!-- Button text -->
     <string name="save_button">Save</string>
