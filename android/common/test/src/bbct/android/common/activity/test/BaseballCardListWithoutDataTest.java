@@ -1,7 +1,7 @@
 /*
  * This file is part of BBCT for Android.
  *
- * Copyright 2012 codeguru <codeguru@users.sourceforge.net>
+ * Copyright 2012-14 codeguru <codeguru@users.sourceforge.net>
  *
  * BBCT for Android is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -41,8 +41,6 @@ import junit.framework.Assert;
 /**
  * Tests for the {@link BaseballCardList} activity when the database does not
  * contain data.
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class BaseballCardListWithoutDataTest extends ActivityInstrumentationTestCase2<BaseballCardList> {
 
@@ -71,7 +69,7 @@ public class BaseballCardListWithoutDataTest extends ActivityInstrumentationTest
 
         InputStream cardInputStream = this.inst.getContext().getAssets().open(DATA_ASSET);
         this.cardInput = new BaseballCardCsvFileReader(cardInputStream, true);
-        this.dbUtil = new DatabaseUtil(this.activity.getPackageName());
+        this.dbUtil = new DatabaseUtil(this.inst.getTargetContext());
     }
 
     /**
@@ -105,7 +103,7 @@ public class BaseballCardListWithoutDataTest extends ActivityInstrumentationTest
         // Subtract 1 from the number of views owned by the ListView to account for the header View
         Assert.assertEquals(0, this.listView.getCount() - 1);
 
-        BBCTTestUtil.assertDatabaseCreated(this.activity.getPackageName());
+        BBCTTestUtil.assertDatabaseCreated(this.inst.getTargetContext());
         Assert.assertTrue(this.dbUtil.isEmpty());
     }
 
@@ -138,6 +136,15 @@ public class BaseballCardListWithoutDataTest extends ActivityInstrumentationTest
 
         filterOptions.finish();
         Assert.assertTrue(filterOptions.isFinishing());
+    }
+
+    /**
+     * Test that the "Delete Cards" menu item is disabled.
+     * It should be disabled because there is no data currently
+     * displayed in the list and therefore no rows are marked.
+     */
+    public void testDeleteCardsMenuItem() {
+        Assert.assertFalse(this.inst.invokeMenuActionSync(this.activity, R.id.delete_menu, 0));
     }
 
     /**

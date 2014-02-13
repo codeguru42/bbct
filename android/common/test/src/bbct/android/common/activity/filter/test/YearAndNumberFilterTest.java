@@ -1,7 +1,7 @@
 /*
  * This file is part of BBCT for Android.
  *
- * Copyright 2012 codeguru <codeguru@users.sourceforge.net>
+ * Copyright 2012-14 codeguru <codeguru@users.sourceforge.net>
  *
  * BBCT for Android is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -113,17 +113,6 @@ public class YearAndNumberFilterTest extends FilterActivityTest<YearAndNumberFil
 
         String expectedNumberError = this.activity.getString(R.string.number_input_error);
         Assert.assertEquals(expectedNumberError, this.numberText.getError());
-    }
-
-    /**
-     * Set the text of the year and card number {@link EditText} views.
-     *
-     * @see FilterActivityTest#testOkButtonOnClickWithSetInputText()
-     */
-    @Override
-    protected void setInputText() {
-        this.yearText.setText(Integer.toString(this.testYear));
-        this.numberText.setText(Integer.toString(this.testNumber));
     }
 
     /**

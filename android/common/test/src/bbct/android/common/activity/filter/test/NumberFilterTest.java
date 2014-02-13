@@ -1,7 +1,7 @@
 /*
  * This file is part of BBCT for Android.
  *
- * Copyright 2012 codeguru <codeguru@users.sourceforge.net>
+ * Copyright 2012-14 codeguru <codeguru@users.sourceforge.net>
  *
  * BBCT for Android is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,8 +26,6 @@ import junit.framework.Assert;
 
 /**
  * Tests for {@link NumberFilter}.
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class NumberFilterTest extends FilterActivityTest<NumberFilter> {
 
@@ -100,16 +98,6 @@ public class NumberFilterTest extends FilterActivityTest<NumberFilter> {
     protected void checkErrorMessage() {
         String expectedNumberError = this.activity.getString(R.string.number_input_error);
         Assert.assertEquals(expectedNumberError, this.numberText.getError());
-    }
-
-    /**
-     * Set the text of the card number {@link EditText} views.
-     *
-     * @see FilterActivityTest#testOkButtonOnClickWithSetInputText()
-     */
-    @Override
-    protected void setInputText() {
-        this.numberText.setText(Integer.toString(this.testNumber));
     }
 
     /**

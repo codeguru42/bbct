@@ -1,7 +1,7 @@
 /*
  * This file is part of BBCT for Android.
  *
- * Copyright 2012 codeguru <codeguru@users.sourceforge.net>
+ * Copyright 2012-14 codeguru <codeguru@users.sourceforge.net>
  *
  * BBCT for Android is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,11 +25,12 @@ import bbct.android.lite.activity.BaseballCardList;
  * Tests for {@link BaseballCardList} activity class.
  *
  * TODO: Add tests for the layout of {@link BaseballCardList}
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class BaseballCardListTest extends ActivityInstrumentationTestCase2<BaseballCardList> {
 
+    /**
+     * Create test cases for {@link BaseballCardList}.
+     */
     public BaseballCardListTest() {
         super(BaseballCardList.class);
     }

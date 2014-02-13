@@ -1,7 +1,7 @@
 /*
  * This file is part of BBCT for Android.
  *
- * Copyright 2012 codeguru <codeguru@users.sourceforge.net>
+ * Copyright 2012-14 codeguru <codeguru@users.sourceforge.net>
  *
  * BBCT for Android is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,8 +26,6 @@ import junit.framework.Assert;
 
 /**
  * Tests for {@link TeamFilter}.
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class TeamFilterTest extends FilterActivityTest<TeamFilter> {
 
@@ -100,16 +98,6 @@ public class TeamFilterTest extends FilterActivityTest<TeamFilter> {
     protected void checkErrorMessage() {
         String expectedError = this.activity.getString(R.string.team_input_error);
         Assert.assertEquals(expectedError, this.teamText.getError());
-    }
-
-    /**
-     * Set the text of the team {@link EditText} view.
-     *
-     * @see FilterActivityTest#testOkButtonOnClickWithSetInputText()
-     */
-    @Override
-    protected void setInputText() {
-        this.teamText.setText(this.testTeam);
     }
 
     /**

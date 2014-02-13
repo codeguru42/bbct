@@ -1,7 +1,7 @@
 /*
  * This file is part of BBCT.
  *
- * Copyright 2012 codeguru <codeguru@users.sourceforge.net>
+ * Copyright 2012-14 codeguru <codeguru@users.sourceforge.net>
  *
  * BBCT is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@ import bbct.common.data.BaseballCardIO;
 import bbct.common.exceptions.BBCTIOException;
 import bbct.common.exceptions.InputException;
 import bbct.swing.BBCTStringResources;
+import bbct.swing.FontResources;
 import bbct.swing.gui.event.SetDefaultButtonAncestorListener;
 import bbct.swing.gui.event.ShowCardActionListener;
 import java.awt.BorderLayout;
@@ -43,9 +44,8 @@ import javax.swing.JPanel;
  * {@link FindCardsByPanel#getBaseballCards()} and displays the returned data in
  * a {@link EditCardsPanel}. The "Back" button returns to the
  * {@link FindCardsMenuPanel}.
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
+@SuppressWarnings("serial")
 public class FindCardsPanel extends JPanel {
 
     /**
@@ -71,7 +71,7 @@ public class FindCardsPanel extends JPanel {
 
         final JButton findButton = new JButton(BBCTStringResources.ButtonResources.FIND_BUTTON);
         // TODO: Don't create Font objects.
-        findButton.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        findButton.setFont(FontResources.BUTTON_FONT);
         findButton.addActionListener(new java.awt.event.ActionListener() {
             @Override
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -100,7 +100,7 @@ public class FindCardsPanel extends JPanel {
         buttonsPanel.add(findButton);
 
         JButton backButton = new JButton(BBCTStringResources.ButtonResources.BACK_BUTTON);
-        backButton.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        backButton.setFont(FontResources.BUTTON_FONT);
         backButton.addActionListener(new ShowCardActionListener(this, BBCTFrame.FIND_CARDS_MENU_CARD_NAME));
         buttonsPanel.add(backButton);
 

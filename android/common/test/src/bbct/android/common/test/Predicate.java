@@ -1,7 +1,7 @@
 /*
  * This file is part of bbct.
  *
- * Copyright 2012 codeguru <codeguru@users.sourceforge.net>
+ * Copyright 2012-14 codeguru <codeguru@users.sourceforge.net>
  *
  * bbct is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,7 +25,6 @@ package bbct.android.common.test;
  * defined by the implementation.
  *
  * @param <T> The class of objects to which this {@link Predicate} applies.
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public interface Predicate<T> {
 

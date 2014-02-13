@@ -1,7 +1,7 @@
 /*
  * This file is part of BBCT for Android.
  *
- * Copyright 2012 codeguru <codeguru@users.sourceforge.net>
+ * Copyright 2012-14 codeguru <codeguru@users.sourceforge.net>
  *
  * BBCT for Android is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,8 +26,6 @@ import junit.framework.Assert;
 
 /**
  * Tests for {@link PlayerNameFilter}.
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class PlayerNameFilterTest extends FilterActivityTest<PlayerNameFilter> {
 
@@ -100,16 +98,6 @@ public class PlayerNameFilterTest extends FilterActivityTest<PlayerNameFilter> {
     protected void checkErrorMessage() {
         String expectedError = this.activity.getString(R.string.player_name_input_error);
         Assert.assertEquals(expectedError, this.playerNameText.getError());
-    }
-
-    /**
-     * Set the text of the player name {@link EditText} view.
-     *
-     * @see FilterActivityTest#testOkButtonOnClickWithSetInputText()
-     */
-    @Override
-    protected void setInputText() {
-        this.playerNameText.setText(this.testPlayerName);
     }
 
     /**

@@ -1,7 +1,7 @@
 /*
  * This file is part of BBCT for Android.
  *
- * Copyright 2012 codeguru <codeguru@users.sourceforge.net>
+ * Copyright 2012-14 codeguru <codeguru@users.sourceforge.net>
  *
  * BBCT for Android is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,7 +29,6 @@ import bbct.android.common.exception.SQLHelperCreationException;
 
 /**
  *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class BaseballCardProvider extends ContentProvider {
 

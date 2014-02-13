@@ -1,7 +1,7 @@
 /*
  * This file is part of BBCT.
  *
- * Copyright 2012 codeguru <codeguru@users.sourceforge.net>
+ * Copyright 2012-14 codeguru <codeguru@users.sourceforge.net>
  *
  * BBCT is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,8 +26,6 @@ import javax.swing.JTextField;
  * {@link YearInputVerifier} verifies that a
  * {@link javax.swing.JFormattedTextField} contains a positive four-digit
  * integer that can represent a year.
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class YearInputVerifier extends InputVerifier {
 

@@ -20,11 +20,15 @@ package bbct.common.data;
 
 import bbct.common.exceptions.BBCTIOException;
 import java.util.List;
-import org.junit.*;
+import org.junit.After;
+import org.junit.AfterClass;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 /**
  *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class AbstractBaseballCardIONominalTest {
 
@@ -80,6 +84,17 @@ public class AbstractBaseballCardIONominalTest {
     }
 
     /**
+     * Test for {@link AbstractBaseballCardIO#removeBaseballCards}.
+     *
+     * @throws Exception
+     */
+    @Test
+    public void testDeleteCards() throws Exception {
+        // TODO add the actual test once the rest of the methods are complete.
+        Assert.fail("The test case is a prototype.");
+    }
+
+    /**
      *
      */
     public class AbstractBaseballCardIOImpl extends AbstractBaseballCardIO {
@@ -116,6 +131,10 @@ public class AbstractBaseballCardIONominalTest {
 
         @Override
         public void updateBaseballCard(BaseballCard card) throws BBCTIOException {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+        @Override
+        public void removeBaseballCard(BaseballCard card) throws BBCTIOException {
             throw new UnsupportedOperationException("Not supported yet.");
         }
     }

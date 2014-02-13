@@ -1,7 +1,7 @@
 /*
  * This file is part of BBCT.
  *
- * Copyright 2012 codeguru <codeguru@users.sourceforge.net>
+ * Copyright 2012-14 codeguru <codeguru@users.sourceforge.net>
  *
  * BBCT is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,8 +34,6 @@ import javax.swing.JOptionPane;
 
 /**
  * This is the driver class for the Baseball Card Tracker program (BBCT).
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class BBCTMain {
 
@@ -59,7 +57,7 @@ public class BBCTMain {
             JOptionPane.showMessageDialog(null, ex.getMessage(), ex.getMessage(), JOptionPane.ERROR_MESSAGE);
         } catch (BBCTIOException ex) {
             Logger.getLogger(BBCTMain.class.getName()).log(Level.SEVERE, "Unable to initialize storage.", ex);
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "Initialization Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, ex.getMessage(), BBCTStringResources.ErrorResources.INITIALIZATION_ERROR_TITLE, JOptionPane.ERROR_MESSAGE);
         }
     }
 

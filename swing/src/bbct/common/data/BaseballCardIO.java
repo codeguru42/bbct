@@ -1,7 +1,7 @@
 /*
  * This file is part of BBCT.
  *
- * Copyright 2012 codeguru <codeguru@users.sourceforge.net>
+ * Copyright 2012-14 codeguru <codeguru@users.sourceforge.net>
  *
  * BBCT is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,8 +25,6 @@ import java.util.List;
  * The {@link BaseballCardIO} interface provides the contract for all I/O
  * operations for the BBCT application. These provide persistence for
  * {@link BaseballCard} objects.
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public interface BaseballCardIO {
 
@@ -118,4 +116,23 @@ public interface BaseballCardIO {
      * underlying storage mechanism.
      */
     public void updateBaseballCards(List<BaseballCard> cards) throws BBCTIOException;
+
+    /**
+     * Removes data in the underlying persistent storage for the given card.
+     *
+     * @param card The card to remove.
+     * @throws BBCTIOException If any I/O errors occur while writing to the
+     * underlying storage mechanism.
+     */
+    public void removeBaseballCard(BaseballCard card) throws BBCTIOException;
+
+    /**
+     * Removes data in the underlying persistent storage for all the cards in
+     * the given List.
+     *
+     * @param cards The list of cards to remove.
+     * @throws BBCTIOException If any I/O errors occur while writing to the
+     * underlying storage mechanism.
+     */
+    public void removeBaseballCards(List<BaseballCard> cards) throws BBCTIOException;
 }

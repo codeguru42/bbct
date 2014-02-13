@@ -1,7 +1,7 @@
 /*
  * This file is part of BBCT.
  *
- * Copyright 2012 codeguru <codeguru@users.sourceforge.net>
+ * Copyright 2012-14 codeguru <codeguru@users.sourceforge.net>
  *
  * BBCT is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,10 +23,14 @@ import bbct.common.data.BaseballCardIO;
 import bbct.common.exceptions.BBCTIOException;
 import bbct.common.exceptions.InputException;
 import bbct.swing.BBCTStringResources;
+import bbct.swing.FontResources;
 import bbct.swing.gui.event.UpdateInstructionsFocusListener;
 import bbct.swing.gui.event.UpdateTitleAncestorListener;
 import bbct.swing.gui.inputverifiers.YearInputVerifier;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.util.List;
@@ -42,9 +46,8 @@ import javax.swing.text.NumberFormatter;
  * {@link FindCardsByYearPanel} allows the user to input a card year. This value
  * is used as the parameters when searching the underlying storage mechanism for
  * cards with the given year.
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
+@SuppressWarnings("serial")
 public class FindCardsByYearPanel extends FindCardsByPanel {
 
     /**
@@ -99,7 +102,7 @@ public class FindCardsByYearPanel extends FindCardsByPanel {
         JPanel inputPanel = new JPanel(new GridBagLayout());
 
         JLabel yearLabel = new JLabel("Card Year:");
-        yearLabel.setFont(new Font("Tahoma", 0, 14)); // NOI18N
+        yearLabel.setFont(FontResources.DEFAULT_FONT);
 
         GridBagConstraints yearLabelConstraints = new GridBagConstraints();
         yearLabelConstraints.gridx = 0;
@@ -110,7 +113,7 @@ public class FindCardsByYearPanel extends FindCardsByPanel {
 
         this.yearTextField = new JFormattedTextField();
         this.yearTextField.setFormatterFactory(new DefaultFormatterFactory(new NumberFormatter(new DecimalFormat("#0"))));
-        this.yearTextField.setFont(new Font("Tahoma", 0, 14)); // NOI18N
+        this.yearTextField.setFont(FontResources.DEFAULT_FONT);
         this.yearTextField.setColumns(10);
         this.yearTextField.addFocusListener(new UpdateInstructionsFocusListener(BBCTStringResources.InstructionResources.CARD_YEAR_INSTRUCTIONS));
 

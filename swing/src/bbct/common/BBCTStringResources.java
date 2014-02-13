@@ -1,7 +1,7 @@
 /*
  * This file is part of BBCT for Android.
  *
- * Copyright 2012 codeguru <codeguru@users.sourceforge.net>
+ * Copyright 2012-14 codeguru <codeguru@users.sourceforge.net>
  *
  * BBCT for Android is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,8 +20,6 @@ package bbct.common;
 
 /**
  * String resources used in the {@link bbct.common} package.
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class BBCTStringResources {
 
@@ -46,6 +44,10 @@ public class BBCTStringResources {
          * UPDATE statement error message.
          */
         public static final String DATABASE_UPDATE_ERROR = "Unable to update baseball card data.";
+        /**
+         * DELETE statement error message.
+         */
+        public static final String DATABASE_DELETE_ERROR = "Unable to remove baseball card data.";
         /**
          * Error when baseball card already exists in the underlying storage
          * system.

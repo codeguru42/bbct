@@ -1,7 +1,7 @@
 /*
  * This file is part of BBCT.
  *
- * Copyright 2012 codeguru <codeguru@users.sourceforge.net>
+ * Copyright 2012-14 codeguru <codeguru@users.sourceforge.net>
  *
  * BBCT is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -20,7 +20,12 @@ package bbct.common.data;
 
 import bbct.common.BBCTStringResources;
 import bbct.common.exceptions.BBCTIOException;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -29,8 +34,6 @@ import java.util.logging.Logger;
 /**
  * An implementation of {@link BaseballCardIO} which uses a database table as
  * the underlying persistent storage mechanism.
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class JDBCBaseballCardIO extends AbstractBaseballCardIO {
 
@@ -281,6 +284,38 @@ public class JDBCBaseballCardIO extends AbstractBaseballCardIO {
             stmt.executeUpdate();
         } catch (SQLException ex) {
             throw new BBCTIOException(BBCTStringResources.ErrorResources.DATABASE_UPDATE_ERROR, ex);
+        }
+    }
+
+    /**
+     * Executes a DELETE query to remove records in the database
+     * containing playerName, year and number from the given
+     * {@link BaseballCard}.
+     *
+     * @param card The card to remove.
+     * @throws BBCTIOException If any I/O errors occur while writing to the
+     * underlying storage mechanism.
+     */
+    @Override
+    public void removeBaseballCard(BaseballCard card) throws BBCTIOException {
+        try {
+            String playerName = card.getPlayerName();
+            int year = card.getYear();
+            int number = card.getNumber();
+
+            String sqlQuery = "DELETE FROM " + TABLE_NAME
+                    + " WHERE " + NAME_COL_NAME + " = ?"
+                    + " AND " + YEAR_COL_NAME + " = ?"
+                    + " AND " + NUMBER_COL_NAME + " = ?";
+
+            PreparedStatement stmt = this.conn.prepareStatement(sqlQuery);
+            stmt.setString(1, playerName);
+            stmt.setInt(2, year);
+            stmt.setInt(3, number);
+
+            stmt.executeUpdate();
+        } catch (SQLException ex) {
+            throw new BBCTIOException(BBCTStringResources.ErrorResources.DATABASE_DELETE_ERROR, ex);
         }
     }
 

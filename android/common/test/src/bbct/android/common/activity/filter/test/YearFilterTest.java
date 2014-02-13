@@ -1,7 +1,7 @@
 /*
  * This file is part of BBCT for Android.
  *
- * Copyright 2012 codeguru <codeguru@users.sourceforge.net>
+ * Copyright 2012-14 codeguru <codeguru@users.sourceforge.net>
  *
  * BBCT for Android is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -100,16 +100,6 @@ public class YearFilterTest extends FilterActivityTest<YearFilter> {
     protected void checkErrorMessage() {
         String expectedError = this.activity.getString(R.string.year_input_error);
         Assert.assertEquals(expectedError, this.yearText.getError());
-    }
-
-    /**
-     * Set the text of the year {@link EditText} view.
-     *
-     * @see FilterActivityTest#testOkButtonOnClickWithSetInputText()
-     */
-    @Override
-    protected void setInputText() {
-        this.yearText.setText(Integer.toString(this.testYear));
     }
 
     /**

@@ -1,7 +1,7 @@
 /*
  * This file is part of BBCT.
  *
- * Copyright 2012 codeguru <codeguru@users.sourceforge.net>
+ * Copyright 2012-14 codeguru <codeguru@users.sourceforge.net>
  *
  * BBCT is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,9 +35,8 @@ import java.awt.CardLayout;
  * @see FindCardsByYearAndNumberPanel
  * @see FindCardsByPlayerNamePanel
  * @see AboutPanel
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
+@SuppressWarnings("serial")
 public class MainPanel extends javax.swing.JPanel {
 
     /**

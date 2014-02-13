@@ -1,7 +1,7 @@
 /*
  * This file is part of BBCT.
  *
- * Copyright 2012 codeguru <codeguru@users.sourceforge.net>
+ * Copyright 2012-14 codeguru <codeguru@users.sourceforge.net>
  *
  * BBCT is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -27,8 +27,6 @@ import javax.swing.event.AncestorListener;
 /**
  * {@link SetDefaultButtonAncestorListener} sets the default button of a
  * {@link javax.swing.JFrame}.
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class SetDefaultButtonAncestorListener implements AncestorListener {
 

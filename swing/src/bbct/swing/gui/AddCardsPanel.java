@@ -1,7 +1,7 @@
 /*
  * This file is part of BBCT.
  *
- * Copyright 2012 codeguru <codeguru@users.sourceforge.net>
+ * Copyright 2012-14 codeguru <codeguru@users.sourceforge.net>
  *
  * BBCT is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,11 +23,11 @@ import bbct.common.data.BaseballCardIO;
 import bbct.common.exceptions.BBCTIOException;
 import bbct.common.exceptions.InputException;
 import bbct.swing.BBCTStringResources;
+import bbct.swing.FontResources;
 import bbct.swing.gui.event.SetDefaultButtonAncestorListener;
 import bbct.swing.gui.event.ShowCardActionListener;
 import bbct.swing.gui.event.UpdateTitleAncestorListener;
 import java.awt.BorderLayout;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.logging.Level;
@@ -44,11 +44,9 @@ import javax.swing.JPanel;
  * baseball card data to storage and to go back to the main menu of the BBCT
  * application.
  *
- * @author codeguru <codeguru@users.sourceforge.net>
- *
  * TODO: Instructions not correct after clicking Add Card button
- *
  */
+@SuppressWarnings("serial")
 public class AddCardsPanel extends JPanel {
 
     /**
@@ -71,7 +69,7 @@ public class AddCardsPanel extends JPanel {
         JPanel buttonsPanel = new JPanel();
 
         final JButton addCardButton = new JButton(BBCTStringResources.ButtonResources.ADD_CARD_BUTTON);
-        addCardButton.setFont(new Font("Tahoma", 0, 16)); // NOI18N
+        addCardButton.setFont(FontResources.BUTTON_FONT);
         addCardButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -87,17 +85,17 @@ public class AddCardsPanel extends JPanel {
                     JOptionPane.showMessageDialog(AddCardsPanel.this, ex.getMessage(), ex.getMessage(), JOptionPane.ERROR_MESSAGE);
                 } catch (InputException ex) {
                     Logger.getLogger(AddCardsPanel.class.getName()).log(Level.INFO, "Invalid input", ex);
-                    JOptionPane.showMessageDialog(AddCardsPanel.this, ex.getMessage(), "Input Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(AddCardsPanel.this, ex.getMessage(), BBCTStringResources.ErrorResources.INPUT_ERROR_TITLE, JOptionPane.ERROR_MESSAGE);
                 } catch (Exception ex) {
-                    Logger.getLogger(AddCardsPanel.class.getName()).log(Level.SEVERE, "Unexpected Exception", ex);
-                    JOptionPane.showMessageDialog(AddCardsPanel.this, ex, "Unexpected Exception", JOptionPane.ERROR_MESSAGE);
+                    Logger.getLogger(AddCardsPanel.class.getName()).log(Level.SEVERE, "Unexpected exception", ex);
+                    JOptionPane.showMessageDialog(AddCardsPanel.this, ex, BBCTStringResources.ErrorResources.UNEXPECTED_EXCEPTION_ERROR_TITLE, JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
         buttonsPanel.add(addCardButton);
 
         JButton backButton = new JButton(BBCTStringResources.ButtonResources.BACK_BUTTON);
-        backButton.setFont(new Font("Tahoma", 0, 16)); // NOI18N
+        backButton.setFont(FontResources.BUTTON_FONT);
         backButton.addActionListener(new ShowCardActionListener(this, BBCTFrame.MENU_CARD_NAME));
         buttonsPanel.add(backButton);
 

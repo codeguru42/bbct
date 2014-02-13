@@ -1,7 +1,7 @@
 /*
  * This file is part of BBCT.
  *
- * Copyright 2012 codeguru <codeguru@users.sourceforge.net>
+ * Copyright 2012-14 codeguru <codeguru@users.sourceforge.net>
  *
  * BBCT is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -29,8 +29,6 @@ import javax.swing.event.AncestorListener;
  * added to the component tree.
  *
  * @see bbct.gui.BBCTFrame#setInstructions(java.lang.String)
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class UpdateInstructionsAncestorListener implements AncestorListener {
 

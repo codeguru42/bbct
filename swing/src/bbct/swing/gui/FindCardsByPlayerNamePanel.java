@@ -1,7 +1,7 @@
 /*
  * This file is part of BBCT.
  *
- * Copyright 2012 codeguru <codeguru@users.sourceforge.net>
+ * Copyright 2012-14 codeguru <codeguru@users.sourceforge.net>
  *
  * BBCT is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,10 +23,14 @@ import bbct.common.data.BaseballCardIO;
 import bbct.common.exceptions.BBCTIOException;
 import bbct.common.exceptions.InputException;
 import bbct.swing.BBCTStringResources;
+import bbct.swing.FontResources;
 import bbct.swing.gui.event.UpdateInstructionsFocusListener;
 import bbct.swing.gui.event.UpdateTitleAncestorListener;
 import bbct.swing.gui.inputverifiers.NotEmptyInputVerifier;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.util.List;
 import javax.swing.InputVerifier;
 import javax.swing.JFrame;
@@ -40,9 +44,8 @@ import javax.swing.JTextField;
  * storage mechanism for cards for the player.
  *
  * TODO: Add support for wild cards.
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
+@SuppressWarnings("serial")
 public class FindCardsByPlayerNamePanel extends FindCardsByPanel {
 
     /**
@@ -81,7 +84,7 @@ public class FindCardsByPlayerNamePanel extends FindCardsByPanel {
         JPanel inputPanel = new JPanel(new GridBagLayout());
 
         JLabel playerNameLabel = new JLabel(BBCTStringResources.LabelResources.PLAYER_NAME_LABEL);
-        playerNameLabel.setFont(new Font("Tahoma", 0, 14)); // NOI18N
+        playerNameLabel.setFont(FontResources.DEFAULT_FONT);
 
         GridBagConstraints playerNameLabelConstraints = new GridBagConstraints();
         playerNameLabelConstraints.gridx = 0;
@@ -92,7 +95,7 @@ public class FindCardsByPlayerNamePanel extends FindCardsByPanel {
         inputPanel.add(playerNameLabel, playerNameLabelConstraints);
 
         this.playerNameTextField = new JTextField();
-        this.playerNameTextField.setFont(new Font("Tahoma", 0, 14)); // NOI18N
+        this.playerNameTextField.setFont(FontResources.DEFAULT_FONT);
         this.playerNameTextField.setColumns(10);
         this.playerNameTextField.addFocusListener(new UpdateInstructionsFocusListener(BBCTStringResources.InstructionResources.PLAYER_NAME_INSTRUCTIONS));
 

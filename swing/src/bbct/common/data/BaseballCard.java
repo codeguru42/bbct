@@ -1,7 +1,7 @@
 /*
  * This file is part of BBCT.
  *
- * Copyright 2012 codeguru <codeguru@users.sourceforge.net>
+ * Copyright 2012-14 codeguru <codeguru@users.sourceforge.net>
  *
  * BBCT is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -24,8 +24,6 @@ import java.io.Serializable;
  * {@link BaseballCard} is the model underlying the BBCT application. It
  * contains properties for the brand, year, number, value, count, player name,
  * and player position.
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class BaseballCard implements Serializable {
 
@@ -198,4 +196,5 @@ public class BaseballCard implements Serializable {
     private int count = 0;
     private String playerName = "";
     private String playerPosition = "";
+    private static final long serialVersionUID = 3647601679580625279L;
 }

@@ -1,7 +1,7 @@
 /*
  * This file is part of BBCT.
  *
- * Copyright 2012 codeguru <codeguru@users.sourceforge.net>
+ * Copyright 2012-14 codeguru <codeguru@users.sourceforge.net>
  *
  * BBCT is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,6 +23,7 @@ import bbct.common.data.BaseballCardIO;
 import bbct.common.data.JDBCBaseballCardIO;
 import bbct.common.exceptions.BBCTIOException;
 import bbct.swing.BBCTStringResources;
+import bbct.swing.FontResources;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Image;
@@ -46,9 +47,8 @@ import javax.swing.WindowConstants;
 
 /**
  * The main window for the BBCT application.
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
+@SuppressWarnings("serial")
 public class BBCTFrame extends JFrame {
 
     /**
@@ -138,7 +138,7 @@ public class BBCTFrame extends JFrame {
 
         JPanel instructionPanel = new JPanel();
         this.instructionLabel = new JLabel(BBCTStringResources.InstructionResources.DUMMY_INSTRUCTIONS);
-        this.instructionLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        this.instructionLabel.setFont(FontResources.INSTRUCTIONS_FONT);
         instructionPanel.add(this.instructionLabel);
 
         this.getContentPane().add(instructionPanel, BorderLayout.NORTH);
@@ -156,7 +156,6 @@ public class BBCTFrame extends JFrame {
     private JLabel instructionLabel;
     private MainPanel mainPanel;
     private BaseballCardIO bcio = null;
-
     /**
      * Tests for {@link BBCTFrame}. Creates a
      * {@link bbct.common.data.JDBCBaseballCardIO} and populates it with data
@@ -177,25 +176,33 @@ public class BBCTFrame extends JFrame {
 
     private static List<BaseballCard> readCards(String fileName) throws FileNotFoundException, IOException {
         List<BaseballCard> cards = new ArrayList<BaseballCard>();
-        BufferedReader in = new BufferedReader(new FileReader(fileName));
+        BufferedReader in = null;
 
-        // Throw away first line with headings
-        String line = in.readLine();
-        while (in.ready()) {
-            line = in.readLine();
-            String[] data = line.split(",");
-            String brand = data[0];
-            int year = Integer.parseInt(data[1]);
-            int number = Integer.parseInt(data[2]);
-            int value = number * 10;
-            int count = 1;
-            String playerName = data[3];
-            String playerPosition = data[4];
-            BaseballCard card = new BaseballCard(brand, year, number, value, count, playerName, playerPosition);
+        try {
+            in = new BufferedReader(new FileReader(fileName));
 
-            cards.add(card);
+            // Throw away first line with headings
+            String line = in.readLine();
+            while (in.ready()) {
+                line = in.readLine();
+                String[] data = line.split(",");
+                String brand = data[0];
+                int year = Integer.parseInt(data[1]);
+                int number = Integer.parseInt(data[2]);
+                int value = number * 10;
+                int count = 1;
+                String playerName = data[3];
+                String playerPosition = data[4];
+                BaseballCard card = new BaseballCard(brand, year, number, value, count, playerName, playerPosition);
+
+                cards.add(card);
+            }
+
+            return cards;
+        } finally {
+            if (in != null) {
+                in.close();
+            }
         }
-
-        return cards;
     }
 }

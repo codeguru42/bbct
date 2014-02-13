@@ -1,7 +1,7 @@
 /*
  * This file is part of BBCT for Android.
  *
- * Copyright 2012 codeguru <codeguru@users.sourceforge.net>
+ * Copyright 2012-14 codeguru <codeguru@users.sourceforge.net>
  *
  * BBCT for Android is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -25,11 +25,20 @@ import bbct.android.common.R;
 
 /**
  * Static utility methods for showing common dialogs.
- *
- * @author codeguru <codeguru@users.sourceforge.net>
  */
 public class DialogUtil {
 
+    /**
+     * Show an error message in a dialog box. The dialog box is displayed using
+     * the string resources with the given ids for the title and error message.
+     *
+     * @param context
+     *            The Android context.
+     * @param titleId
+     *            The string resource for the title.
+     * @param errorId
+     *            The string resource for the error message.
+     */
     public static void showErrorDialog(Context context, int titleId, int errorId) {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(context);
         dialogBuilder.setTitle(titleId);
