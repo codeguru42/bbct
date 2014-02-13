@@ -68,8 +68,10 @@ public class BaseballCardCsvFileReader {
         String playerName = data[3];
         String team = data[4];
         String playerPosition = data[5];
+        String pathToFrontImage = data[6];
+        String pathToBackImage = data[7];
 
-        return new BaseballCard(brand, year, number, value, count, playerName, team, playerPosition);
+        return new BaseballCard(brand, year, number, value, count, playerName, team, playerPosition, pathToFrontImage, pathToBackImage);
     }
 
     /**

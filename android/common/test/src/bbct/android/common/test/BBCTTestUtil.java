@@ -496,7 +496,15 @@ final public class BBCTTestUtil {
         /**
          * Input the player position field.
          */
-        PLAYER_POSITION
+        PLAYER_POSITION,
+        /**
+         * Input the player position field.
+         */
+        CARD_FRONT_IMAGE,
+        /**
+         * Input the player position field.
+         */
+        CARD_BACK_IMAGE
     }
 
     /**
