@@ -92,6 +92,7 @@ public class BaseballCardList extends ListActivity {
                 }
             });
             listView.addHeaderView(this.headerView);
+            FillBaseballCardsListOnCreate();
         } catch (SQLHelperCreationException ex) {
             // TODO Show a dialog and exit app
             Toast.makeText(this, R.string.database_error, Toast.LENGTH_LONG)
@@ -389,7 +390,8 @@ public class BaseballCardList extends ListActivity {
     @SuppressWarnings("deprecation")
     private void swapCursor() {
         Cursor cursor = this.sqlHelper.getCursor();
-        this.adapter.setSelection(new boolean[cursor.getCount()]);
+        int count = cursor.getCount();
+        this.adapter.setSelection(new boolean[count]);
         this.stopManagingCursor(this.adapter.getCursor());
         this.startManagingCursor(cursor);
         this.adapter.changeCursor(cursor);

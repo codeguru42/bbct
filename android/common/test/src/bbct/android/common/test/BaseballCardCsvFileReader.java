@@ -59,7 +59,7 @@ public class BaseballCardCsvFileReader {
      */
     public BaseballCard getNextBaseballCard() throws IOException {
         String line = this.in.readLine();
-        String[] data = line.split(",");
+        String[] data = line.split(",", 8);
         String brand = data[0];
         int year = Integer.parseInt(data[1]);
         int number = Integer.parseInt(data[2]);

@@ -101,6 +101,9 @@ public class BaseballCardDetails extends Activity {
                 .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         this.playerPositionSpinner.setAdapter(positionsAdapter);
 
+        Button saveButton = (Button) this.findViewById(R.id.save_button);
+        saveButton.setOnClickListener(this.onSave);
+        
         Button doneButton = (Button) this.findViewById(R.id.done_button);
         doneButton.setOnClickListener(this.onDone);
         
