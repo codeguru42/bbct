@@ -35,7 +35,7 @@
     <string name="input_error_title">Input Error</string>
     <string name="duplicate_card_title">Duplicate Card</string>
 
-    <string name="start">Press the menu button to get started.</string>
+    <string name="start">Tap (+) to get started.</string>
     <string name="empty_list">No cards found.</string>
 
     <!-- Labels for card details -->
@@ -52,7 +52,7 @@
     <!-- Column headings for card list -->
     <string name="brand_col">Brand</string>
     <string name="year_col">Year</string>
-    <string name="number_col">Number</string>
+    <string name="number_col">#</string>
     <string name="value_col">Value</string>
     <string name="count_col">Count</string>
     <string name="player_name_col">Player Name</string>
