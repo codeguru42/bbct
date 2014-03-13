@@ -19,13 +19,13 @@
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="bbct.android.premium"
-          android:versionCode="7"
+          android:versionCode="9"
           android:versionName="@string/version_number"
 >
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-sdk android:targetSdkVersion="17"
-              android:minSdkVersion="7"
-    />
+    <uses-sdk
+        android:minSdkVersion="7"
+        android:targetSdkVersion="19" />
     <uses-feature android:name="android.hardware.camera"
                   android:required="false"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
@@ -42,7 +42,7 @@
     />
     <application android:label="@string/app_name"
                  android:icon="@drawable/baseball"
-    >
+    		 android:theme="@style/AppTheme">
         <activity android:name="bbct.android.premium.BaseballCardList"
                   android:label="@string/app_name"
         >
@@ -57,21 +57,52 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:mimeType="vnd.android.cursor.item/baseball_card" />
             </intent-filter>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="bbct.android.premium.BaseballCardList" />
         </activity>
-        <activity android:name="bbct.android.premium.ChangeCardImage" />
-        <activity android:name="bbct.android.common.activity.FilterOptions"/>
-        <activity android:name="bbct.android.common.activity.filter.YearFilter"/>
-        <activity android:name="bbct.android.common.activity.filter.NumberFilter"/>
-        <activity android:name="bbct.android.common.activity.filter.YearAndNumberFilter"/>
-        <activity android:name="bbct.android.common.activity.filter.PlayerNameFilter"/>
-        <activity android:name="bbct.android.common.activity.filter.TeamFilter"/>
-        <activity android:name="bbct.android.common.activity.About" />
-        <provider android:name="bbct.android.common.provider.BaseballCardProvider"
-                  android:label="@string/provider_name"
-                  android:icon="@drawable/baseball"
-                  android:authorities="@string/authorities"
-                  android:readPermission="@string/read_permission"
-                  android:writePermission="@string/write_permission"
-        />
+        <activity android:name="bbct.android.common.activity.FilterOptions" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="bbct.android.premium.BaseballCardList" />
+        </activity>
+        <activity android:name="bbct.android.common.activity.filter.YearFilter" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="bbct.android.common.activity.FilterOptions" />
+        </activity>
+        <activity android:name="bbct.android.common.activity.filter.NumberFilter" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="bbct.android.common.activity.FilterOptions" />
+        </activity>
+        <activity android:name="bbct.android.common.activity.filter.YearAndNumberFilter" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="bbct.android.common.activity.FilterOptions" />
+        </activity>
+        <activity android:name="bbct.android.common.activity.filter.PlayerNameFilter" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="bbct.android.common.activity.FilterOptions" />
+        </activity>
+        <activity android:name="bbct.android.common.activity.filter.TeamFilter" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="bbct.android.common.activity.FilterOptions" />
+        </activity>
+        <activity android:name="bbct.android.common.activity.About" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="bbct.android.common.activity.BaseballCardList" />
+        </activity>
+
+        <provider
+            android:name="bbct.android.common.provider.BaseballCardProvider"
+            android:authorities="@string/authorities"
+            android:icon="@drawable/baseball"
+            android:label="@string/provider_name"
+            android:readPermission="@string/read_permission"
+            android:writePermission="@string/write_permission" />
     </application>
 </manifest>
