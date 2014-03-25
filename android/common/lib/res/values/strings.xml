@@ -92,6 +92,10 @@
     <string name="clear_filter_menu">Clear Filter</string>
     <string name="about_menu">About</string>
     <string name="delete_menu">Delete Cards</string>
+    <string name="take_picture">Take Picture</string>
+    <!--  Menu Options for Changing Card Image -->
+    <string name="change_picture_menu">Change Picture</string>
+    <string name="remove_picture_menu">Remove Picture</string>
 
     <!-- Text in About activity -->
     <string name="version_text">Version %1$s</string>
@@ -112,6 +116,7 @@
     <!-- Card details toasts -->
     <string name="card_added_message">Card added successfully.</string>
     <string name="card_deleted_message">Cards deleted successfully.</string>
+    <string name="card_upgrade_premium">Upgrade to premium version to take picture</string>
 
     <!-- Strings for position spinner in card details activity -->
     <string-array name="positions">

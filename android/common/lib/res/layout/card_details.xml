@@ -26,9 +26,9 @@
         		  android:layout_height="wrap_content"
         		  android:orientation="vertical"
         		  >
-    <LinearLayout 
+    <LinearLayout android:id="@+id/image_layout"
         		  android:layout_width="fill_parent"
-        		  android:layout_height="wrap_content"
+        		  android:layout_height="120dp"
         		  android:orientation="horizontal"
         		  android:paddingBottom="4sp"
         		  >

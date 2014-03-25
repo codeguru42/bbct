@@ -19,6 +19,11 @@
 package bbct.android.common.activity;
 
 
+import android.content.Intent;
+import android.content.res.Resources;
+import android.view.Menu;
+import android.view.MenuItem;
+
 import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
@@ -267,11 +272,15 @@ public class BaseballCardDetails extends ActionBarActivity {
         }
     }
     
+    private void handleTakePictureonClick(Context context) {
+        Toast.makeText(context, R.string.card_upgrade_premium, Toast.LENGTH_LONG).show();
+    }
+    
     private View.OnClickListener onImageCardDetailsFrontClick = new View.OnClickListener() {
         
         @Override
         public void onClick(View v) {
-            Toast.makeText(v.getContext(), R.string.card_upgrade_premium, Toast.LENGTH_LONG).show();            
+            handleTakePictureonClick(v.getContext());            
         }
     };
     
@@ -279,7 +288,7 @@ public class BaseballCardDetails extends ActionBarActivity {
         
         @Override
         public void onClick(View v) {
-            Toast.makeText(v.getContext(), R.string.card_upgrade_premium, Toast.LENGTH_LONG).show();            
+            handleTakePictureonClick(v.getContext());            
         }
     };
     

@@ -18,6 +18,7 @@
  */
 package bbct.android.common.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
@@ -47,6 +48,7 @@ import bbct.android.common.provider.SQLHelperFactory;
  *
  * TODO: Make list fancier
  */
+@SuppressLint("NewApi")
 public class BaseballCardList extends ActionBarActivity {
 
     /**
@@ -395,7 +397,7 @@ public class BaseballCardList extends ActionBarActivity {
      * @param v
      *            - {@link View} object to obtain the card from
      * @return the {@link BaseballCard} containing year, brand, number and
-     *         playerName.
+     *         playerName.  
      */
     private BaseballCard getBaseballCard(View v) {
         TextView yearCol = (TextView) v.findViewById(R.id.year_text_view);

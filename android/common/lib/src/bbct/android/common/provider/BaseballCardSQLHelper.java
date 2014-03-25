@@ -116,14 +116,17 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
                 db.execSQL(sqlUpgrade);
             }
             else if (newVersion == PICTURE_PATH_SCHEMA) {
-                String sqlUpgrade = "ALTER TABLE "
+                String sqlAlterString = "ALTER TABLE "
                         + BaseballCardContract.TABLE_NAME + " ADD COLUMN ";
                 if (oldVersion < TEAM_SCHEMA) {
-                    sqlUpgrade += BaseballCardContract.TEAM_COL_NAME + " VARCHAR(50), ";
+                    String sqlUpgrade = sqlAlterString + BaseballCardContract.TEAM_COL_NAME + " VARCHAR(50)";
+                    db.execSQL(sqlUpgrade);
+                } else {
+                    String sqlUpgrade = sqlAlterString + BaseballCardContract.PATH_TO_PICTURE_FRONT + " VARCHAR(50)";                              
+                    db.execSQL(sqlUpgrade);
+                    sqlUpgrade = sqlAlterString + BaseballCardContract.PATH_TO_PICTURE_BACK + " VARCHAR(50)";
+                    db.execSQL(sqlUpgrade);
                 }
-                sqlUpgrade += BaseballCardContract.PATH_TO_PICTURE_FRONT + " VARCHAR(50), "
-                              + BaseballCardContract.PATH_TO_PICTURE_BACK + " VARCHAR(50)";
-                db.execSQL(sqlUpgrade); 
             }
         }
     }

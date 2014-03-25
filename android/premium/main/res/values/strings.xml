@@ -32,7 +32,4 @@
     <string name="select_all_col">Select all cards</string>
     <string name="deselect_all_col">Deselect all cards</string>
     
-    <!--  Menu Options for Changing Card Image -->
-    <string name="change_picture_menu">Change Picture</string>
-    <string name="remove_picture_menu">Remove Picture</string>
 </resources>

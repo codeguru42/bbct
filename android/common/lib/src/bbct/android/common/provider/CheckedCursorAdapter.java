@@ -150,7 +150,7 @@ public class CheckedCursorAdapter extends SimpleCursorAdapter {
     @Override
     public void setViewImage(ImageView view, String value) {
         BbctPictureHelper pictureHelper = new BbctPictureHelper();
-        Bitmap imageBitmap = pictureHelper.ScaleImageFromPath(value, view.getWidth(), view.getHeight());
+        Bitmap imageBitmap = pictureHelper.GetScaledImageFromPath(value, view.getWidth(), view.getHeight());
         view.setImageBitmap(imageBitmap);
     }
 

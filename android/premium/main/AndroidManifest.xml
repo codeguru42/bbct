@@ -51,7 +51,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="bbct.android.premium.BaseballCardDetailsPremium">
+        <activity android:name="bbct.android.premium.BaseballCardDetails"
+                  android:configChanges="orientation"
+                  android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.EDIT" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -60,6 +62,17 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="bbct.android.premium.BaseballCardList" />
+        </activity>
+        <activity android:name="bbct.android.premium.ChangeCardImage"
+            	  android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.EDIT" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="vnd.android.cursor.item/baseball_card" />
+            </intent-filter>
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="bbct.android.premium.BaseballCardDetails" />
         </activity>
         <activity android:name="bbct.android.common.activity.FilterOptions" >
             <meta-data
