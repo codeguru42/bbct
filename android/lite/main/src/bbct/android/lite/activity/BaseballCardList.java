@@ -18,15 +18,11 @@
  */
 package bbct.android.lite.activity;
 
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
-import android.view.MenuItem;
 import android.widget.TextView;
 import bbct.android.R;
-import bbct.android.common.activity.BaseballCardDetails;
-import bbct.android.common.provider.BaseballCardContract;
 import com.google.ads.AdRequest;
 import com.google.ads.AdView;
 import java.util.Arrays;
@@ -56,26 +52,4 @@ public class BaseballCardList extends bbct.android.common.activity.BaseballCardL
         TextView premiumText = (TextView) this.findViewById(R.id.premium_text);
         premiumText.setMovementMethod(LinkMovementMethod.getInstance());
     }
-    
-    /**
-     * Respond to the user selecting a menu item.
-     *
-     * @param item
-     *            The menu item selected.
-     */
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int itemId = item.getItemId();
-
-        if (itemId == R.id.add_menu) {
-            Intent intent = new Intent(Intent.ACTION_EDIT,
-                    BaseballCardDetails.DETAILS_URI);
-            intent.setType(BaseballCardContract.BASEBALL_CARD_ITEM_MIME_TYPE);
-            this.startActivity(intent);
-            return true;
-        } else {
-            return super.onOptionsItemSelected(item);  
-        }
-    }
-
 }

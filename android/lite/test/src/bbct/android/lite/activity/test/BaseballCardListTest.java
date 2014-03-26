@@ -18,7 +18,6 @@
  */
 package bbct.android.lite.activity.test;
 
-import android.annotation.SuppressLint;
 import android.test.ActivityInstrumentationTestCase2;
 import bbct.android.lite.activity.BaseballCardList;
 
@@ -27,7 +26,6 @@ import bbct.android.lite.activity.BaseballCardList;
  *
  * TODO: Add tests for the layout of {@link BaseballCardList}
  */
-@SuppressLint("NewApi")
 public class BaseballCardListTest extends ActivityInstrumentationTestCase2<BaseballCardList> {
 
     /**
