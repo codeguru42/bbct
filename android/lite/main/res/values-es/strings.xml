@@ -18,12 +18,12 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <!-- Dimensions used in card list rows -->
-    <dimen name="brand_col_width">40dp</dimen>
-    <dimen name="year_col_width">25dp</dimen>
-    <dimen name="number_col_width">40dp</dimen>
-    <dimen name="player_name_col_width">60dp</dimen>
-    
-    <!-- Text size used in filter cards activity -->
-    <dimen name="option_size">15sp</dimen>
+    <string name="app_name">BBCT Lite</string>
+    <string name="bbct_title">BBCT Lite - %1$s</string>
+    <string name="version_number">0.5.7</string>
+    <string name="premium">
+        Si te gusta utilizar BBCT, obtiene la
+        <a href="market://details?id=bbct.android.premium">edición premium</a>
+        sin publicidad por sólo $3.00USD.
+    </string>
 </resources>
