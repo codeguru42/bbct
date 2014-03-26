@@ -22,6 +22,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -380,7 +381,9 @@ public class BaseballCardList extends ActionBarActivity {
                 this.sqlHelper.applyFilter(this, this.filterRequest,
                         this.filterParams);
                 this.swapCursor();
-                this.invalidateOptionsMenu();
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+                    this.invalidateOptionsMenu();
+                }
             }
         } else {
             Log.e(TAG, "onActivityResult(): Invalid result code: "
