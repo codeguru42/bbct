@@ -53,7 +53,8 @@ public class BaseballCard implements Serializable {
      *            The position this player played.
      */
     public BaseballCard(String brand, int year, int number, int value, int count,
-            String playerName, String team, String playerPosition) {
+            String playerName, String team, String playerPosition, 
+            String pathToPictureFront, String pathToPictureBack) {
         this.brand = brand;
         this.year = year;
         this.number = number;
@@ -62,6 +63,44 @@ public class BaseballCard implements Serializable {
         this.playerName = playerName;
         this.team = team;
         this.playerPosition = playerPosition;
+        this.pathToPictureFront = pathToPictureFront;
+        this.pathToPictureBack = pathToPictureBack;
+    }
+    
+    /**
+     * Set the path to front of the picture of this {@link BaseballCard}.
+     *
+     * @return none
+     */
+    public void setPathToPictureFront(String pathToPictureFront) {
+        this.pathToPictureFront = pathToPictureFront;
+    }
+
+    /**
+     * Set the path to back of the picture of this {@link BaseballCard}.
+     *
+     * @return none
+     */
+    public void setPathToPictureBack(String pathToPictureBack) {
+        this.pathToPictureBack = pathToPictureBack;
+    }
+
+    /**
+     * Get the path to front of the picture of this {@link BaseballCard}.
+     *
+     * @return The path to front of the picture of this {@link BaseballCard}.
+     */
+    public String getPathToPictureFront() {
+        return this.pathToPictureFront;
+    }
+
+    /**
+     * Get the path to back of the picture of this {@link BaseballCard}.
+     *
+     * @return The path to back of the picture of this {@link BaseballCard}.
+     */
+    public String getPathToPictureBack() {
+        return this.pathToPictureBack;
     }
 
     /**
@@ -177,7 +216,9 @@ public class BaseballCard implements Serializable {
                     && this.count == c.getCount()
                     && this.playerName.equals(c.getPlayerName())
                     && this.team.equals(c.getTeam())
-                    && this.playerPosition.equals(c.getPlayerPosition());
+                    && this.playerPosition.equals(c.getPlayerPosition())
+                    && this.pathToPictureFront.equals(c.getPathToPictureFront())
+                    && this.pathToPictureBack.equals(c.getPathToPictureBack());
         }
 
         return false;
@@ -200,6 +241,8 @@ public class BaseballCard implements Serializable {
         hash = 67 * hash + this.playerName.hashCode();
         hash = 67 * hash + this.team.hashCode();
         hash = 67 * hash + this.playerPosition.hashCode();
+        hash = 67 * hash + this.pathToPictureFront.hashCode();
+        hash = 67 * hash + this.pathToPictureBack.hashCode();
         return hash;
     }
 
@@ -216,7 +259,9 @@ public class BaseballCard implements Serializable {
         return "BaseballCard{" + "cardBrand=" + this.brand + ", cardYear=" + this.year
                 + ", cardNumber=" + this.number + ", cardValue=" + this.value
                 + ", cardCount=" + this.count + ", playerName=" + this.playerName
-                + ", team=" + this.team + ", playerPosition=" + this.playerPosition + '}';
+                + ", team=" + this.team + ", playerPosition=" + this.playerPosition 
+                + ", pathToPictureFront=" + this.pathToPictureFront 
+                + ", pathToPictureBack=" + this.pathToPictureBack + '}';
     }
     private String brand = null;
     private int year = 0;
@@ -226,4 +271,6 @@ public class BaseballCard implements Serializable {
     private String playerName = null;
     private String team = null;
     private String playerPosition = null;
+    private String pathToPictureFront = null;
+    private String pathToPictureBack = null;
 }

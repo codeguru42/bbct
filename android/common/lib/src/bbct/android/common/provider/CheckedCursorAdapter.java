@@ -22,13 +22,16 @@ import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.os.Build;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.CheckedTextView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import bbct.android.common.BbctPictureHelper;
 import bbct.android.common.R;
 
 /**
@@ -137,6 +140,13 @@ public class CheckedCursorAdapter extends SimpleCursorAdapter {
                 listView.setAdapter(CheckedCursorAdapter.this);
             }
         });
+    }
+    
+    @Override
+    public void setViewImage(ImageView view, String value) {
+        BbctPictureHelper pictureHelper = new BbctPictureHelper();
+        Bitmap imageBitmap = pictureHelper.GetScaledImageFromPath(value, view.getWidth(), view.getHeight());
+        view.setImageBitmap(imageBitmap);
     }
 
     private boolean[] selection;

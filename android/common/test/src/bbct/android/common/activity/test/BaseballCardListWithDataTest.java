@@ -92,7 +92,7 @@ public class BaseballCardListWithDataTest extends
         this.listView = (ListView) this.activity
                 .findViewById(android.R.id.list);
         this.newCard = new BaseballCard("Code Guru Apps", 1993, 1, 50000, 1,
-                "Code Guru", "Code Guru Devs", "Catcher");
+                "Code Guru", "Code Guru Devs", "Catcher", "", "");
 
         this.solo = new Solo(this.inst, this.activity);
     }
@@ -352,7 +352,7 @@ public class BaseballCardListWithDataTest extends
         this.testYearFilter();
 
         this.newCard = new BaseballCard("codeguru apps", 1976, 1, 50000, 1,
-                "codeguru", "codeguru devs", "Catcher");
+                "codeguru", "codeguru devs", "Catcher", "", "");
         Activity cardDetails = BBCTTestUtil.testMenuItem(this.solo,
                 this.activity, R.id.add_menu, BaseballCardDetails.class);
         BBCTTestUtil.addCard(this, cardDetails, this.newCard);

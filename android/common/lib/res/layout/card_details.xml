@@ -21,7 +21,34 @@
     android:id="@id/scroll_card_details"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent" >
-
+    <LinearLayout 
+        		  android:layout_width="wrap_content"
+        		  android:layout_height="wrap_content"
+        		  android:orientation="vertical"
+        		  >
+    <LinearLayout android:id="@+id/image_layout"
+        		  android:layout_width="fill_parent"
+        		  android:layout_height="120dp"
+        		  android:orientation="horizontal"
+        		  android:paddingBottom="4sp"
+        		  >
+        <ImageView android:id="@id/image_card_details_front"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/no_card_image"
+                android:contentDescription="@string/image_front_desc"
+                android:adjustViewBounds="true"
+        />
+        <ImageView android:id="@id/image_card_details_back"
+            	android:layout_width="0dp"
+            	android:layout_height="wrap_content"
+            	android:layout_weight="1"
+                android:src="@drawable/no_card_image"
+                android:contentDescription="@string/image_back_desc"
+                android:adjustViewBounds="true"
+         />
+    </LinearLayout>
     <TableLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -60,7 +87,6 @@
         </TableRow>
 
         <TableRow>
-
             <TextView
                 android:text="@string/number_label"
                 android:textStyle="bold" />
@@ -163,5 +189,5 @@
                 android:text="@string/done_button" />
         </LinearLayout>
     </TableLayout>
-
+    </LinearLayout>
 </ScrollView>

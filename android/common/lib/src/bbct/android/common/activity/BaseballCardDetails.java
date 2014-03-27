@@ -18,6 +18,13 @@
  */
 package bbct.android.common.activity;
 
+
+import android.content.Intent;
+import android.content.res.Resources;
+import android.view.Menu;
+import android.view.MenuItem;
+
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -32,6 +39,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 import bbct.android.common.R;
@@ -102,10 +110,15 @@ public class BaseballCardDetails extends ActionBarActivity {
 
         Button saveButton = (Button) this.findViewById(R.id.save_button);
         saveButton.setOnClickListener(this.onSave);
-
+        
         Button doneButton = (Button) this.findViewById(R.id.done_button);
         doneButton.setOnClickListener(this.onDone);
-
+        
+        this.imageCardDetailsFront = (ImageView) this.findViewById(R.id.image_card_details_front);
+        this.imageCardDetailsBack = (ImageView) this.findViewById(R.id.image_card_details_back);
+        this.imageCardDetailsFront.setOnClickListener(this.onImageCardDetailsFrontClick);
+        this.imageCardDetailsBack.setOnClickListener(this.onImageCardDetailsBackClick);
+        
         this.oldCard = (BaseballCard) this.getIntent().getSerializableExtra(
                 this.getString(R.string.baseball_card_extra));
 
@@ -128,8 +141,8 @@ public class BaseballCardDetails extends ActionBarActivity {
         ActionBar actionBar = this.getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
-
-    private BaseballCard getBaseballCard() {
+    
+    protected BaseballCard getBaseballCard() {
         Log.d(TAG, "getBaseballCard()");
 
         EditText[] allEditTexts = { this.brandText, this.yearText,
@@ -168,7 +181,7 @@ public class BaseballCardDetails extends ActionBarActivity {
             String team = this.teamText.getText().toString();
             String playerName = this.playerNameText.getText().toString();
             return new BaseballCard(brand, year, number, (int) (value * 100),
-                    count, playerName, team, playerPosition);
+                    count, playerName, team, playerPosition, "", "");
         } else {
             return null;
         }
@@ -217,50 +230,73 @@ public class BaseballCardDetails extends ActionBarActivity {
         this.teamText.setText("");
         this.playerPositionSpinner.setSelection(-1);
     }
+    
+    protected void saveCard(View view, BaseballCard card) {
+        BaseballCardSQLHelper sqlHelper = null;
+        try {
+            sqlHelper = SQLHelperFactory.getSQLHelper(view.getContext());
 
-    private final View.OnClickListener onSave = new View.OnClickListener() {
+            if (card != null) {
+                if (BaseballCardDetails.this.isUpdating) {
+                    sqlHelper.updateBaseballCard(
+                            BaseballCardDetails.this.oldCard, card);
+                    BaseballCardDetails.this.finish();
+                } else {
+                    long result = sqlHelper.insertBaseballCard(card);
+
+                    if (result == -1) {
+                        DialogUtil.showErrorDialog(
+                                BaseballCardDetails.this,
+                                R.string.duplicate_card_title,
+                                R.string.duplicate_card_error);
+                    } else {
+                        BaseballCardDetails.this.resetInput();
+                        BaseballCardDetails.this.brandText.requestFocus();
+                        Toast.makeText(view.getContext(),
+                                R.string.card_added_message,
+                                Toast.LENGTH_LONG).show();
+                    }
+                }
+                // TODO: Catch SQL exceptions and show appropriate error
+                // messages.
+            }
+        } catch (SQLHelperCreationException ex) {
+            // TODO Show a dialog and exit app
+            Toast.makeText(view.getContext(), R.string.database_error,
+                    Toast.LENGTH_LONG).show();
+            Log.e(TAG, ex.getMessage(), ex);
+        } finally {
+            if (sqlHelper != null) {
+                sqlHelper.close();
+            }
+        }
+    }
+    
+    private void handleTakePictureonClick(Context context) {
+        Toast.makeText(context, R.string.card_upgrade_premium, Toast.LENGTH_LONG).show();
+    }
+    
+    private View.OnClickListener onImageCardDetailsFrontClick = new View.OnClickListener() {
+        
+        @Override
+        public void onClick(View v) {
+            handleTakePictureonClick(v.getContext());            
+        }
+    };
+    
+    private View.OnClickListener onImageCardDetailsBackClick = new View.OnClickListener() {
+        
+        @Override
+        public void onClick(View v) {
+            handleTakePictureonClick(v.getContext());            
+        }
+    };
+    
+    private View.OnClickListener onSave = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            BaseballCardSQLHelper sqlHelper = null;
-            try {
-                BaseballCard newCard = BaseballCardDetails.this
-                        .getBaseballCard();
-                sqlHelper = SQLHelperFactory.getSQLHelper(view.getContext());
-
-                if (newCard != null) {
-                    if (BaseballCardDetails.this.isUpdating) {
-                        sqlHelper.updateBaseballCard(
-                                BaseballCardDetails.this.oldCard, newCard);
-                        BaseballCardDetails.this.finish();
-                    } else {
-                        long result = sqlHelper.insertBaseballCard(newCard);
-
-                        if (result == -1) {
-                            DialogUtil.showErrorDialog(
-                                    BaseballCardDetails.this,
-                                    R.string.duplicate_card_title,
-                                    R.string.duplicate_card_error);
-                        } else {
-                            BaseballCardDetails.this.resetInput();
-                            BaseballCardDetails.this.brandText.requestFocus();
-                            Toast.makeText(view.getContext(),
-                                    R.string.card_added_message,
-                                    Toast.LENGTH_LONG).show();
-                        }
-                    }
-                    // TODO: Catch SQL exceptions and show appropriate error
-                    // messages.
-                }
-            } catch (SQLHelperCreationException ex) {
-                // TODO Show a dialog and exit app
-                Toast.makeText(view.getContext(), R.string.database_error,
-                        Toast.LENGTH_LONG).show();
-                Log.e(TAG, ex.getMessage(), ex);
-            } finally {
-                if (sqlHelper != null) {
-                    sqlHelper.close();
-                }
-            }
+            BaseballCard card = getBaseballCard();
+            saveCard(view, card);
         }
     };
 
@@ -271,6 +307,9 @@ public class BaseballCardDetails extends ActionBarActivity {
         }
     };
 
+    private ImageView imageCardDetailsFront = null;
+    private ImageView imageCardDetailsBack = null;
+    private Button doneButton = null;
     private BaseballCard oldCard = null;
     private AutoCompleteTextView brandText = null;
     private EditText yearText = null;

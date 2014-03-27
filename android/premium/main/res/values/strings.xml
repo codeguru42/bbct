@@ -27,4 +27,9 @@
         Please update <a href="market://details?id=bbct.android">Lite Edition</a>.
     </string>
     <string name="lite_not_installed_message">Lite Edition not installed.</string>
+
+    <!-- Column headings for card list -->
+    <string name="select_all_col">Select all cards</string>
+    <string name="deselect_all_col">Deselect all cards</string>
+    
 </resources>
