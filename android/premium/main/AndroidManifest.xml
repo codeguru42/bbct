@@ -25,7 +25,9 @@
     <uses-sdk
         android:minSdkVersion="7"
         android:targetSdkVersion="19" />
-
+    <uses-feature android:name="android.hardware.camera"
+                  android:required="false"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="bbct.android.lite.permission.READ" />
 
     <permission
