@@ -18,21 +18,6 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <!-- IDs for views -->
-    <item type="id" name="brand_text"/>
-    <item type="id" name="year_text"/>
-    <item type="id" name="number_text"/>
-    <item type="id" name="value_text"/>
-    <item type="id" name="count_text"/>
-    <item type="id" name="player_name_text"/>
-    <item type="id" name="team_text"/>
-    <item type="id" name="player_position_text"/>
-    <item type="id" name="scroll_card_details"/>
-    <item type="id" name="image_card_details_front"/>
-    <item type="id" name="image_card_details_back"/>
-
-    <item type="id" name="save_button"/>
-    <item type="id" name="done_button"/>
-    <item type="id" name="ok_button"/>
-    <item type="id" name="cancel_button"/>
+    <!-- Keys for extras stored in Bundle and Intent objects -->
+    <string name="image_path_extra">image_path</string>
 </resources>

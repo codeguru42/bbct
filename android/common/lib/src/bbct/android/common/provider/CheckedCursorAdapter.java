@@ -18,6 +18,8 @@
  */
 package bbct.android.common.provider;
 
+import bbct.android.common.data.BaseballCard;
+
 import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Context;
@@ -141,7 +143,20 @@ public class CheckedCursorAdapter extends SimpleCursorAdapter {
             }
         });
     }
-    
+
+    /**
+     * Called by bindView() to set the image for an ImageView but only
+     * if there is no existing ViewBinder or if the existing ViewBinder
+     * cannot handle binding to an ImageView. By default, the value will
+     * be treated as an image resource. If the value cannot be used as an
+     * image resource, the value is used as an image Uri. So this method is overridden
+     * to treat value as the path to the image.
+     *
+     * @param v
+     *          ImageView to receive an image
+     * @param value
+     *          The value retrieved from the data set
+     */
     @Override
     public void setViewImage(ImageView view, String value) {
         BbctPictureHelper pictureHelper = new BbctPictureHelper();

@@ -37,7 +37,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.BaseballCardDetails" 
+        <activity android:name=".activity.BaseballCardDetails"
                   android:configChanges="orientation">
             <intent-filter>
                 <action android:name="android.intent.action.EDIT" />

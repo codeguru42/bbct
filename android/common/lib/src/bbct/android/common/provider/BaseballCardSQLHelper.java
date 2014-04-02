@@ -104,7 +104,7 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (oldVersion == ORIGINAL_SCHEMA 
+        if (oldVersion == ORIGINAL_SCHEMA
                 || oldVersion == BAD_TEAM_SCHEMA
                 || oldVersion == TEAM_SCHEMA) {
             if (newVersion == TEAM_SCHEMA) {

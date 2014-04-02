@@ -71,7 +71,7 @@ public final class BaseballCardContract {
      * The column name for the path to picture of the back of the card.
      */
     public static final String PATH_TO_PICTURE_BACK = "picture_back_path";
-    
+
     /**
      * The column name for the card brand.
      */
@@ -174,9 +174,9 @@ public final class BaseballCardContract {
         cv.put(BaseballCardContract.TEAM_COL_NAME, card.getTeam());
         cv.put(BaseballCardContract.PLAYER_POSITION_COL_NAME,
                 card.getPlayerPosition());
-        cv.put(BaseballCardContract.PATH_TO_PICTURE_FRONT, 
+        cv.put(BaseballCardContract.PATH_TO_PICTURE_FRONT,
                 card.getPathToPictureFront());
-        cv.put(BaseballCardContract.PATH_TO_PICTURE_BACK, 
+        cv.put(BaseballCardContract.PATH_TO_PICTURE_BACK,
                 card.getPathToPictureBack());
         return cv;
     }

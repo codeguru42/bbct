@@ -95,15 +95,23 @@ public class BaseballCardList extends ActionBarActivity {
             listView.addHeaderView(this.headerView);
             listView.setEmptyView(this.emptyList);
             listView.setOnItemClickListener(this.onCardClick);
-
-            this.adapter = new CheckedCursorAdapter(this, R.layout.row, null,
-                    ROW_PROJECTION, ROW_TEXT_VIEWS);
+			FillBaseballCardsListOnCreate();
         } catch (SQLHelperCreationException ex) {
             // TODO Show a dialog and exit app
             Toast.makeText(this, R.string.database_error, Toast.LENGTH_LONG)
                     .show();
             Log.e(TAG, ex.getMessage(), ex);
         }
+    }
+
+    /**
+     * Creates an adapter and fills the rows with values. This
+     * method should be overridden and called from onCreate to
+     * query and display any extra fields.
+     */
+    protected void FillBaseballCardsListOnCreate() {
+        this.adapter = new CheckedCursorAdapter(this, R.layout.row, null,
+                ROW_PROJECTION, ROW_TEXT_VIEWS);
     }
 
     /**
@@ -399,7 +407,7 @@ public class BaseballCardList extends ActionBarActivity {
                 .findViewById(R.id.player_name_text_view);
         String player = nameCol.getText().toString();
 
-        return new BaseballCard("", year, number, 0, 0, player, "", "");
+        return new BaseballCard("", year, number, 0, 0, player, "", "", "", "");
     }
 
     private void updateFilter() {
@@ -434,7 +442,7 @@ public class BaseballCardList extends ActionBarActivity {
     private boolean[] savedSelection;
     TextView emptyList = null;
     private BaseballCardSQLHelper sqlHelper = null;
-    private CheckedCursorAdapter adapter = null;
+    protected CheckedCursorAdapter adapter = null;
     private boolean filterActive = false;
     private Bundle filterParams = null;
     private View headerView;

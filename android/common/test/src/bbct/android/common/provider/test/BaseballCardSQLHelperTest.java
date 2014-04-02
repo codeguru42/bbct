@@ -117,8 +117,9 @@ public class BaseballCardSQLHelperTest extends InstrumentationTestCase {
         String name = this.card.getPlayerName();
         String team = this.card.getTeam();
         String position = this.card.getPlayerPosition();
-        BaseballCard newCard = new BaseballCard(brand, year, number, newValue,
-                newCount, name, team, position);
+        String pathToFrontImage = this.card.getPathToPictureFront();
+        String pathToBackImage = this.card.getPathToPictureBack();
+        BaseballCard newCard = new BaseballCard(brand, year, number, newValue, newCount, name, team, position, pathToFrontImage, pathToBackImage);
         this.sqlHelper.updateBaseballCard(this.card, newCard);
 
         Assert.assertFalse(this.dbUtil.containsBaseballCard(this.card));

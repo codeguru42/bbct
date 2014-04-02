@@ -19,12 +19,6 @@
 package bbct.android.common.activity;
 
 
-import android.content.Intent;
-import android.content.res.Resources;
-import android.view.Menu;
-import android.view.MenuItem;
-
-import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -110,15 +104,15 @@ public class BaseballCardDetails extends ActionBarActivity {
 
         Button saveButton = (Button) this.findViewById(R.id.save_button);
         saveButton.setOnClickListener(this.onSave);
-        
+
         Button doneButton = (Button) this.findViewById(R.id.done_button);
         doneButton.setOnClickListener(this.onDone);
-        
+
         this.imageCardDetailsFront = (ImageView) this.findViewById(R.id.image_card_details_front);
         this.imageCardDetailsBack = (ImageView) this.findViewById(R.id.image_card_details_back);
         this.imageCardDetailsFront.setOnClickListener(this.onImageCardDetailsFrontClick);
         this.imageCardDetailsBack.setOnClickListener(this.onImageCardDetailsBackClick);
-        
+
         this.oldCard = (BaseballCard) this.getIntent().getSerializableExtra(
                 this.getString(R.string.baseball_card_extra));
 
@@ -141,7 +135,7 @@ public class BaseballCardDetails extends ActionBarActivity {
         ActionBar actionBar = this.getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
-    
+
     protected BaseballCard getBaseballCard() {
         Log.d(TAG, "getBaseballCard()");
 
@@ -230,7 +224,16 @@ public class BaseballCardDetails extends ActionBarActivity {
         this.teamText.setText("");
         this.playerPositionSpinner.setSelection(-1);
     }
-    
+
+    /**
+    * Saves the given {@link BaseballCard} card object and
+    * notifies the result in the given view {@link View}
+    *
+    * @param view
+    *            The view {@link View} object on which the user should be notified
+    * @param card
+    *            The card {@link BaseballCard} object to be saved.
+    */
     protected void saveCard(View view, BaseballCard card) {
         BaseballCardSQLHelper sqlHelper = null;
         try {
@@ -257,8 +260,6 @@ public class BaseballCardDetails extends ActionBarActivity {
                                 Toast.LENGTH_LONG).show();
                     }
                 }
-                // TODO: Catch SQL exceptions and show appropriate error
-                // messages.
             }
         } catch (SQLHelperCreationException ex) {
             // TODO Show a dialog and exit app
@@ -271,27 +272,41 @@ public class BaseballCardDetails extends ActionBarActivity {
             }
         }
     }
-    
+
+    /**
+     * Shows the notification to upgrade to premium version.
+     *
+     * @param context
+     *            The context {@link Context} object on which the user should be notified
+     */
     private void handleTakePictureonClick(Context context) {
         Toast.makeText(context, R.string.card_upgrade_premium, Toast.LENGTH_LONG).show();
     }
-    
+
+    /**
+     * Default listener to handle front image click event
+     */
     private View.OnClickListener onImageCardDetailsFrontClick = new View.OnClickListener() {
-        
+
         @Override
         public void onClick(View v) {
-            handleTakePictureonClick(v.getContext());            
+            handleTakePictureonClick(v.getContext());
         }
     };
-    
+
+    /**
+     * Default listener to handle back image click event
+     */
     private View.OnClickListener onImageCardDetailsBackClick = new View.OnClickListener() {
-        
+
         @Override
         public void onClick(View v) {
-            handleTakePictureonClick(v.getContext());            
+            handleTakePictureonClick(v.getContext());
         }
     };
-    
+    /**
+     * Default listener to handle save button click event
+     */
     private View.OnClickListener onSave = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -309,7 +324,6 @@ public class BaseballCardDetails extends ActionBarActivity {
 
     private ImageView imageCardDetailsFront = null;
     private ImageView imageCardDetailsBack = null;
-    private Button doneButton = null;
     private BaseballCard oldCard = null;
     private AutoCompleteTextView brandText = null;
     private EditText yearText = null;

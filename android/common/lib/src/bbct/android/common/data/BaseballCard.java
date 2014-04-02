@@ -53,7 +53,7 @@ public class BaseballCard implements Serializable {
      *            The position this player played.
      */
     public BaseballCard(String brand, int year, int number, int value, int count,
-            String playerName, String team, String playerPosition, 
+            String playerName, String team, String playerPosition,
             String pathToPictureFront, String pathToPictureBack) {
         this.brand = brand;
         this.year = year;
@@ -66,7 +66,7 @@ public class BaseballCard implements Serializable {
         this.pathToPictureFront = pathToPictureFront;
         this.pathToPictureBack = pathToPictureBack;
     }
-    
+
     /**
      * Set the path to front of the picture of this {@link BaseballCard}.
      *
@@ -260,7 +260,7 @@ public class BaseballCard implements Serializable {
                 + ", cardNumber=" + this.number + ", cardValue=" + this.value
                 + ", cardCount=" + this.count + ", playerName=" + this.playerName
                 + ", team=" + this.team + ", playerPosition=" + this.playerPosition 
-                + ", pathToPictureFront=" + this.pathToPictureFront 
+                + ", pathToPictureFront=" + this.pathToPictureFront
                 + ", pathToPictureBack=" + this.pathToPictureBack + '}';
     }
     private String brand = null;

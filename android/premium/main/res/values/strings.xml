@@ -31,5 +31,5 @@
     <!-- Column headings for card list -->
     <string name="select_all_col">Select all cards</string>
     <string name="deselect_all_col">Deselect all cards</string>
-    
+
 </resources>
