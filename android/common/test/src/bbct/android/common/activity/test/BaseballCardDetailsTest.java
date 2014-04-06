@@ -32,6 +32,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ScrollView;
@@ -41,6 +42,7 @@ import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
+import com.robotium.solo.Solo;
 import java.io.InputStream;
 import junit.framework.Assert;
 
@@ -86,7 +88,8 @@ public class BaseballCardDetailsTest extends
         // Must call getActivity() before creating a DatabaseUtil object to
         // ensure that the database is created
         this.activity = this.getActivity();
-        this.brandText = (EditText) this.activity.findViewById(R.id.brand_text);
+        this.brandText = (AutoCompleteTextView) this.activity
+                .findViewById(R.id.brand_text);
         this.yearText = (EditText) this.activity.findViewById(R.id.year_text);
         this.numberText = (EditText) this.activity
                 .findViewById(R.id.number_text);
@@ -99,9 +102,11 @@ public class BaseballCardDetailsTest extends
         this.playerPositionSpinner = (Spinner) this.activity
                 .findViewById(R.id.player_position_text);
         this.saveButton = (Button) this.activity.findViewById(R.id.save_button);
-        this.doneButton = (Button) this.activity.findViewById(R.id.done_button);
+        this.cancelButton = (Button) this.activity.findViewById(R.id.cancel_button);
         this.scrollView = (ScrollView) this.activity
                 .findViewById(R.id.scroll_card_details);
+
+        this.solo = new Solo(this.inst, this.activity);
     }
 
     /**
@@ -121,7 +126,7 @@ public class BaseballCardDetailsTest extends
         Assert.assertNotNull(this.playerTeamText);
         Assert.assertNotNull(this.playerPositionSpinner);
         Assert.assertNotNull(this.saveButton);
-        Assert.assertNotNull(this.doneButton);
+        Assert.assertNotNull(this.cancelButton);
         Assert.assertNotNull(this.scrollView);
     }
 
@@ -134,7 +139,7 @@ public class BaseballCardDetailsTest extends
      *             If BBCTTestUtil#sendKeysToCardDetails() is interrupted.
      */
     public void testStateDestroy() throws InterruptedException {
-        BBCTTestUtil.sendKeysToCardDetails(this, this.activity, this.card);
+        BBCTTestUtil.sendKeysToCardDetails(this.solo, this.card);
         this.activity.finish();
         Assert.assertTrue(this.activity.isFinishing());
         this.activity = this.getActivity();
@@ -151,7 +156,7 @@ public class BaseballCardDetailsTest extends
      *             interrupted.
      */
     public void testStatePause() throws InterruptedException {
-        BBCTTestUtil.sendKeysToCardDetails(this, this.activity, this.card);
+        BBCTTestUtil.sendKeysToCardDetails(this.solo, this.card);
         this.inst.callActivityOnRestart(this.activity);
         BBCTTestUtil.assertAllEditTextContents(this.activity, this.card);
     }
@@ -162,7 +167,7 @@ public class BaseballCardDetailsTest extends
      */
     @UiThreadTest
     public void testDoneButtonOnClick() {
-        Assert.assertTrue(this.doneButton.performClick());
+        Assert.assertTrue(this.cancelButton.performClick());
         Assert.assertTrue(this.activity.isFinishing());
     }
 
@@ -276,12 +281,14 @@ public class BaseballCardDetailsTest extends
     }
 
     public void testNavigateUp() {
-        ActionBar actionBar = ((ActionBarActivity) this.activity).getSupportActionBar();
+        ActionBar actionBar = ((ActionBarActivity) this.activity)
+                .getSupportActionBar();
         Assert.assertTrue((actionBar.getDisplayOptions() & ActionBar.DISPLAY_HOME_AS_UP) > 0);
     }
 
+    private Solo solo = null;
     private Activity activity = null;
-    private EditText brandText = null;
+    private AutoCompleteTextView brandText = null;
     private EditText yearText = null;
     private EditText numberText = null;
     private EditText valueText = null;
@@ -290,7 +297,7 @@ public class BaseballCardDetailsTest extends
     private EditText playerTeamText = null;
     private Spinner playerPositionSpinner = null;
     private Button saveButton = null;
-    private Button doneButton = null;
+    private Button cancelButton = null;
     private ScrollView scrollView = null;
     private Instrumentation inst = null;
     private BaseballCard card = null;
