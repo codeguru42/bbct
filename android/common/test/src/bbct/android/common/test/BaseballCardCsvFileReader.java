@@ -37,11 +37,15 @@ public class BaseballCardCsvFileReader {
      * card data as comma-separated values from the given {@link InputStream}.
      * The input may contain column headers, which will be ignored.
      *
-     * @param in The {@link InputStream} containing the comma-separated values.
-     * @param hasColHeaders Whether or not the input contains column headers.
-     * @throws IOException If an error occurs while reading the input.
+     * @param in
+     *            The {@link InputStream} containing the comma-separated values.
+     * @param hasColHeaders
+     *            Whether or not the input contains column headers.
+     * @throws IOException
+     *             If an error occurs while reading the input.
      */
-    public BaseballCardCsvFileReader(InputStream in, boolean hasColHeaders) throws IOException {
+    public BaseballCardCsvFileReader(InputStream in, boolean hasColHeaders)
+            throws IOException {
         this.in = new BufferedReader(new InputStreamReader(in));
 
         if (hasColHeaders) {
@@ -53,23 +57,27 @@ public class BaseballCardCsvFileReader {
      * Reads baseball card data from the next line of comma-spearated values.
      *
      * @return A {@link BaseballCard} containing the data from the input stream.
-     * @throws IOException If an error occurs while reading the input.
+     * @throws IOException
+     *             If an error occurs while reading the input.
      */
     public BaseballCard getNextBaseballCard() throws IOException {
         String line = this.in.readLine();
-        String[] data = line.split(",", 8);
-        String brand = data[0];
-        int year = Integer.parseInt(data[1]);
-        int number = Integer.parseInt(data[2]);
+        String[] data = line.split(",", 10);
+        boolean autographed = Boolean.parseBoolean(data[0]);
+        String condition = data[1];
+        String brand = data[2];
+        int year = Integer.parseInt(data[3]);
+        int number = Integer.parseInt(data[4]);
         int value = 10000;
         int count = 1;
-        String playerName = data[3];
-        String team = data[4];
-        String playerPosition = data[5];
-        String pathToFrontImage = data[6];
-        String pathToBackImage = data[7];
+        String playerName = data[5];
+        String team = data[6];
+        String playerPosition = data[7];
+		String pathToFrontImage = data[8];
+        String pathToBackImage = data[9];
 
-        return new BaseballCard(brand, year, number, value, count, playerName, team, playerPosition, pathToFrontImage, pathToBackImage);
+        return new BaseballCard(autographed, condition, brand, year, number,
+		         value, count, playerName, team, playerPosition, pathToFrontImage, pathToBackImage);
     }
 
     /**
@@ -80,8 +88,9 @@ public class BaseballCardCsvFileReader {
      * }.
      *
      * @return <code>true</code> if the input stream is ready for an input
-     * operation; <code>false</code>, otherwise.
-     * @throws IOException If an error occurs while reading the input.
+     *         operation; <code>false</code>, otherwise.
+     * @throws IOException
+     *             If an error occurs while reading the input.
      */
     public boolean hasNextBaseballCard() throws IOException {
         return this.in.ready();
@@ -91,8 +100,9 @@ public class BaseballCardCsvFileReader {
      * Reads all the baseball card data from the input stream.
      *
      * @return A list of {@link BaseballCard} objects containing all of the
-     * baseball card data from the input stream.
-     * @throws IOException If an error occurs while reading the input.
+     *         baseball card data from the input stream.
+     * @throws IOException
+     *             If an error occurs while reading the input.
      */
     public List<BaseballCard> getAllBaseballCards() throws IOException {
         List<BaseballCard> cards = new ArrayList<BaseballCard>();
@@ -106,10 +116,12 @@ public class BaseballCardCsvFileReader {
     /**
      * Close the input stream.
      *
-     * @throws IOException If an error occurs while reading the input.
+     * @throws IOException
+     *             If an error occurs while reading the input.
      */
     public void close() throws IOException {
         this.in.close();
     }
+
     private BufferedReader in = null;
 }

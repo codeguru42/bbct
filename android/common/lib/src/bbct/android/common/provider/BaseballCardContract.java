@@ -39,11 +39,21 @@ public final class BaseballCardContract {
      */
     public static final String AUTHORITY = "bbct.android.common.provider";
 
+    public static final String LITE_AUTHORITY = "bbct.android.lite.provider";
+
+    public static final String PREMIUM_AUTHORITY = "bbct.android.premium.provider";
+
     /**
      * URI used to access data with {@link BaseballCardProvider}.
      */
     public static final Uri CONTENT_URI = new Uri.Builder().scheme("content")
             .authority(AUTHORITY).path(TABLE_NAME).build();
+
+    public static final Uri LITE_URI = new Uri.Builder().scheme("content")
+            .authority(LITE_AUTHORITY).path(TABLE_NAME).build();
+
+    public static final Uri PREMIUM_URI = new Uri.Builder().scheme("content")
+            .authority(PREMIUM_AUTHORITY).path(TABLE_NAME).build();
 
     /**
      * MIME type for a list of baseball card data.
@@ -62,6 +72,16 @@ public final class BaseballCardContract {
      */
     public static final String ID_COL_NAME = "_id";
 
+    /**
+     * The column name for the autograph option.
+     */
+    public static final String AUTOGRAPHED_COL_NAME = "autographed";
+
+    /**
+     * The column name for the card condition.
+     */
+    public static final String CONDITION_COL_NAME = "condition";
+	
     /**
      * The column name for the path to picture of the front of the card.
      */
@@ -116,12 +136,13 @@ public final class BaseballCardContract {
      * Convenience variable that can be used when the {@link ContentResolver}
      * wants every column from the {@link BaseballCardProvider}.
      */
-    public static final String[] PROJECTION = { ID_COL_NAME, BRAND_COL_NAME,
+    public static final String[] PROJECTION = { ID_COL_NAME,
+            AUTOGRAPHED_COL_NAME, CONDITION_COL_NAME, BRAND_COL_NAME,
             YEAR_COL_NAME, NUMBER_COL_NAME, VALUE_COL_NAME, COUNT_COL_NAME,
             PLAYER_NAME_COL_NAME, TEAM_COL_NAME, PLAYER_POSITION_COL_NAME,
             PATH_TO_PICTURE_FRONT, PATH_TO_PICTURE_BACK };
 
-    private static final String INT_SELECTION_FORMAT = "%s = ?";
+    public static final String INT_SELECTION_FORMAT = "%s = ?";
 
     /**
      * Convenience variable to select cards with a given year.
@@ -135,10 +156,13 @@ public final class BaseballCardContract {
     public static final String NUMBER_SELECTION = String.format(
             INT_SELECTION_FORMAT, NUMBER_COL_NAME);
 
+    public static final String STRING_SELECTION_FORMAT = "%s LIKE ?";
+
     /**
-     * Convenience variable to select cards with a given player name.
+     * Convenience variable to select cards with a given brand.
      */
-    private static final String STRING_SELECTION_FORMAT = "%s LIKE ?";
+    public static final Object BRAND_SELECTION = String.format(
+            STRING_SELECTION_FORMAT, BRAND_COL_NAME);
 
     /**
      * Convenience variable to select cards for a given player.
@@ -152,7 +176,6 @@ public final class BaseballCardContract {
     public static final String TEAM_SELECTION = String.format(
             STRING_SELECTION_FORMAT, TEAM_COL_NAME);
 
-
     /**
      * Convenience method to create a {@link ContentValues} map for the data
      * from the given {@link BaseballCard} object. The returned
@@ -165,6 +188,8 @@ public final class BaseballCardContract {
      */
     public static ContentValues getContentValues(BaseballCard card) {
         ContentValues cv = new ContentValues(7);
+        cv.put(BaseballCardContract.AUTOGRAPHED_COL_NAME, card.isAutographed());
+        cv.put(BaseballCardContract.CONDITION_COL_NAME, card.getCondition());
         cv.put(BaseballCardContract.BRAND_COL_NAME, card.getBrand());
         cv.put(BaseballCardContract.YEAR_COL_NAME, card.getYear());
         cv.put(BaseballCardContract.NUMBER_COL_NAME, card.getNumber());
@@ -179,5 +204,15 @@ public final class BaseballCardContract {
         cv.put(BaseballCardContract.PATH_TO_PICTURE_BACK,
                 card.getPathToPictureBack());
         return cv;
+    }
+
+    public static Uri getUri(String packageName) {
+        if (packageName.equals("bbct.android")) {
+            return LITE_URI;
+        } else if (packageName.equals("bbct.android.premium")) {
+            return PREMIUM_URI;
+        }
+
+        return CONTENT_URI;
     }
 }

@@ -29,6 +29,7 @@ import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.test.BBCTTestUtil;
 import bbct.android.common.test.BaseballCardCsvFileReader;
+import com.robotium.solo.Solo;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.EnumSet;
@@ -100,7 +101,8 @@ public class BaseballCardDetailsPartialInputTest extends ActivityInstrumentation
         this.countEditText = (EditText) this.activity.findViewById(R.id.count_text);
         this.valueEditText = (EditText) this.activity.findViewById(R.id.value_text);
         this.playerNameEditText = (EditText) this.activity.findViewById(R.id.player_name_text);
-        this.saveButton = (Button) this.activity.findViewById(R.id.save_button);
+
+        this.solo = new Solo(this.inst, this.activity);
     }
 
     /**
@@ -114,13 +116,8 @@ public class BaseballCardDetailsPartialInputTest extends ActivityInstrumentation
         Log.d(TAG, "testPartialInput()");
         Log.d(TAG, "inputFieldsMask=" + this.inputFieldsMask);
 
-        BBCTTestUtil.sendKeysToCardDetails(this, this.activity, this.card, this.inputFieldsMask);
-        this.runTestOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Assert.assertTrue(BaseballCardDetailsPartialInputTest.this.saveButton.performClick());
-            }
-        });
+        BBCTTestUtil.sendKeysToCardDetails(this.solo, this.card, this.inputFieldsMask);
+        this.solo.clickOnActionBarItem(R.id.save_menu);
 
         EditText focusEditText = null;
 
@@ -155,11 +152,13 @@ public class BaseballCardDetailsPartialInputTest extends ActivityInstrumentation
 
         // TODO Check that correct EditText has focus
 //        Assert.assertEquals(focusEditText, this.activity.getCurrentFocus());
-//        Assert.assertTrue(focusEditText.hasFocus());
+        this.inst.waitForIdleSync();
+        Assert.assertTrue(focusEditText.hasFocus());
     }
+
+    private Solo solo = null;
     private Activity activity = null;
     private Instrumentation inst = null;
-    private Button saveButton = null;
     private EditText brandEditText = null;
     private EditText yearEditText = null;
     private EditText numberEditText = null;
