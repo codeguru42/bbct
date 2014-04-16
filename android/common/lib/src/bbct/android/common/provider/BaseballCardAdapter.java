@@ -1,0 +1,199 @@
+/*
+ * This file is part of BBCT for Android.
+ *
+ * Copyright 2012-14 codeguru <codeguru@users.sourceforge.net>
+ *
+ * BBCT for Android is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * BBCT for Android is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+package bbct.android.common.provider;
+
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.ListActivity;
+import android.content.Context;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.os.Build;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.CheckedTextView;
+import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
+import bbct.android.common.BbctPictureHelper;
+import bbct.android.common.R;
+import bbct.android.common.data.BaseballCard;
+
+/**
+ * This class adds click listeners to {@link CheckedTextView} in
+ * {@link SimpleCursorAdapter}. It enables {@link CheckedTextView} to toggle
+ * its' state.
+ */
+public class BaseballCardAdapter extends SimpleCursorAdapter {
+
+    @SuppressWarnings("deprecation")
+    public BaseballCardAdapter(Context context, int layout, Cursor c,
+            String[] from, int[] to) {
+        super(context, layout, c, from, to);
+        this.context = context;
+    }
+
+    /**
+     * Restores selection of {@link CheckedTextView} if there was a previous
+     * selection made on the same element. Also adds {@link OnClickListener} to
+     * {@link CheckedTextView}.
+     *
+     * @see {@link SimpleCursorAdapater#getView}
+     */
+    @Override
+    public View getView(final int position, View convertView, ViewGroup parent) {
+        View v = super.getView(position, convertView, parent);
+
+        CheckedTextView ctv = (CheckedTextView) v.findViewById(R.id.checkmark);
+        final Activity curActivity = (Activity) this.context;
+
+        // restore selection
+        if (this.selection != null) {
+            ctv.setChecked(this.selection[position]);
+        }
+
+        // set listener
+        ctv.setOnClickListener(new OnClickListener() {
+
+            @SuppressLint("NewApi")
+            @Override
+            public void onClick(View v) {
+                CheckedTextView cview = (CheckedTextView) v
+                        .findViewById(R.id.checkmark);
+                cview.toggle();
+                BaseballCardAdapter.this.selection[position] = cview
+                        .isChecked();
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                    curActivity.invalidateOptionsMenu();
+                }
+
+            }
+
+        });
+
+        return v;
+    }
+
+    /**
+     * Marks/unmarks all items in the {@link BaseballCardAdapter}.
+     *
+     * @param check
+     *            - a boolean indicating whether all items will be checked
+     */
+    public void toggleAll(boolean check) {
+        for (int i = 0; i < this.selection.length; i++) {
+            this.selection[i] = check;
+        }
+
+        this.updateDataSet();
+    }
+
+    /**
+     * Returns the saved selection object.
+     *
+     * @return an array of marked items
+     */
+    public boolean[] getSelection() {
+        return this.selection;
+    }
+
+    /**
+     * Sets the saved selection object.
+     *
+     * @param sel
+     *            - an array of marked items
+     */
+    public void setSelection(boolean[] sel) {
+        this.selection = sel;
+        this.updateDataSet();
+    }
+
+    /**
+     * Notifies {@link BaseballCardAdapter} of changed data and also updates
+     * {@link ListView} in the appropriate {@link ListActivity}
+     */
+    private void updateDataSet() {
+        this.notifyDataSetChanged();
+        final Activity curActivity = (Activity) this.context;
+        curActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ListView listView = (ListView) curActivity
+                        .findViewById(android.R.id.list);
+                listView.setAdapter(BaseballCardAdapter.this);
+            }
+        });
+    }
+
+    public BaseballCard getSelectedCard() {
+        Cursor cursor = this.getCursor();
+        boolean autographed = cursor.getInt(cursor
+                .getColumnIndex(BaseballCardContract.AUTOGRAPHED_COL_NAME)) != 0;
+        String condition = cursor.getString(cursor
+                .getColumnIndex(BaseballCardContract.CONDITION_COL_NAME));
+        String brand = cursor.getString(cursor
+                .getColumnIndex(BaseballCardContract.BRAND_COL_NAME));
+        int year = cursor.getInt(cursor
+                .getColumnIndex(BaseballCardContract.YEAR_COL_NAME));
+        int number = cursor.getInt(cursor
+                .getColumnIndex(BaseballCardContract.NUMBER_COL_NAME));
+        int value = cursor.getInt(cursor
+                .getColumnIndex(BaseballCardContract.VALUE_COL_NAME));
+        int count = cursor.getInt(cursor
+                .getColumnIndex(BaseballCardContract.COUNT_COL_NAME));
+        String name = cursor.getString(cursor
+                .getColumnIndex(BaseballCardContract.PLAYER_NAME_COL_NAME));
+        String team = cursor.getString(cursor
+                .getColumnIndex(BaseballCardContract.TEAM_COL_NAME));
+        String position = cursor.getString(cursor
+                .getColumnIndex(BaseballCardContract.PLAYER_POSITION_COL_NAME));
+        String pathToFrontPicture = cursor.getString(cursor
+                .getColumnIndex(BaseballCardContract.PATH_TO_PICTURE_FRONT));
+        String pathToBackPicture = cursor.getString(cursor
+                .getColumnIndex(BaseballCardContract.PATH_TO_PICTURE_BACK));
+
+        return new BaseballCard(autographed, condition, brand, year, number,
+                value, count, name, team, position, pathToFrontPicture, pathToBackPicture);
+    }
+	
+	/**
+     * Called by bindView() to set the image for an ImageView but only
+     * if there is no existing ViewBinder or if the existing ViewBinder
+     * cannot handle binding to an ImageView. By default, the value will
+     * be treated as an image resource. If the value cannot be used as an
+     * image resource, the value is used as an image Uri. So this method is overridden
+     * to treat value as the path to the image.
+     *
+     * @param v
+     *          ImageView to receive an image
+     * @param value
+     *          The value retrieved from the data set
+     */
+    @Override
+    public void setViewImage(ImageView view, String value) {
+        BbctPictureHelper pictureHelper = new BbctPictureHelper();
+        Bitmap imageBitmap = pictureHelper.GetScaledImageFromPath(value, view.getWidth(), view.getHeight());
+        view.setImageBitmap(imageBitmap);
+    }
+
+    private boolean[] selection;
+    private final Context context;
+}
