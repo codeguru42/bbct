@@ -23,8 +23,7 @@ import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.os.Build;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -62,7 +61,7 @@ public class BaseballCardAdapter extends SimpleCursorAdapter {
         View v = super.getView(position, convertView, parent);
 
         CheckedTextView ctv = (CheckedTextView) v.findViewById(R.id.checkmark);
-        final Activity curActivity = (Activity) this.context;
+        final ActionBarActivity curActivity = (ActionBarActivity) this.context;
 
         // restore selection
         if (this.selection != null) {
@@ -81,12 +80,8 @@ public class BaseballCardAdapter extends SimpleCursorAdapter {
                 BaseballCardAdapter.this.selection[position] = cview
                         .isChecked();
 
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                    curActivity.invalidateOptionsMenu();
-                }
-
+                curActivity.supportInvalidateOptionsMenu();
             }
-
         });
 
         return v;

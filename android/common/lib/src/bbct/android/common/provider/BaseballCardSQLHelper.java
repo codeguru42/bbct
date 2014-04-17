@@ -174,6 +174,26 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
             }
         }
     }
+	@Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        if (oldVersion < TEAM_SCHEMA) {
+            String sqlUpgrade = "ALTER TABLE "
+                    + BaseballCardContract.TABLE_NAME + " ADD COLUMN "
+                    + BaseballCardContract.TEAM_COL_NAME + " VARCHAR(50)";
+            db.execSQL(sqlUpgrade);
+        }
+
+        if (oldVersion < AUTO_AND_CONDITION_SCHEMA) {
+            String addAutographed = "ALTER TABLE "
+                    + BaseballCardContract.TABLE_NAME + " ADD COLUMN "
+                    + BaseballCardContract.AUTOGRAPHED_COL_NAME + " INTEGER;";
+            String addCondition = "ALTER TABLE "
+                    + BaseballCardContract.TABLE_NAME + " ADD COLUMN "
+                    + BaseballCardContract.CONDITION_COL_NAME + " TEXT";
+            db.execSQL(addAutographed);
+            db.execSQL(addCondition);
+        }
+    }
 
     /**
      * Insert data for multiple baseball cards into a SQLite database.

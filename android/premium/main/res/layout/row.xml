@@ -57,7 +57,7 @@
             	android:ellipsize="end"
             	android:textSize="12sp"
             	android:textColor="#818181"
-            	android:text="@string/brand_col"
+            	android:text="@string/brand"
             	android:paddingRight="2dp"
     		/>
     		<TextView android:id="@+id/brand_text_view"
@@ -78,7 +78,7 @@
             	android:ellipsize="end"
             	android:textSize="12sp"
             	android:textColor="#818181"
-            	android:text="@string/year_col"
+            	android:text="@string/year"
             	android:paddingLeft="4dp"
             	android:paddingRight="2dp"
     		/>
@@ -125,7 +125,7 @@
               	android:ellipsize="end"
               	android:textSize="12sp"
             	android:textColor="#818181"
-            	android:text="@string/player_name_col"
+            	android:text="@string/player_name"
             	android:paddingLeft="2dp"
             	android:paddingRight="2dp"
     		/>
