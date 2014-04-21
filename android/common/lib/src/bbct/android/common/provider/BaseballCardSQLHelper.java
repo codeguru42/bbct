@@ -106,74 +106,6 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
         db.execSQL(sqlCreate);
     }
 
-
-/*    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (oldVersion < TEAM_SCHEMA) {
-            String sqlUpgrade = "ALTER TABLE "
-                    + BaseballCardContract.TABLE_NAME + " ADD COLUMN "
-                    + BaseballCardContract.TEAM_COL_NAME + " VARCHAR(50)";
-            db.execSQL(sqlUpgrade);
-        }
-
-        if (oldVersion < AUTO_AND_CONDITION_SCHEMA) {
-            String sqlUpgrade = "ALTER TABLE "
-                    + BaseballCardContract.AUTOGRAPHED_COL_NAME + " INTEGER,"
-                    + BaseballCardContract.CONDITION_COL_NAME + " TEXT";
-            db.execSQL(sqlUpgrade);
-        }
-    }
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (oldVersion == ORIGINAL_SCHEMA
-                || oldVersion == BAD_TEAM_SCHEMA
-                || oldVersion == TEAM_SCHEMA) {
-            if (newVersion == TEAM_SCHEMA) {
-                String sqlUpgrade = "ALTER TABLE "
-                        + BaseballCardContract.TABLE_NAME + " ADD COLUMN "
-                        + BaseballCardContract.TEAM_COL_NAME + " VARCHAR(50)";
-                db.execSQL(sqlUpgrade);
-            }
-            else if (newVersion == PICTURE_PATH_SCHEMA) {
-                String sqlAlterString = "ALTER TABLE "
-                        + BaseballCardContract.TABLE_NAME + " ADD COLUMN ";
-                if (oldVersion < TEAM_SCHEMA) {
-                    String sqlUpgrade = sqlAlterString + BaseballCardContract.TEAM_COL_NAME + " VARCHAR(50)";
-                    db.execSQL(sqlUpgrade);
-                } else {
-                    String sqlUpgrade = sqlAlterString + BaseballCardContract.PATH_TO_PICTURE_FRONT + " VARCHAR(50)";                              
-                    db.execSQL(sqlUpgrade);
-                    sqlUpgrade = sqlAlterString + BaseballCardContract.PATH_TO_PICTURE_BACK + " VARCHAR(50)";
-                    db.execSQL(sqlUpgrade);
-                }
-            }
-        }
-    }*/
-    
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (oldVersion <= TEAM_SCHEMA) {
-            if (newVersion == TEAM_SCHEMA) {
-                String sqlUpgrade = "ALTER TABLE "
-                        + BaseballCardContract.TABLE_NAME + " ADD COLUMN "
-                        + BaseballCardContract.TEAM_COL_NAME + " VARCHAR(50)";
-                db.execSQL(sqlUpgrade);
-            }
-            else if (newVersion == PICTURE_PATH_SCHEMA) {
-                String sqlAlterString = "ALTER TABLE "
-                        + BaseballCardContract.TABLE_NAME + " ADD COLUMN ";
-                if (oldVersion < TEAM_SCHEMA) {
-                    String sqlUpgrade = sqlAlterString + BaseballCardContract.TEAM_COL_NAME + " VARCHAR(50)";
-                    db.execSQL(sqlUpgrade);
-                } else {
-                    String sqlUpgrade = sqlAlterString + BaseballCardContract.PATH_TO_PICTURE_FRONT + " VARCHAR(50)";                              
-                    db.execSQL(sqlUpgrade);
-                    sqlUpgrade = sqlAlterString + BaseballCardContract.PATH_TO_PICTURE_BACK + " VARCHAR(50)";
-                    db.execSQL(sqlUpgrade);
-                }
-            }
-        }
-    }
 	@Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         if (oldVersion < TEAM_SCHEMA) {
@@ -192,6 +124,15 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
                     + BaseballCardContract.CONDITION_COL_NAME + " TEXT";
             db.execSQL(addAutographed);
             db.execSQL(addCondition);
+        }
+        
+        if (oldVersion < PICTURE_PATH_SCHEMA) {
+            String sqlAlterString = "ALTER TABLE "
+                    + BaseballCardContract.TABLE_NAME + " ADD COLUMN ";
+            String sqlUpgrade = sqlAlterString + BaseballCardContract.PATH_TO_PICTURE_FRONT + " TEXT";                              
+            db.execSQL(sqlUpgrade);
+            sqlUpgrade = sqlAlterString + BaseballCardContract.PATH_TO_PICTURE_BACK + " TEXT";
+            db.execSQL(sqlUpgrade);
         }
     }
 
