@@ -62,19 +62,19 @@ public class BaseballCardCsvFileReader {
      */
     public BaseballCard getNextBaseballCard() throws IOException {
         String line = this.in.readLine();
-        String[] data = line.split(",", 10);
+        String[] data = line.split(",");
         boolean autographed = Boolean.parseBoolean(data[0]);
         String condition = data[1];
-        String brand = data[2];
-        int year = Integer.parseInt(data[3]);
-        int number = Integer.parseInt(data[4]);
+        String pathToFrontImage = data[2];
+        String pathToBackImage = data[3];
+        String brand = data[4];
+        int year = Integer.parseInt(data[5]);
+        int number = Integer.parseInt(data[6]);
         int value = 10000;
         int count = 1;
-        String playerName = data[5];
-        String team = data[6];
-        String playerPosition = data[7];
-		String pathToFrontImage = data[8];
-        String pathToBackImage = data[9];
+        String playerName = data[7];
+        String team = data[8];
+        String playerPosition = data[9];
 
         return new BaseballCard(autographed, condition, brand, year, number,
 		         value, count, playerName, team, playerPosition, pathToFrontImage, pathToBackImage);

@@ -281,10 +281,10 @@ final public class BBCTTestUtil {
             @SuppressWarnings("unchecked")
             ArrayAdapter<CharSequence> playerPositionAdapter = (ArrayAdapter<CharSequence>) playerPositionSpinner
                     .getAdapter();
-            int newIndex = 8;//playerPositionAdapter.getPosition(card
-                    //.getPlayerPosition());
+            int newIndex = playerPositionAdapter.getPosition(card
+                    .getPlayerPosition());
             int currIndex = playerPositionSpinner.getSelectedItemPosition();
-            solo.pressSpinnerItem(0, currIndex);//, activityClass)(1, newIndex - currIndex);
+            solo.pressSpinnerItem(1, newIndex-currIndex);//, activityClass)(1, newIndex - currIndex);
         }
     }
 
