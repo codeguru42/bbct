@@ -284,7 +284,7 @@ final public class BBCTTestUtil {
             int newIndex = playerPositionAdapter.getPosition(card
                     .getPlayerPosition());
             int currIndex = playerPositionSpinner.getSelectedItemPosition();
-            solo.pressSpinnerItem(1, newIndex-currIndex);//, activityClass)(1, newIndex - currIndex);
+            solo.pressSpinnerItem(1, newIndex-currIndex+1);//, activityClass)(1, newIndex - currIndex);
         }
     }
 
