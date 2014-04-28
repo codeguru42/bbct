@@ -18,10 +18,27 @@
  */
 package bbct.swing.gui;
 
+import java.awt.BorderLayout;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.WindowConstants;
+import javax.swing.table.TableModel;
 
 import bbct.common.data.BaseballCardIO;
+import bbct.common.exceptions.BBCTIOException;
+import bbct.swing.BBCTStringResources;
+import bbct.swing.FontResources;
+import bbct.swing.gui.event.ShowCardActionListener;
+import bbct.swing.gui.event.UpdateInstructionsAncestorListener;
+import bbct.swing.gui.event.UpdateTitleAncestorListener;
+import bbct.swing.gui.model.CardTableModel;
 
 /**
  * Shows a list of all baseball cards. Can be filtered.
@@ -42,6 +59,31 @@ public class CardListPanel extends JPanel {
     }
 
     private void initComponents() {
+        this.setLayout(new BorderLayout());
+
+        try {
+            TableModel model = null;
+            model = new CardTableModel(this.bcio);
+            JTable table = new JTable(model);
+            JScrollPane tableScroller = new JScrollPane(table);
+            table.setFillsViewportHeight(true);
+            this.add(tableScroller, BorderLayout.CENTER);
+        } catch (BBCTIOException ex) {
+            Logger.getLogger(CardListPanel.class.getName()).log(Level.SEVERE, "Unable to load card list", ex);
+            JOptionPane.showMessageDialog(null, ex.getMessage(), BBCTStringResources.ErrorResources.IO_ERROR_TITLE, JOptionPane.ERROR_MESSAGE);
+        }
+
+        JPanel buttonsPanel = new JPanel();
+
+        JButton backButton = new JButton(BBCTStringResources.ButtonResources.BACK_BUTTON);
+        backButton.setFont(FontResources.BUTTON_FONT);
+        backButton.addActionListener(new ShowCardActionListener(this, BBCTFrame.MENU_CARD_NAME));
+        buttonsPanel.add(backButton);
+
+        this.add(buttonsPanel, BorderLayout.SOUTH);
+
+        this.addAncestorListener(new UpdateTitleAncestorListener(BBCTStringResources.TitleResources.CARD_LIST_PANEL_TITLE));
+        this.addAncestorListener(new UpdateInstructionsAncestorListener(BBCTStringResources.InstructionResources.CARD_LIST_INSTRUCTIONS));
     }
 
     /**
@@ -53,7 +95,7 @@ public class CardListPanel extends JPanel {
      */
     public static void main(String[] args) {
         JFrame f = new JFrame("CardListPanel Test");
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         f.add(new CardListPanel(null));
         f.setSize(400, 400);
         f.setVisible(true);

@@ -52,11 +52,16 @@ public class MenuPanel extends JPanel {
     }
 
     private void initComponents() {
-        this.setLayout(new GridLayout(4, 1, 0, 30));
+        this.setLayout(new GridLayout(5, 1, 0, 30));
         this.setBorder(BorderFactory.createEmptyBorder(50, 110, 50, 110));
 
+        JButton cardsListButton = new JButton(BBCTStringResources.ButtonResources.CARDS_LIST_BUTTON);
+        cardsListButton.setFont(FontResources.MENU_BUTTON_FONT);
+        cardsListButton.addActionListener(new ShowCardActionListener(this, BBCTFrame.CARD_LIST_CARD_NAME));
+        this.add(cardsListButton);
+
         JButton addCardsButton = new JButton(BBCTStringResources.ButtonResources.ADD_CARDS_BUTTON);
-		addCardsButton.setFont(FontResources.MENU_BUTTON_FONT);
+        addCardsButton.setFont(FontResources.MENU_BUTTON_FONT);
         addCardsButton.addActionListener(new ShowCardActionListener(this, BBCTFrame.ADD_CARDS_CARD_NAME));
         this.add(addCardsButton);
 

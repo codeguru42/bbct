@@ -57,6 +57,11 @@ public class BBCTStringResources {
         public static final String MAIN_PANEL_TITLE = BASEBALL_FRAME_TITLE;
         /**
          * Title shown in the BBCT window when
+         * {@link bbct.swing.gui.CardListPanel} is visible.
+         */
+        public static final String CARD_LIST_PANEL_TITLE = BASEBALL_FRAME_TITLE + " - Card List";
+        /**
+         * Title shown in the BBCT window when
          * {@link bbct.swing.gui.AddCardsPanel} is visible.
          */
         public static final String ADD_CARDS_PANEL_TITLE = BASEBALL_FRAME_TITLE
@@ -220,7 +225,7 @@ public class BBCTStringResources {
         /**
          * Player position.
          */
-        public static final String PLAYER_POSITION_LABEL = "Player Position";
+        public static final String PLAYER_POSITION_LABEL = "Position";
 
         private ColumnNameResources() {
         }
@@ -296,6 +301,11 @@ public class BBCTStringResources {
          */
         public static final String DELETE_BUTTON = "Delete";
 
+        /**
+         * Text for Cards List button.
+         */
+        public static final String CARDS_LIST_BUTTON = "Cards List";
+
         private ButtonResources() {
         }
     }
@@ -355,6 +365,10 @@ public class BBCTStringResources {
          * Tell the user how to close the About window.
          */
         public static final String ABOUT_INSTRUCTIONS = "Click OK when ready.";
+        /**
+         * Tell the user how to return to the menu.
+         */
+        public static final String CARD_LIST_INSTRUCTIONS = "Click Back when finished.";
 
         private InstructionResources() {
         }

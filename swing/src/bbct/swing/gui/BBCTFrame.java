@@ -55,6 +55,12 @@ public class BBCTFrame extends JFrame {
      * Name used for {@link MainPanel} card.
      */
     public static final String MENU_CARD_NAME = "menu";
+
+    /**
+     * Name used for {@link CardListPanel} card.
+     */
+    public static final String CARD_LIST_CARD_NAME = "cardsList";
+
     /**
      * Name used for {@link AddCardsPanel} card.
      */

@@ -53,6 +53,7 @@ public class MainPanel extends javax.swing.JPanel {
 
     private void initComponents() {
         MenuPanel menuPanel = new MenuPanel();
+        CardListPanel cardListPanel = new CardListPanel(this.bcio);
         AddCardsPanel addCardsPanel = new AddCardsPanel(this.bcio);
         FindCardsMenuPanel findCardsMenuPanel = new FindCardsMenuPanel();
         AboutPanel aboutPanel = new AboutPanel();
@@ -67,6 +68,7 @@ public class MainPanel extends javax.swing.JPanel {
 
         this.setLayout(new CardLayout());
         this.add(menuPanel, BBCTFrame.MENU_CARD_NAME);
+        this.add(cardListPanel, BBCTFrame.CARD_LIST_CARD_NAME);
         this.add(addCardsPanel, BBCTFrame.ADD_CARDS_CARD_NAME);
         this.add(findCardsMenuPanel, BBCTFrame.FIND_CARDS_MENU_CARD_NAME);
         this.add(aboutPanel, BBCTFrame.ABOUT_CARD_NAME);
