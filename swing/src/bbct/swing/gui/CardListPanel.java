@@ -21,10 +21,28 @@ package bbct.swing.gui;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import bbct.common.data.BaseballCardIO;
+
 /**
  * Shows a list of all baseball cards. Can be filtered.
  */
 public class CardListPanel extends JPanel {
+
+    private BaseballCardIO bcio;
+
+    /**
+     * Creates a new {@link CardListPanel}.
+     *
+     * @param bcio The connection to the underlying persistent storage mechanism.
+     */
+    public CardListPanel(BaseballCardIO bcio) {
+        this.bcio = bcio;
+        this.initComponents();
+
+    }
+
+    private void initComponents() {
+    }
 
     /**
      * Tests for {@link CardListPanel}. Simply creates a {@link javax.swing.JFrame}
@@ -36,7 +54,7 @@ public class CardListPanel extends JPanel {
     public static void main(String[] args) {
         JFrame f = new JFrame("CardListPanel Test");
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.add(new CardListPanel());
+        f.add(new CardListPanel(null));
         f.setSize(400, 400);
         f.setVisible(true);
     }
