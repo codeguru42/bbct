@@ -139,6 +139,28 @@ public class JDBCBaseballCardIO extends AbstractBaseballCardIO {
     }
 
     /**
+     * Get all {@link bbct.common.data.BaseballCard}s from the underlying data storage.
+     *
+     * @throws BBCTIOException If any I/O errors occur while reading the
+     * underlying storage mechanism.
+     */
+    @Override
+    public List<BaseballCard> getAllBaseballCards() throws BBCTIOException {
+        try {
+            String sqlQuery = "SELECT * "
+                    + "  FROM " + TABLE_NAME;
+            PreparedStatement stmt = this.conn.prepareStatement(sqlQuery);
+            ResultSet rs = stmt.executeQuery();
+
+            return this.getBaseballCards(rs);
+        } catch (SQLException ex) {
+            // TODO: How do I remove this String literal?
+            String msg = BBCTStringResources.ErrorResources.DATABASE_SELECT_ERROR;
+            throw new BBCTIOException(msg, ex);
+        }
+    }
+
+    /**
      * Executes a SELECT query to get all database records where the year column
      * contains the given year value.
      *

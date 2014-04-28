@@ -109,6 +109,17 @@ public class AbstractBaseballCardIONominalTest {
             throw new UnsupportedOperationException("Not supported yet.");
         }
 
+        /**
+         * Get all {@link BaseballCard}s from the underlying data storage.
+         *
+         * @throws bbct.common.exceptions.BBCTIOException If any I/O errors occur while reading the
+         *                                                underlying storage mechanism.
+         */
+        @Override
+        public List<BaseballCard> getAllBaseballCards() throws BBCTIOException {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+
         @Override
         public List<BaseballCard> getBaseballCardsByYear(int year) throws BBCTIOException {
             throw new UnsupportedOperationException("Not supported yet.");

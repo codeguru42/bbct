@@ -55,6 +55,14 @@ public interface BaseballCardIO {
     public void insertBaseballCards(List<BaseballCard> cards) throws BBCTIOException;
 
     /**
+     * Get all {@link BaseballCard}s from the underlying data storage.
+     *
+     * @throws BBCTIOException If any I/O errors occur while reading the
+     * underlying storage mechanism.
+     */
+    public List<BaseballCard> getAllBaseballCards() throws BBCTIOException;
+
+    /**
      * Search for {@link BaseballCard}s matching the specified year.
      *
      * @param year The year of {@link BaseballCard}s to look for.
