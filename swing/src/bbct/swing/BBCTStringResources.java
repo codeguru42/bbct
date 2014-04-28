@@ -189,6 +189,44 @@ public class BBCTStringResources {
     }
 
     /**
+     * Labels used in the Card List panel.
+     */
+    public static class ColumnNameResources {
+
+        /**
+         * Card brand.
+         */
+        public static final String CARD_BRAND_LABEL = "Brand";
+        /**
+         * Card year.
+         */
+        public static final String CARD_YEAR_LABEL = "Year";
+        /**
+         * Card number.
+         */
+        public static final String CARD_NUMBER_LABEL = "Number";
+        /**
+         * Card value.
+         */
+        public static final String CARD_VALUE_LABEL = "Value";
+        /**
+         * Card count.
+         */
+        public static final String CARD_COUNT_LABEL = "Count";
+        /**
+         * Player name.
+         */
+        public static final String PLAYER_NAME_LABEL = "Player Name";
+        /**
+         * Player position.
+         */
+        public static final String PLAYER_POSITION_LABEL = "Player Position";
+
+        private ColumnNameResources() {
+        }
+    }
+
+    /**
      * Text shown in buttons.
      */
     public static class ButtonResources {
