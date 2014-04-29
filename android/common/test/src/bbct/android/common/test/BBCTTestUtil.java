@@ -224,7 +224,8 @@ final public class BBCTTestUtil {
         AutoCompleteTextView brandText = (AutoCompleteTextView) solo
                 .getView(R.id.brand_text);
         if (fieldFlags.contains(EditTexts.BRAND)) {
-            solo.typeText(brandText, card.getBrand());
+            //solo.typeText(brandText, card.getBrand());
+            solo.enterText(brandText, card.getBrand());
         }
 
         Thread.sleep(50);
@@ -234,29 +235,34 @@ final public class BBCTTestUtil {
 
         if (fieldFlags.contains(EditTexts.YEAR)) {
             EditText yearText = (EditText) solo.getView(R.id.year_text);
-            solo.typeText(yearText, Integer.toString(card.getYear()));
+            //solo.typeText(yearText, Integer.toString(card.getYear()));
+            solo.enterText(yearText, Integer.toString(card.getYear()));
         }
 
         if (fieldFlags.contains(EditTexts.NUMBER)) {
             EditText numberText = (EditText) solo.getView(R.id.number_text);
-            solo.typeText(numberText, Integer.toString(card.getNumber()));
+            //solo.typeText(numberText, Integer.toString(card.getNumber()));
+            solo.enterText(numberText, Integer.toString(card.getNumber()));
         }
 
         if (fieldFlags.contains(EditTexts.VALUE)) {
             String valueStr = String.format("%.2f", card.getValue() / 100.0);
             EditText valueText = (EditText) solo.getView(R.id.value_text);
-            solo.typeText(valueText, valueStr);
+            //solo.typeText(valueText, valueStr);
+            solo.enterText(valueText, valueStr);
         }
 
         if (fieldFlags.contains(EditTexts.COUNT)) {
             EditText countText = (EditText) solo.getView(R.id.count_text);
-            solo.typeText(countText, Integer.toString(card.getCount()));
+            //solo.typeText(countText, Integer.toString(card.getCount()));
+            solo.enterText(countText, Integer.toString(card.getCount()));
         }
 
         AutoCompleteTextView playerNameText = (AutoCompleteTextView) solo
                 .getView(R.id.player_name_text);
         if (fieldFlags.contains(EditTexts.PLAYER_NAME)) {
-            solo.typeText(playerNameText, card.getPlayerName());
+            //solo.typeText(playerNameText, card.getPlayerName());
+            solo.enterText(playerNameText, card.getPlayerName());
         }
 
         Thread.sleep(50);
@@ -267,7 +273,8 @@ final public class BBCTTestUtil {
         AutoCompleteTextView teamText = (AutoCompleteTextView) solo
                 .getView(R.id.team_text);
         if (fieldFlags.contains(EditTexts.TEAM)) {
-            solo.typeText(teamText, card.getTeam());
+            //solo.typeText(teamText, card.getTeam());
+            solo.enterText(teamText, card.getTeam());
         }
 
         Thread.sleep(50);

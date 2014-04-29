@@ -115,7 +115,7 @@ public class BaseballCardDetailsAddCardsTest extends
      * @throws Throwable
      *             If an error occurs while the portion of the test on the UI
      *             thread runs.
-     *//*
+     */
     public void testAddMultipleCards() throws Throwable {
         for (BaseballCard nextCard : this.allCards) {
             BBCTTestUtil.addCard(this.solo, nextCard);
@@ -128,7 +128,7 @@ public class BaseballCardDetailsAddCardsTest extends
                     dbUtil.containsBaseballCard(nextCard));
         }
     }
-*/
+
     public void testBrandAutoComplete() throws Throwable {
         AutoCompleteTextView brandText = (AutoCompleteTextView) this.activity
                 .findViewById(R.id.brand_text);
