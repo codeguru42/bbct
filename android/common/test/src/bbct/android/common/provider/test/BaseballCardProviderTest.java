@@ -24,6 +24,7 @@ public class BaseballCardProviderTest extends
         ProviderTestCase2<BaseballCardProvider> {
     private static final String CREATE_TABLE = "CREATE TABLE baseball_cards"
             + "  (_id INTEGER PRIMARY KEY AUTOINCREMENT,"
+            + "    picture_front_path TEXT, picture_back_path TEXT,"
             + "    autographed INTEGER, condition       TEXT,"
             + "    brand       TEXT,    year            INTEGER,"
             + "    number      INTEGER, value           INTEGER,"
@@ -31,13 +32,13 @@ public class BaseballCardProviderTest extends
             + "    team        TEXT,    player_position TEXT,"
             + "  UNIQUE (brand, year, number));\n";
     private static final String INSERT_DATA = "BEGIN TRANSACTION;\n"
-            + "INSERT INTO \"baseball_cards\" VALUES(1,0,'Excellent','Topps',1991,278,10000,1,'Alex Fernandez','White Sox','Pitcher');\n"
-            + "INSERT INTO \"baseball_cards\" VALUES(2,0,'Excellent','Topps',1974,175,10000,1,'Bob Stanley','Red Sox','Pitcher');\n"
-            + "INSERT INTO \"baseball_cards\" VALUES(3,0,'Excellent','Topps',1985,201,10000,1,'Vince Coleman','Cardinals','Left Field');\n"
-            + "INSERT INTO \"baseball_cards\" VALUES(4,0,'Excellent','TMG',1993,5,10000,1,'Ken Griffey Jr.','All-Star','Center Field');\n"
-            + "INSERT INTO \"baseball_cards\" VALUES(5,0,'Excellent','Upper Deck',1993,18,10000,1,'Dave Hollins','Phillies','Third Base');\n"
-            + "INSERT INTO \"baseball_cards\" VALUES(6,0,'Excellent','Upper Deck',1990,189,10000,1,'Tom Browning','Reds','Pitcher');\n"
-            + "INSERT INTO \"baseball_cards\" VALUES(7,0,'Excellent','Topps',1982,121,10000,1,'Ed Lynch','Mets','Pitcher');\n"
+            + "INSERT INTO \"baseball_cards\" VALUES(1,'','',0,'Excellent','Topps',1991,278,10000,1,'Alex Fernandez','White Sox','Pitcher');\n"
+            + "INSERT INTO \"baseball_cards\" VALUES(2,'','',0,'Excellent','Topps',1974,175,10000,1,'Bob Stanley','Red Sox','Pitcher');\n"
+            + "INSERT INTO \"baseball_cards\" VALUES(3,'','',0,'Excellent','Topps',1985,201,10000,1,'Vince Coleman','Cardinals','Left Field');\n"
+            + "INSERT INTO \"baseball_cards\" VALUES(4,'','',0,'Excellent','TMG',1993,5,10000,1,'Ken Griffey Jr.','All-Star','Center Field');\n"
+            + "INSERT INTO \"baseball_cards\" VALUES(5,'','',0,'Excellent','Upper Deck',1993,18,10000,1,'Dave Hollins','Phillies','Third Base');\n"
+            + "INSERT INTO \"baseball_cards\" VALUES(6,'','',0,'Excellent','Upper Deck',1990,189,10000,1,'Tom Browning','Reds','Pitcher');\n"
+            + "INSERT INTO \"baseball_cards\" VALUES(7,'','',0,'Excellent','Topps',1982,121,10000,1,'Ed Lynch','Mets','Pitcher');\n"
             + "COMMIT;\n";
     private static final List<BaseballCard> CARDS = new ArrayList<BaseballCard>();
     static {

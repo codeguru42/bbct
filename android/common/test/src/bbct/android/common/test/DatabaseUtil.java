@@ -40,6 +40,8 @@ public class DatabaseUtil {
     public DatabaseUtil(Context context) {
         String sqlCreate = "CREATE TABLE IF NOT EXISTS " + BaseballCardContract.TABLE_NAME + "("
                 + BaseballCardContract.ID_COL_NAME + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + BaseballCardContract.PATH_TO_PICTURE_FRONT + " TEXT, "
+                + BaseballCardContract.PATH_TO_PICTURE_BACK + " TEXT, "
                 + BaseballCardContract.BRAND_COL_NAME + " TEXT, "
                 + BaseballCardContract.YEAR_COL_NAME + " INTEGER, "
                 + BaseballCardContract.NUMBER_COL_NAME + " INTEGER, "

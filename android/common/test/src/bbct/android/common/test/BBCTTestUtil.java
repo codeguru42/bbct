@@ -217,8 +217,12 @@ final public class BBCTTestUtil {
             ArrayAdapter<CharSequence> conditionAdapter = (ArrayAdapter<CharSequence>) conditionSpinner
                     .getAdapter();
             int newIndex = conditionAdapter.getPosition(card.getCondition());
-            int currIndex = conditionSpinner.getSelectedItemPosition();
-            solo.pressSpinnerItem(0, newIndex - currIndex);
+            //int currIndex = conditionSpinner.getSelectedItemPosition();
+            //solo.pressSpinnerItem(0, newIndex - currIndex);
+            solo.clickOnView(conditionSpinner);
+            solo.scrollToTop(); // I put this in here so that it always keeps the list at start
+            // select the 10th item in the spinner
+            solo.clickOnView(solo.getView(TextView.class, newIndex)); 
         }
 
         AutoCompleteTextView brandText = (AutoCompleteTextView) solo
@@ -290,8 +294,12 @@ final public class BBCTTestUtil {
                     .getAdapter();
             int newIndex = playerPositionAdapter.getPosition(card
                     .getPlayerPosition());
-            int currIndex = playerPositionSpinner.getSelectedItemPosition();
-            solo.pressSpinnerItem(1, newIndex-currIndex+1);//, activityClass)(1, newIndex - currIndex);
+            //int currIndex = playerPositionSpinner.getSelectedItemPosition();
+            solo.clickOnView(playerPositionSpinner);
+            solo.scrollToTop(); // I put this in here so that it always keeps the list at start
+            // select the 10th item in the spinner
+            solo.clickOnView(solo.getView(TextView.class, newIndex)); 
+            //solo.pressSpinnerItem(1, newIndex-currIndex+1);//, activityClass)(1, newIndex - currIndex);
         }
     }
 
