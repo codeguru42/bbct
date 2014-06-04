@@ -12,7 +12,7 @@ import bbct.android.common.data.BaseballCard;
 import bbct.android.common.provider.BaseballCardContract;
 import bbct.android.common.provider.BaseballCardProvider;
 import bbct.android.common.provider.BaseballCardSQLHelper;
-import bbct.android.common.test.DatabaseUtil;
+import bbct.android.common.test.lib.DatabaseUtil;
 import java.util.ArrayList;
 import java.util.List;
 import junit.framework.Assert;

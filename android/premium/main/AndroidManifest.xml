@@ -63,18 +63,12 @@
 
                 <data android:mimeType="vnd.android.cursor.item/baseball_card" />
             </intent-filter>
-
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="bbct.android.premium.activity.BaseballCardList" />
         </activity>
         <activity android:name="bbct.android.premium.activity.ChangeCardImage"
                   android:launchMode="singleTop">
-            <intent-filter>
-                <action android:name="android.intent.action.EDIT" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <data android:mimeType="vnd.android.cursor.item/baseball_card" />
-            </intent-filter>
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="bbct.android.premium.activity.BaseballCardDetails" />

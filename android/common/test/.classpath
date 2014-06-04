@@ -7,5 +7,6 @@
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry kind="lib" path="libs/robotium-solo-5.0.1.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/bbct-common-test-lib"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

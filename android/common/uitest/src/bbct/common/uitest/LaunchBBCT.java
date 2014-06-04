@@ -4,6 +4,7 @@
 
 package bbct.common.uitest;
 
+import android.view.KeyEvent;
 import android.widget.TextView;
 import com.android.uiautomator.core.UiObject;
 import com.android.uiautomator.core.UiObjectNotFoundException;
@@ -15,8 +16,9 @@ public class LaunchBBCT extends UiAutomatorTestCase {
 
 	public void testDemo() throws UiObjectNotFoundException {
 
+	    //UiDevice device = getUiDevice();
 		// Simulate a short press on the HOME button.
-		getUiDevice().pressHome();
+	    getUiDevice().pressHome();
 
 		// We’re now in the home screen. Next, we want to simulate
 		// a user bringing up the All Apps screen.
@@ -50,14 +52,36 @@ public class LaunchBBCT extends UiAutomatorTestCase {
 
 		// Create a UiSelector to find the Settings app and simulate
 		// a user click to launch the app.
-		UiObject settingsApp = appViews.getChildByText(
+		UiObject BBCTApp = appViews.getChildByText(
 				new UiSelector().className(TextView.class.getName()),
-				"BBCT Common");
-		settingsApp.clickAndWaitForNewWindow();
+				"BBCT Premium");
+		BBCTApp.clickAndWaitForNewWindow();
 
 		// Validate that the package name is the expected one
-		UiObject settingsValidation = new UiObject(
-				new UiSelector().packageName("bbct.android.common"));
-		assertTrue("Unable to detect BBCT", settingsValidation.exists());
+		UiObject BBCTValidation = new UiObject(
+				new UiSelector().packageName("bbct.android.premium"));
+		assertTrue("Unable to detect BBCT", BBCTValidation.exists());
+		
+		UiObject addCard = new UiObject(new UiSelector()
+		.description("Add Cards"));
+		assertTrue("Unable to detect Add Cards button", addCard.exists());
+		addCard.clickAndWaitForNewWindow();
+		
+		UiObject takePicture = new UiObject(new UiSelector()
+        .description("Front Image"));
+        assertTrue("Unable to detect Take Picture Image", takePicture.exists());
+        takePicture.clickAndWaitForNewWindow();
+        
+        getUiDevice().pressKeyCode(KeyEvent.KEYCODE_CAMERA);
+        
+        UiObject savePic = new UiObject(new UiSelector()
+        .className("android.widget.ImageView").index(2));
+        assertTrue("Unable to detect save Picture Image", savePic.exists());
+        savePic.click();
+        
+        UiObject cardDetailsText = new UiObject(new UiSelector()
+        .className("android.widget.TextView").text("BBCT Premium - Card Details"));
+        assertTrue("Unable to detect card details Image after saving picture", 
+                cardDetailsText.exists());		
 	}
 }

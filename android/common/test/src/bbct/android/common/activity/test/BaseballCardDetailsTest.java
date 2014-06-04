@@ -34,13 +34,14 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardDetails;
 import bbct.android.common.data.BaseballCard;
-import bbct.android.common.test.BBCTTestUtil;
-import bbct.android.common.test.BaseballCardCsvFileReader;
+import bbct.android.common.test.lib.BBCTTestUtil;
+import bbct.android.common.test.lib.BaseballCardCsvFileReader;
 import com.robotium.solo.Solo;
 import java.io.InputStream;
 import junit.framework.Assert;
@@ -102,6 +103,10 @@ public class BaseballCardDetailsTest extends
                 .findViewById(R.id.player_position_text);
         this.scrollView = (ScrollView) this.activity
                 .findViewById(R.id.scroll_card_details);
+        this.imageFrontPicture = (ImageView) this.activity
+                .findViewById(R.id.image_card_details_front);
+        this.imageBackPicture = (ImageView) this.activity
+                .findViewById(R.id.image_card_details_back);
 
         this.solo = new Solo(this.inst, this.activity);
     }
@@ -123,6 +128,8 @@ public class BaseballCardDetailsTest extends
         Assert.assertNotNull(this.playerTeamText);
         Assert.assertNotNull(this.playerPositionSpinner);
         Assert.assertNotNull(this.scrollView);
+        Assert.assertNotNull(this.imageFrontPicture);
+        Assert.assertNotNull(this.imageBackPicture);
     }
 
     /**
@@ -270,6 +277,14 @@ public class BaseballCardDetailsTest extends
                 .getSupportActionBar();
         Assert.assertTrue((actionBar.getDisplayOptions() & ActionBar.DISPLAY_HOME_AS_UP) > 0);
     }
+    
+    public void testPictureOnClick() {
+        solo.clickLongOnView(imageFrontPicture);
+        BBCTTestUtil.waitForToast(solo, activity.getString(R.string.card_upgrade_premium));
+        
+        solo.clickLongOnView(imageBackPicture);
+        BBCTTestUtil.waitForToast(solo, activity.getString(R.string.card_upgrade_premium));
+    }
 
     private Solo solo = null;
     private Activity activity = null;
@@ -282,6 +297,8 @@ public class BaseballCardDetailsTest extends
     private EditText playerTeamText = null;
     private Spinner playerPositionSpinner = null;
     private ScrollView scrollView = null;
+    private ImageView imageFrontPicture = null;
+    private ImageView imageBackPicture = null;
     private Instrumentation inst = null;
     private BaseballCard card = null;
 }
