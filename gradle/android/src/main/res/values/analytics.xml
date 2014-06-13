@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <!--
  This file is part of BBCT for Android.
 
@@ -18,10 +18,12 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
+    <!--Replace placeholder ID with your tracking ID-->
+    <string name="ga_trackingId">UA-38019406-1</string>
 
-    <string name="app_name">BBCT Common</string>
-    <string name="bbct_title">BBCT Common - %1$s</string>
-    <string name="version_number">0.5.x</string>
-    <string name="copyright">Copyright 2012–14 by codeguru</string>
-    
+    <!--Enable automatic activity tracking-->
+    <bool name="ga_autoActivityTracking">true</bool>
+
+    <!--Enable automatic exception tracking-->
+    <bool name="ga_reportUncaughtExceptions">true</bool>
 </resources>
