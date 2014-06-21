@@ -31,5 +31,7 @@
     <item name="team_text" type="id"/>
     <item name="player_position_text" type="id"/>
     <item name="scroll_card_details" type="id"/>
+    <item name="image_card_details_front" type="id"/>
+    <item name="image_card_details_back" type="id"/>
 
 </resources>

@@ -193,8 +193,14 @@ public class BaseballCardDetailsEditCardTest extends
         String position = this.inputMask
                 .contains(BBCTTestUtil.EditTexts.PLAYER_POSITION) ? this.newCard
                 .getPlayerPosition() : this.oldCard.getPlayerPosition();
+        String pathToFrontPic = this.inputMask
+                .contains(BBCTTestUtil.EditTexts.CARD_FRONT_IMAGE) ? this.newCard
+                .getPathToPictureFront() : this.oldCard.getPathToPictureFront();
+        String pathToBackPic = this.inputMask
+                .contains(BBCTTestUtil.EditTexts.CARD_BACK_IMAGE) ? this.newCard
+                .getPathToPictureBack() : this.oldCard.getPathToPictureBack();
         return new BaseballCard(autographed, condition, brand, year, number,
-                value, count, name, team, position);
+		        value, count, name, team, position, pathToFrontPic, pathToBackPic);
     }
 
     private final Set<BBCTTestUtil.EditTexts> inputMask;

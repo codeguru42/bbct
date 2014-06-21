@@ -68,8 +68,7 @@ public class BaseballCardList extends ListFragment {
 
         super.onCreate(savedInstanceState);
 
-        this.adapter = new BaseballCardAdapter(this.getActivity(),
-                R.layout.row, null, ROW_PROJECTION, ROW_TEXT_VIEWS);
+        FillBaseballCardsListOnCreate();
         this.setListAdapter(this.adapter);
 
         Log.d(TAG, "  adapter=" + this.adapter);
@@ -117,6 +116,15 @@ public class BaseballCardList extends ListFragment {
         return view;
     }
 
+    /**
+     * Creates an adapter and fills the rows with values. This
+     * method should be overridden and called from onCreate to
+     * query and display any extra fields.
+     */
+    protected void FillBaseballCardsListOnCreate() {
+        this.adapter = new BaseballCardAdapter(this, R.layout.row, null,
+                ROW_PROJECTION, ROW_TEXT_VIEWS);
+    }
     @Override
     public void onResume() {
         super.onResume();

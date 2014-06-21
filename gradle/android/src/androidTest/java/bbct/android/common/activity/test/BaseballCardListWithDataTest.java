@@ -91,7 +91,7 @@ public class BaseballCardListWithDataTest extends
         // Start Activity
         this.activity = this.getActivity();
         this.newCard = new BaseballCard(true, "Mint", "Code Guru Apps", 1993,
-                1, 50000, 1, "Code Guru", "Code Guru Devs", "Catcher");
+	            1, 50000, 1, "Code Guru", "Code Guru Devs", "Catcher", "", "");
 
         this.solo = new Solo(this.inst, this.activity);
     }
@@ -330,7 +330,7 @@ public class BaseballCardListWithDataTest extends
         this.testYearFilter();
 
         this.newCard = new BaseballCard(false, "Excellent", "Codeguru Apps",
-                1976, 1, 50000, 1, "Codeguru", "Codeguru Devs", "Catcher");
+                1976, 1, 50000, 1, "Codeguru", "Codeguru Devs", "Catcher", "", "");
         BBCTTestUtil.testMenuItem(this.solo, R.id.add_menu, BaseballCardDetails.class);
         BBCTTestUtil.addCard(this.solo, this.newCard);
         BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);

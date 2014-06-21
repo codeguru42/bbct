@@ -52,9 +52,10 @@ public class BaseballCard implements Serializable {
      * @param playerPosition
      *            The position this player played.
      */
-    public BaseballCard(boolean autographed, String condition, String brand,
-            int year, int number, int value, int count, String playerName,
-            String team, String playerPosition) {
+    public BaseballCard(boolean autographed, String condition, String brand, 
+	        int year, int number, int value, int count, String playerName,
+            String team, String playerPosition,
+            String pathToPictureFront, String pathToPictureBack) {
         this.autographed = autographed;
         this.condition = condition;
         this.brand = brand;
@@ -65,6 +66,8 @@ public class BaseballCard implements Serializable {
         this.playerName = playerName;
         this.team = team;
         this.playerPosition = playerPosition;
+        this.pathToPictureFront = pathToPictureFront;
+        this.pathToPictureBack = pathToPictureBack;
     }
 
     /**
@@ -83,6 +86,42 @@ public class BaseballCard implements Serializable {
      */
     public String getCondition() {
         return this.condition;
+    }
+
+    /**
+     * Set the path to front of the picture of this {@link BaseballCard}.
+     *
+     * @return none
+     */
+    public void setPathToPictureFront(String pathToPictureFront) {
+        this.pathToPictureFront = pathToPictureFront;
+    }
+
+    /**
+     * Set the path to back of the picture of this {@link BaseballCard}.
+     *
+     * @return none
+     */
+    public void setPathToPictureBack(String pathToPictureBack) {
+        this.pathToPictureBack = pathToPictureBack;
+    }
+
+    /**
+     * Get the path to front of the picture of this {@link BaseballCard}.
+     *
+     * @return The path to front of the picture of this {@link BaseballCard}.
+     */
+    public String getPathToPictureFront() {
+        return this.pathToPictureFront;
+    }
+
+    /**
+     * Get the path to back of the picture of this {@link BaseballCard}.
+     *
+     * @return The path to back of the picture of this {@link BaseballCard}.
+     */
+    public String getPathToPictureBack() {
+        return this.pathToPictureBack;
     }
 
     /**
@@ -200,7 +239,9 @@ public class BaseballCard implements Serializable {
                     && this.count == c.getCount()
                     && this.playerName.equals(c.getPlayerName())
                     && this.team.equals(c.getTeam())
-                    && this.playerPosition.equals(c.getPlayerPosition());
+                    && this.playerPosition.equals(c.getPlayerPosition())
+                    && this.pathToPictureFront.equals(c.getPathToPictureFront())
+                    && this.pathToPictureBack.equals(c.getPathToPictureBack());
         }
 
         return false;
@@ -226,6 +267,8 @@ public class BaseballCard implements Serializable {
         hash = 67 * hash + this.playerName.hashCode();
         hash = 67 * hash + this.team.hashCode();
         hash = 67 * hash + this.playerPosition.hashCode();
+        hash = 67 * hash + this.pathToPictureFront.hashCode();
+        hash = 67 * hash + this.pathToPictureBack.hashCode();
         return hash;
     }
 
@@ -244,7 +287,9 @@ public class BaseballCard implements Serializable {
                 + ", cardYear=" + this.year + ", cardNumber=" + this.number
                 + ", cardValue=" + this.value + ", cardCount=" + this.count
                 + ", playerName=" + this.playerName + ", team=" + this.team
-                + ", playerPosition=" + this.playerPosition + '}';
+                + ", playerPosition=" + this.playerPosition 
+                + ", pathToPictureFront=" + this.pathToPictureFront
+                + ", pathToPictureBack=" + this.pathToPictureBack + '}';
     }
 
     private final boolean autographed;
@@ -257,4 +302,6 @@ public class BaseballCard implements Serializable {
     private final String playerName;
     private final String team;
     private final String playerPosition;
+	private String pathToPictureFront;
+    private String pathToPictureBack;
 }
