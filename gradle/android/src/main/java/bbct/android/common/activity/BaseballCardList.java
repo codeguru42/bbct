@@ -51,12 +51,16 @@ import bbct.android.common.provider.BaseballCardContract;
  */
 public class BaseballCardList extends ListFragment {
 
-    public static BaseballCardList getInstance(Bundle filterArgs) {
-        BaseballCardList cardList = new BaseballCardList();
-
+    protected static Bundle makeArgs(Bundle filterArgs) {
         Bundle args = new Bundle();
         args.putBundle(FILTER_PARAMS, filterArgs);
-        cardList.setArguments(args);
+
+        return args;
+    }
+
+    public static BaseballCardList getInstance(Bundle filterArgs) {
+        BaseballCardList cardList = new BaseballCardList();
+        cardList.setArguments(makeArgs(filterArgs));
 
         return cardList;
     }

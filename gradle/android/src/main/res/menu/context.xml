@@ -22,4 +22,9 @@
         android:id="@+id/delete_menu"
         android:icon="@drawable/ic_menu_delete"
         android:title="@string/delete_menu"/>
+    <item
+        android:id="@+id/share_menu"
+        android:actionLayout="@layout/share"
+        android:title="@string/share_menu"/>
+
 </menu>

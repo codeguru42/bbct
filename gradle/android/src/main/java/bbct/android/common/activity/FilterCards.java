@@ -184,7 +184,7 @@ public class FilterCards extends Fragment {
             }
         }
 
-        BaseballCardList cardList = BaseballCardList.getInstance(filterArgs);
+        BaseballCardList cardList = ((MainActivity) this.getActivity()).getListFragment(filterArgs);
         this.getActivity().getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_holder, cardList)

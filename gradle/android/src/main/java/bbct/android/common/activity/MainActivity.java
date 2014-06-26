@@ -50,7 +50,7 @@ public class MainActivity extends ActionBarActivity {
             if (cursor == null || cursor.getCount() == 0) {
                 ft.add(R.id.fragment_holder, new BaseballCardDetails());
             } else {
-                ft.add(R.id.fragment_holder, new BaseballCardList());
+                ft.add(R.id.fragment_holder, getListFragment(null));
             }
             ft.commit();
 
@@ -107,6 +107,10 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public BaseballCardList getListFragment(Bundle filterArgs) {
+        return BaseballCardList.getInstance(filterArgs);
     }
 
 }
