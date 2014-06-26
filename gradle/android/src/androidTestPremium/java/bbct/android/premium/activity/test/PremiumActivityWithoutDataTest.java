@@ -20,14 +20,15 @@ package bbct.android.premium.activity.test;
 
 import bbct.android.common.activity.MainActivity;
 import bbct.android.common.activity.test.BaseballCardListWithoutDataTest;
+import bbct.android.premium.activity.PremiumActivity;
 
-public class MainActivityWithoutDataTest extends BaseballCardListWithoutDataTest<MainActivity> {
+public class PremiumActivityWithoutDataTest extends BaseballCardListWithoutDataTest<PremiumActivity> {
 
     /**
      * Create instrumented test cases for {@link MainActivity}.
      */
-    public MainActivityWithoutDataTest() {
-        super(MainActivity.class);
+    public PremiumActivityWithoutDataTest() {
+        super(PremiumActivity.class);
     }
 
 }

@@ -29,8 +29,6 @@ import org.brickred.socialauth.android.SocialAuthAdapter;
 
 public class PremiumChoiceModeListener extends BaseballCardActionModeCallback {
 
-    private SocialAuthAdapter mSocialAuthAdapter;
-
     public PremiumChoiceModeListener(BaseballCardList listFragment) {
         super(listFragment);
     }
@@ -46,7 +44,7 @@ public class PremiumChoiceModeListener extends BaseballCardActionModeCallback {
      */
     @Override
     public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-        mSocialAuthAdapter = new SocialAuthAdapter(new ResponseListener());
+        SocialAuthAdapter mSocialAuthAdapter = new SocialAuthAdapter(new ResponseListener());
         mSocialAuthAdapter.addProvider(SocialAuthAdapter.Provider.FACEBOOK, R.drawable.facebook);
         mSocialAuthAdapter.addProvider(SocialAuthAdapter.Provider.FLICKR, R.drawable.flickr);
         mSocialAuthAdapter.addProvider(SocialAuthAdapter.Provider.INSTAGRAM, R.drawable.instagram);
@@ -57,4 +55,5 @@ public class PremiumChoiceModeListener extends BaseballCardActionModeCallback {
 
         return result;
     }
+
 }
