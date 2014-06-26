@@ -123,5 +123,8 @@
     <string name="duplicate_card_error">Baseball card already exists. Please update its count.</string>
     <string name="sponsor">Proud Sponsor of:</string>
     <string name="share_menu">Share Cards</string>
+    <string name="unavailable">Feature Unavailable</string>
+    <string name="get_premium">To activate this feature, please purchase the Premium Edition.</string>
+    <string name="buy_now">Buy Now</string>
 
 </resources>

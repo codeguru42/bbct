@@ -16,17 +16,16 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package bbct.android.premium.activity;
+package bbct.android.lite.activity;
 
 import android.os.Bundle;
 import android.widget.AbsListView;
 import bbct.android.common.activity.BaseballCardList;
-import bbct.android.premium.activity.util.PremiumChoiceModeListener;
 
-public class PremiumList extends BaseballCardList {
+public class LiteList extends BaseballCardList {
 
-    public static PremiumList getInstance(Bundle filterArgs) {
-        PremiumList list = new PremiumList();
+    public static LiteList getInstance(Bundle filterArgs) {
+        LiteList list = new LiteList();
         list.setArguments(makeArgs(filterArgs));
 
         return list;
@@ -34,6 +33,6 @@ public class PremiumList extends BaseballCardList {
 
     @Override
     public AbsListView.MultiChoiceModeListener getMultiChoiceModeListener() {
-        return new PremiumChoiceModeListener(this);
+        return new LiteMultiChoiceModeListener(this);
     }
 }

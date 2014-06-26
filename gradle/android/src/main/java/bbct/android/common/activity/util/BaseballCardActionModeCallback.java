@@ -28,9 +28,9 @@ import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardList;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-public class BaseballCardActionModeCallback implements AbsListView.MultiChoiceModeListener {
+public abstract class BaseballCardActionModeCallback implements AbsListView.MultiChoiceModeListener {
 
-    private final BaseballCardList mListFragment;
+    protected final BaseballCardList mListFragment;
 
     private ActionMode mMode;
 

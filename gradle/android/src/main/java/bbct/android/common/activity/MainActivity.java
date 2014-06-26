@@ -30,7 +30,7 @@ import bbct.android.common.R;
 import bbct.android.common.provider.BaseballCardContract;
 import com.google.analytics.tracking.android.EasyTracker;
 
-public class MainActivity extends ActionBarActivity {
+public abstract class MainActivity extends ActionBarActivity {
 
     private static final String TAG = MainActivity.class.getName();
 
@@ -109,8 +109,6 @@ public class MainActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public BaseballCardList getListFragment(Bundle filterArgs) {
-        return BaseballCardList.getInstance(filterArgs);
-    }
+    public abstract BaseballCardList getListFragment(Bundle filterArgs);
 
 }

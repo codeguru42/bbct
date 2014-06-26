@@ -171,7 +171,7 @@ public class BaseballCardDetails extends Fragment {
     }
 
     private void onHome() {
-        Fragment list = BaseballCardList.getInstance(null);
+        Fragment list = ((MainActivity) this.getActivity()).getListFragment(null);
         this.getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_holder, list)
                 .addToBackStack(LIST_BACKSTACK)

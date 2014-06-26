@@ -39,7 +39,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import bbct.android.common.R;
-import bbct.android.common.activity.util.BaseballCardActionModeCallback;
+import bbct.android.common.activity.util.DialogUtil;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.provider.BaseballCardAdapter;
 import bbct.android.common.provider.BaseballCardContract;
@@ -49,20 +49,13 @@ import bbct.android.common.provider.BaseballCardContract;
  *
  * TODO: Make list fancier
  */
-public class BaseballCardList extends ListFragment {
+public abstract class BaseballCardList extends ListFragment {
 
     protected static Bundle makeArgs(Bundle filterArgs) {
         Bundle args = new Bundle();
         args.putBundle(FILTER_PARAMS, filterArgs);
 
         return args;
-    }
-
-    public static BaseballCardList getInstance(Bundle filterArgs) {
-        BaseballCardList cardList = new BaseballCardList();
-        cardList.setArguments(makeArgs(filterArgs));
-
-        return cardList;
     }
 
     /**
@@ -345,8 +338,10 @@ public class BaseballCardList extends ListFragment {
         }
     }
 
-    public AbsListView.MultiChoiceModeListener getMultiChoiceModeListener() {
-        return new BaseballCardActionModeCallback(this);
+    public abstract AbsListView.MultiChoiceModeListener getMultiChoiceModeListener();
+
+    public void purchasePremium() {
+        DialogUtil.showErrorDialog(this.getActivity(), R.string.unavailable, R.string.get_premium);
     }
 
     private static final String[] ROW_PROJECTION = {

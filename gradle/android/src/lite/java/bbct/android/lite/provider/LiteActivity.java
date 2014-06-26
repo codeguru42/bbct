@@ -23,7 +23,9 @@ import android.text.method.LinkMovementMethod;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import bbct.android.common.R;
+import bbct.android.common.activity.BaseballCardList;
 import bbct.android.common.activity.MainActivity;
+import bbct.android.lite.activity.LiteList;
 import com.amazon.device.ads.AdError;
 import com.amazon.device.ads.AdLayout;
 import com.amazon.device.ads.AdListener;
@@ -104,5 +106,10 @@ public class LiteActivity extends MainActivity implements AdListener {
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                 .build();
         admobAdView.loadAd(request);
+    }
+
+    @Override
+    public BaseballCardList getListFragment(Bundle filterArgs) {
+        return LiteList.getInstance(filterArgs);
     }
 }

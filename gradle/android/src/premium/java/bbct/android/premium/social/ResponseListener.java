@@ -16,24 +16,30 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package bbct.android.premium.activity;
+package bbct.android.premium.social;
 
 import android.os.Bundle;
-import android.widget.AbsListView;
-import bbct.android.common.activity.BaseballCardList;
-import bbct.android.premium.activity.util.PremiumChoiceModeListener;
+import org.brickred.socialauth.android.DialogListener;
+import org.brickred.socialauth.android.SocialAuthError;
 
-public class PremiumList extends BaseballCardList {
+public class ResponseListener implements DialogListener {
+    @Override
+    public void onComplete(Bundle bundle) {
 
-    public static PremiumList getInstance(Bundle filterArgs) {
-        PremiumList list = new PremiumList();
-        list.setArguments(makeArgs(filterArgs));
-
-        return list;
     }
 
     @Override
-    public AbsListView.MultiChoiceModeListener getMultiChoiceModeListener() {
-        return new PremiumChoiceModeListener(this);
+    public void onError(SocialAuthError socialAuthError) {
+
+    }
+
+    @Override
+    public void onCancel() {
+
+    }
+
+    @Override
+    public void onBack() {
+
     }
 }
