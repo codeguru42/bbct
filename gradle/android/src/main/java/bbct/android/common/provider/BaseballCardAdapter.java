@@ -83,7 +83,7 @@ public class BaseballCardAdapter extends SimpleCursorAdapter {
             @Override
             public void onClick(View v) {
                 if (mMode == null) {
-                    mMode = mActivity.startActionMode(new BaseballCardActionModeCallback(mListFragment));
+                    mMode = mActivity.startActionMode(mListFragment.getMultiChoiceModeListener());
                 }
 
                 ListView listView = mListFragment.getListView();

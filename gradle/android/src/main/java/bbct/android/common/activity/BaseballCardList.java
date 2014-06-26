@@ -114,7 +114,7 @@ public class BaseballCardList extends ListFragment {
                     public void onClick(View v) {
                         if (mode == null) {
                             mode = BaseballCardList.this.getActivity().startActionMode(
-                                    new BaseballCardActionModeCallback(BaseballCardList.this));
+                                    getMultiChoiceModeListener());
                         } else {
                             mode.finish();
                             mode = null;
@@ -129,7 +129,7 @@ public class BaseballCardList extends ListFragment {
         this.adapter.setListFragment(this);
 
         listView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
-        listView.setMultiChoiceModeListener(new BaseballCardActionModeCallback(this));
+        listView.setMultiChoiceModeListener(getMultiChoiceModeListener());
         this.applyFilter(this.filterParams);
 
         return view;
@@ -343,6 +343,10 @@ public class BaseballCardList extends ListFragment {
         if (oldCursor != null) {
             oldCursor.close();
         }
+    }
+
+    public AbsListView.MultiChoiceModeListener getMultiChoiceModeListener() {
+        return new BaseballCardActionModeCallback(this);
     }
 
     private static final String[] ROW_PROJECTION = {
