@@ -18,6 +18,8 @@
  */
 package bbct.android.lite.activity.test;
 
+import android.view.View;
+import bbct.android.common.R;
 import bbct.android.common.activity.test.BaseballCardListWithDataTest;
 import bbct.android.lite.provider.LiteActivity;
 
@@ -28,6 +30,14 @@ public class LiteActivityWithDataTest extends BaseballCardListWithDataTest<LiteA
      */
     public LiteActivityWithDataTest() {
         super(LiteActivity.class);
+    }
+
+    public void testShareButton() {
+        this.testOnItemLongClickStartActionMode();
+        View shareMenu = this.solo.getView(R.id.share_menu);
+        this.solo.clickOnView(shareMenu);
+        this.solo.waitForDialogToOpen();
+        this.solo.clickOnButton(this.solo.getString(R.string.later));
     }
 
 }

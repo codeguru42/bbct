@@ -598,7 +598,7 @@ public class BaseballCardListWithDataTest<T extends MainActivity> extends
 
     private List<BaseballCard> allCards;
     private List<BaseballCard> expectedCards;
-    private Solo solo = null;
+    protected Solo solo = null;
     private Instrumentation inst = null;
     private Activity activity = null;
     private DatabaseUtil dbUtil = null;

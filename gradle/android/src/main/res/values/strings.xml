@@ -126,5 +126,6 @@
     <string name="unavailable">Feature Unavailable</string>
     <string name="get_premium">To activate this feature, please purchase the Premium Edition.</string>
     <string name="buy_now">Buy Now</string>
+    <string name="later">Later</string>
 
 </resources>

@@ -18,7 +18,9 @@
  */
 package bbct.android.common.activity;
 
+import android.app.AlertDialog;
 import android.content.ContentUris;
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -39,7 +41,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import bbct.android.common.R;
-import bbct.android.common.activity.util.DialogUtil;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.provider.BaseballCardAdapter;
 import bbct.android.common.provider.BaseballCardContract;
@@ -341,7 +342,24 @@ public abstract class BaseballCardList extends ListFragment {
     public abstract AbsListView.MultiChoiceModeListener getMultiChoiceModeListener();
 
     public void purchasePremium() {
-        DialogUtil.showErrorDialog(this.getActivity(), R.string.unavailable, R.string.get_premium);
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this.getActivity())
+                .setTitle(R.string.unavailable)
+                .setMessage(R.string.get_premium)
+                .setPositiveButton(R.string.buy_now,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        }
+                )
+                .setNegativeButton(R.string.later,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        }
+                );
+        dialogBuilder.show();
     }
 
     private static final String[] ROW_PROJECTION = {
