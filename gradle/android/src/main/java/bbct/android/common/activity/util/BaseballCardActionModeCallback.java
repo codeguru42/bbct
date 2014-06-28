@@ -34,6 +34,8 @@ public abstract class BaseballCardActionModeCallback implements AbsListView.Mult
 
     private ActionMode mMode;
 
+    private boolean mStarted;
+
     public BaseballCardActionModeCallback(BaseballCardList listFragment) {
         mListFragment = listFragment;
     }
@@ -64,6 +66,7 @@ public abstract class BaseballCardActionModeCallback implements AbsListView.Mult
     public boolean onCreateActionMode(ActionMode mode, Menu menu) {
         mListFragment.getActivity().getMenuInflater().inflate(R.menu.context, menu);
         mMode = mode;
+        mStarted = true;
 
         return true;
     }
@@ -107,6 +110,11 @@ public abstract class BaseballCardActionModeCallback implements AbsListView.Mult
      */
     @Override
     public void onDestroyActionMode(ActionMode mode) {
-
+        mStarted = false;
     }
+
+    public boolean isStarted() {
+        return mStarted;
+    }
+
 }

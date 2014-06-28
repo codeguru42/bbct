@@ -19,8 +19,8 @@
 package bbct.android.lite.activity;
 
 import android.os.Bundle;
-import android.widget.AbsListView;
 import bbct.android.common.activity.BaseballCardList;
+import bbct.android.common.activity.util.BaseballCardActionModeCallback;
 
 public class LiteList extends BaseballCardList {
 
@@ -32,7 +32,7 @@ public class LiteList extends BaseballCardList {
     }
 
     @Override
-    public AbsListView.MultiChoiceModeListener getMultiChoiceModeListener() {
+    public BaseballCardActionModeCallback getMultiChoiceModeListener() {
         return new LiteMultiChoiceModeListener(this);
     }
 }

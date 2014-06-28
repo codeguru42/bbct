@@ -23,8 +23,6 @@ import android.app.Instrumentation;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.test.InstrumentationTestCase;
 import android.test.ViewAsserts;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -34,6 +32,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import bbct.android.common.R;
@@ -103,26 +102,12 @@ final public class BBCTTestUtil {
      *            The {@link Solo} instance used for this test.
      * @param menuId
      *            The id of the menu resource.
-     * @param fragmentClass
-     *            The Class of the {@link Fragment} which should be launched.
+     * @param fragmentTag
+     *            The tag used when adding the {@link Fragment} to the main activity.
      */
-    public static void testMenuItem(Solo solo, int menuId,
-                                    final Class<? extends Fragment> fragmentClass) {
+    public static void testMenuItem(Solo solo, int menuId, String fragmentTag) {
         solo.clickOnActionBarItem(menuId);
-        final Activity activity = solo.getCurrentActivity();
-        activity.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Assert.assertTrue(isFragmentVisible((FragmentActivity) activity, fragmentClass));
-            }
-        });
-    }
-
-    public static boolean isFragmentVisible(FragmentActivity activity, Class<? extends Fragment> fragmentClass) {
-        Fragment fragment = activity.getSupportFragmentManager()
-                .findFragmentById(R.id.fragment_holder);
-        Assert.assertNotNull(fragment);
-        return fragmentClass.getName().equals(fragment.getClass().getName());
+        Assert.assertTrue(solo.waitForFragmentByTag(fragmentTag));
     }
 
     /**
@@ -190,6 +175,17 @@ final public class BBCTTestUtil {
             Set<EditTexts> fieldFlags) throws InterruptedException {
         Log.d(TAG, "sendKeysToCardDetails()");
 
+        final ScrollView scrollView = (ScrollView) solo.getCurrentActivity()
+                .findViewById(R.id.scroll_card_details);
+        Assert.assertNotNull("Scroll view not found", scrollView);
+        scrollView.post(new Runnable() {
+            @Override
+            public void run() {
+                scrollView.fullScroll(ScrollView.FOCUS_UP);
+            }
+        });
+
+        solo.waitForView(R.id.autograph);
         if (fieldFlags.contains(EditTexts.AUTOGRAPHED)) {
             if (card.isAutographed()) {
                 solo.clickOnCheckBox(0);
@@ -252,6 +248,9 @@ final public class BBCTTestUtil {
         AutoCompleteTextView teamText = (AutoCompleteTextView) solo
                 .getView(R.id.team_text);
         if (fieldFlags.contains(EditTexts.TEAM)) {
+            if (!solo.searchText(solo.getString(R.string.team_label))) {
+                scrollDown(scrollView);
+            }
             solo.typeText(teamText, card.getTeam());
         }
 
@@ -261,16 +260,42 @@ final public class BBCTTestUtil {
         }
 
         if (fieldFlags.contains(EditTexts.PLAYER_POSITION)) {
-            Spinner playerPositionSpinner = (Spinner) solo
-                    .getView(R.id.player_position_text);
+            Spinner playerPositionSpinner = (Spinner) solo.getView(R.id.player_position_text);
             @SuppressWarnings("unchecked")
             ArrayAdapter<CharSequence> playerPositionAdapter = (ArrayAdapter<CharSequence>) playerPositionSpinner
                     .getAdapter();
             int newIndex = playerPositionAdapter.getPosition(card
                     .getPlayerPosition());
             int currIndex = playerPositionSpinner.getSelectedItemPosition();
-            solo.pressSpinnerItem(1, newIndex - currIndex);
+
+            scrollDown(scrollView);
+            solo.waitForView(R.id.player_position_text);
+
+            boolean isConditionVisible = solo.searchText(solo.getString(R.string.condition_label),
+                    false);
+            boolean isPositionVisible = solo.searchText(
+                    solo.getString(R.string.player_position_label), true);
+
+            int index = -1;
+            if (!isConditionVisible && isPositionVisible) {
+                index = 0;
+            }
+            if (isPositionVisible && isConditionVisible) {
+                index = 1;
+            }
+
+            Assert.assertFalse("Invalid index", index == -1);
+            solo.pressSpinnerItem(index, newIndex - currIndex);
         }
+    }
+
+    public static void scrollDown(final ScrollView scrollView) {
+        scrollView.post(new Runnable() {
+            @Override
+            public void run() {
+                scrollView.arrowScroll(ScrollView.FOCUS_DOWN);
+            }
+        });
     }
 
     /**
@@ -366,44 +391,6 @@ final public class BBCTTestUtil {
 
         // TODO How do I check that a table exists in the database?
         // TODO How do I check that a table has the correct columns?
-    }
-
-    public static void markCard(InstrumentationTestCase test,
-            Activity cardList, BaseballCard card) throws Throwable {
-        final ListView lv = (ListView) cardList.findViewById(android.R.id.list);
-
-        String playerName = card.getPlayerName();
-        String brand = card.getBrand();
-        int year = card.getYear();
-        int number = card.getNumber();
-
-        for (int i = 1; i < lv.getChildCount(); i++) {
-            View v = lv.getChildAt(i);
-            final CheckBox ctv = (CheckBox) v.findViewById(R.id.checkmark);
-
-            boolean isEqualPName = playerName.equals(((TextView) v
-                    .findViewById(R.id.player_name_text_view)).getText()
-                    .toString());
-            boolean isEqualBrand = brand.equals(((TextView) v
-                    .findViewById(R.id.brand_text_view)).getText().toString());
-            boolean isEqualYear = (year == Integer.parseInt(((TextView) v
-                    .findViewById(R.id.year_text_view)).getText().toString()));
-            boolean isEqualNumber = (number == Integer.parseInt(((TextView) v
-                    .findViewById(R.id.number_text_view)).getText().toString()));
-
-            if (isEqualPName && isEqualBrand && isEqualYear && isEqualNumber) {
-
-                test.runTestOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Assert.assertTrue(ctv.performClick());
-                    }
-                });
-
-                break;
-            }
-        }
-
     }
 
     /**
@@ -599,9 +586,8 @@ final public class BBCTTestUtil {
     /**
      * Asset file which contains card data as CSV values.
      */
-    public static final String CARD_DATA = "cards.csv";
-    public static String ADD_MESSAGE = "Card added successfully";
-    public static String DELETE_MESSAGE = "Cards deleted successfully";
+    public static final String ADD_MESSAGE = "Card added successfully";
+    public static final String DELETE_MESSAGE = "Cards deleted successfully";
     private static final int TIME_OUT = 5 * 1000; // 5 seconds
     private static final String TAG = BBCTTestUtil.class.getName();
 }

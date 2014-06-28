@@ -18,6 +18,7 @@
  */
 package bbct.android.common.activity;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.ContentUris;
 import android.content.DialogInterface;
@@ -41,6 +42,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import bbct.android.common.R;
+import bbct.android.common.activity.util.BaseballCardActionModeCallback;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.provider.BaseballCardAdapter;
 import bbct.android.common.provider.BaseballCardContract;
@@ -100,15 +102,15 @@ public abstract class BaseballCardList extends ListFragment {
         ListView listView = (ListView) view.findViewById(android.R.id.list);
         View headerView = View.inflate(this.getActivity(),
                 R.layout.list_header, null);
-        headerView.findViewById(R.id.checkmark)
+        headerView.findViewById(R.id.select_all)
                 .setOnClickListener(new OnClickListener() {
                     ActionMode mode;
 
+                    @SuppressLint("AppCompatMethod")
                     @Override
                     public void onClick(View v) {
                         if (mode == null) {
-                            mode = BaseballCardList.this.getActivity().startActionMode(
-                                    getMultiChoiceModeListener());
+                            mode = getActivity().startActionMode(mCallbacks);
                         } else {
                             mode.finish();
                             mode = null;
@@ -122,8 +124,11 @@ public abstract class BaseballCardList extends ListFragment {
         this.setListAdapter(this.adapter);
         this.adapter.setListFragment(this);
 
+        mCallbacks = getMultiChoiceModeListener();
         listView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
-        listView.setMultiChoiceModeListener(getMultiChoiceModeListener());
+        listView.setMultiChoiceModeListener(mCallbacks);
+        this.adapter.setActionModeCallback(mCallbacks);
+
         this.applyFilter(this.filterParams);
 
         return view;
@@ -181,16 +186,16 @@ public abstract class BaseballCardList extends ListFragment {
             BaseballCardDetails details = new BaseballCardDetails();
             this.getActivity().getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.fragment_holder, details)
-                    .addToBackStack(EDIT_CARD)
+                    .replace(R.id.fragment_holder, details, FragmentTags.EDIT_CARD)
+                    .addToBackStack(FragmentTags.EDIT_CARD)
                     .commit();
             return true;
         } else if (itemId == R.id.filter_menu) {
             FilterCards filterCards = new FilterCards();
             this.getActivity().getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.fragment_holder, filterCards)
-                    .addToBackStack(EDIT_CARD)
+                    .replace(R.id.fragment_holder, filterCards, FragmentTags.FILTER_CARDS)
+                    .addToBackStack(FragmentTags.FILTER_CARDS)
                     .commit();
             return true;
         } else if (itemId == R.id.clear_filter_menu) {
@@ -243,8 +248,8 @@ public abstract class BaseballCardList extends ListFragment {
         Fragment details = BaseballCardDetails.getInstance(id, card);
         this.getActivity().getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.fragment_holder, details)
-                .addToBackStack(EDIT_CARD)
+                .replace(R.id.fragment_holder, details, FragmentTags.EDIT_CARD)
+                .addToBackStack(FragmentTags.EDIT_CARD)
                 .commit();
     }
 
@@ -339,7 +344,7 @@ public abstract class BaseballCardList extends ListFragment {
         }
     }
 
-    public abstract AbsListView.MultiChoiceModeListener getMultiChoiceModeListener();
+    public abstract BaseballCardActionModeCallback getMultiChoiceModeListener();
 
     public void purchasePremium() {
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this.getActivity())
@@ -373,12 +378,12 @@ public abstract class BaseballCardList extends ListFragment {
             R.id.player_name_text_view};
 
     private static final String FILTER_PARAMS = "filterParams";
-    private static final String EDIT_CARD = "Edit Card";
 
     private static final String TAG = BaseballCardList.class.getName();
-    TextView emptyList = null;
+    private TextView emptyList = null;
     private BaseballCardAdapter adapter = null;
     private Uri uri = null;
     private Bundle filterParams = null;
+    private BaseballCardActionModeCallback mCallbacks;
 
 }

@@ -16,24 +16,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package bbct.android.premium.activity;
+package bbct.android.common.activity;
 
-import android.os.Bundle;
-import bbct.android.common.activity.BaseballCardList;
-import bbct.android.common.activity.util.BaseballCardActionModeCallback;
-import bbct.android.premium.activity.util.PremiumChoiceModeListener;
+public interface FragmentTags {
 
-public class PremiumList extends BaseballCardList {
+    public static final String EDIT_CARD = "Edit Card";
+    public static final String FILTER_CARDS = "Filter Cards";
+    public static final String CARD_LIST = "Card List";
+    public static final String ABOUT = "About";
 
-    public static PremiumList getInstance(Bundle filterArgs) {
-        PremiumList list = new PremiumList();
-        list.setArguments(makeArgs(filterArgs));
-
-        return list;
-    }
-
-    @Override
-    public BaseballCardActionModeCallback getMultiChoiceModeListener() {
-        return new PremiumChoiceModeListener(this);
-    }
 }
