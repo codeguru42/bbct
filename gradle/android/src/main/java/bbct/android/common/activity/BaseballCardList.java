@@ -22,6 +22,7 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.ContentUris;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -53,6 +54,8 @@ import bbct.android.common.provider.BaseballCardContract;
  * TODO: Make list fancier
  */
 public abstract class BaseballCardList extends ListFragment {
+
+    public static final String PREMIUM_PLAY_STORE_URI = "https://play.google.com/store/apps/details?id=bbct.android.premium";
 
     protected static Bundle makeArgs(Bundle filterArgs) {
         Bundle args = new Bundle();
@@ -354,6 +357,9 @@ public abstract class BaseballCardList extends ListFragment {
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                Uri storeUri = Uri.parse(PREMIUM_PLAY_STORE_URI);
+                                Intent intent = new Intent(Intent.ACTION_VIEW, storeUri);
+                                startActivity(intent);
                             }
                         }
                 )
