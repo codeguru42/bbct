@@ -40,4 +40,12 @@ public class LiteActivityWithDataTest extends BaseballCardListWithDataTest<LiteA
         this.solo.clickOnButton(this.solo.getString(R.string.later));
     }
 
+    public void testShareButtonBuyNow() {
+        this.testOnItemLongClickStartActionMode();
+        View shareMenu = this.solo.getView(R.id.share_menu);
+        this.solo.clickOnView(shareMenu);
+        this.solo.waitForDialogToOpen();
+        this.solo.clickOnButton(this.solo.getString(R.string.buy_now));
+    }
+
 }
