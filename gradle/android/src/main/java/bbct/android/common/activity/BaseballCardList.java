@@ -29,7 +29,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
-import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -47,6 +46,7 @@ import bbct.android.common.activity.util.BaseballCardActionModeCallback;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.provider.BaseballCardAdapter;
 import bbct.android.common.provider.BaseballCardContract;
+import bbct.android.common.view.HeaderView;
 
 /**
  * Displays a list of all baseball cards stored in the database.
@@ -102,21 +102,17 @@ public abstract class BaseballCardList extends ListFragment {
 
         this.emptyList = (TextView) view.findViewById(android.R.id.empty);
 
-        ListView listView = (ListView) view.findViewById(android.R.id.list);
-        View headerView = View.inflate(this.getActivity(),
-                R.layout.list_header, null);
+        final ListView listView = (ListView) view.findViewById(android.R.id.list);
+        View headerView = new HeaderView(this.getActivity());
         headerView.findViewById(R.id.select_all)
                 .setOnClickListener(new OnClickListener() {
-                    ActionMode mode;
-
                     @SuppressLint("AppCompatMethod")
                     @Override
                     public void onClick(View v) {
-                        if (mode == null) {
-                            mode = getActivity().startActionMode(mCallbacks);
+                        if (!mCallbacks.isStarted()) {
+                            BaseballCardList.this.getActivity().startActionMode(mCallbacks);
                         } else {
-                            mode.finish();
-                            mode = null;
+                            mCallbacks.finish();
                         }
 
                         Checkable ctv = (Checkable) v;
@@ -270,10 +266,10 @@ public abstract class BaseballCardList extends ListFragment {
                 .show();
     }
 
-    public void setAllChecked(boolean checked) {
+    private void setAllChecked(boolean checked) {
         ListView listView = this.getListView();
         // Add 1 for the header view
-        for (int i = 1; i < this.adapter.getCount() + 1; ++i) {
+        for (int i = 0; i < this.adapter.getCount() + 1; ++i) {
             listView.setItemChecked(i, checked);
         }
     }
