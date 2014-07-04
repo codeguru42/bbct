@@ -121,4 +121,5 @@
     <string name="database_error">Se produjo un error al conectar con la base de datos.</string>
     <string name="duplicate_card_error">La tarjeta de béisbol ya existe. Por favor actualice su cantidad.</string>
     <string name="sponsor">Patrocinador Orgulloso:</string>
+    <string name="sent_with">Sent with Baseball Card Tracker Premium for Android</string>
 </resources>

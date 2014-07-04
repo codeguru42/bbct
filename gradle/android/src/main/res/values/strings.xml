@@ -128,5 +128,6 @@
     <string name="get_premium">To activate this feature, please purchase the Premium Edition.</string>
     <string name="buy_now">Buy Now</string>
     <string name="later">Later</string>
+    <string name="sent_with">Sent with Baseball Card Tracker Premium for Android</string>
 
 </resources>
