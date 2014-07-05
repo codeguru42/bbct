@@ -18,16 +18,27 @@
  */
 package bbct.android.premium.activity.util;
 
+import android.os.Bundle;
+import android.util.Log;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardList;
 import bbct.android.common.activity.util.BaseballCardActionModeCallback;
-import bbct.android.premium.social.ResponseListener;
+import bbct.android.common.data.BaseballCard;
+import java.util.List;
+import org.brickred.socialauth.android.DialogListener;
 import org.brickred.socialauth.android.SocialAuthAdapter;
+import org.brickred.socialauth.android.SocialAuthError;
+import org.brickred.socialauth.android.SocialAuthListener;
 
 public class PremiumChoiceModeListener extends BaseballCardActionModeCallback {
+
+    private static final String TAG = PremiumChoiceModeListener.class.getName();
+    private static final String TWITTER_CALLBACK = "bbct-premium-oauth-twitter://callback";
+    private SocialAuthAdapter mSocialAuthAdapter;
 
     public PremiumChoiceModeListener(BaseballCardList listFragment) {
         super(listFragment);
@@ -44,16 +55,70 @@ public class PremiumChoiceModeListener extends BaseballCardActionModeCallback {
      */
     @Override
     public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-        SocialAuthAdapter mSocialAuthAdapter = new SocialAuthAdapter(new ResponseListener());
+        mSocialAuthAdapter = new SocialAuthAdapter(new ResponseListener());
         mSocialAuthAdapter.addProvider(SocialAuthAdapter.Provider.FACEBOOK, R.drawable.facebook);
-        mSocialAuthAdapter.addProvider(SocialAuthAdapter.Provider.FLICKR, R.drawable.flickr);
-        mSocialAuthAdapter.addProvider(SocialAuthAdapter.Provider.INSTAGRAM, R.drawable.instagram);
+        mSocialAuthAdapter.addProvider(SocialAuthAdapter.Provider.TWITTER, R.drawable.twitter);
+        mSocialAuthAdapter.addCallBack(SocialAuthAdapter.Provider.TWITTER, TWITTER_CALLBACK);
 
         boolean result = super.onCreateActionMode(mode, menu);
         final MenuItem item = menu.findItem(R.id.share_menu);
         mSocialAuthAdapter.enable(item.getActionView());
 
         return result;
+    }
+
+    private class ResponseListener implements DialogListener {
+
+        @Override
+        public void onComplete(Bundle bundle) {
+            List<BaseballCard> cards = mListFragment.getSelectedCards();
+
+            for (BaseballCard card : cards) {
+                String message = String.valueOf(card.getYear()) + ' ' + card.getBrand() + ' '
+                        + card.getPlayerName() + '\n' + mListFragment.getString(R.string.sent_with);
+                mSocialAuthAdapter.updateStatus(message, new MessageListener(), false);
+            }
+        }
+
+        @Override
+        public void onError(SocialAuthError socialAuthError) {
+
+        }
+
+        @Override
+        public void onCancel() {
+
+        }
+
+        @Override
+        public void onBack() {
+
+        }
+
+    }
+
+    private class MessageListener implements SocialAuthListener<Integer> {
+
+        @Override
+        public void onExecute(String provider, Integer status) {
+            if (status == 200 || status == 201 || status == 204) {
+                Toast.makeText(mListFragment.getActivity(), "Card posted on " + provider,
+                        Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(mListFragment.getActivity(), "Card not posted on" + provider,
+                        Toast.LENGTH_LONG).show();
+            }
+
+            finish();
+        }
+
+        @Override
+        public void onError(SocialAuthError e) {
+            e.printStackTrace();
+            Log.e(TAG, e.getMessage());
+            Toast.makeText(mListFragment.getActivity(), e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+
     }
 
 }

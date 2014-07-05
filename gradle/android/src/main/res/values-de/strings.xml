@@ -109,5 +109,6 @@
     <string name="database_error">App konnte sich nicht mit der Datenbank verbinden.</string>
     <string name="duplicate_card_error">Baseballkarte existiert bereits. Bitte ändern Sie die Anzahl der Karte.</string>
     <string name="sponsor">Stolzer Sponsor von:</string>
+    <string name="sent_with">Sent with Baseball Card Tracker Premium for Android</string>
 
 </resources>

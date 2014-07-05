@@ -29,6 +29,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -47,6 +48,8 @@ import bbct.android.common.data.BaseballCard;
 import bbct.android.common.provider.BaseballCardAdapter;
 import bbct.android.common.provider.BaseballCardContract;
 import bbct.android.common.view.HeaderView;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Displays a list of all baseball cards stored in the database.
@@ -367,6 +370,20 @@ public abstract class BaseballCardList extends ListFragment {
                         }
                 );
         dialogBuilder.show();
+    }
+
+    public List<BaseballCard> getSelectedCards() {
+        List<BaseballCard> cards = new ArrayList<BaseballCard>();
+        SparseBooleanArray checked = getListView().getCheckedItemPositions();
+
+        for (int i = 1; i < getListView().getCount(); ++i) {
+            if (checked.get(i)) {
+                // Subtract 1 for header view
+                cards.add(adapter.getItem(i - 1));
+            }
+        }
+
+        return cards;
     }
 
     private static final String[] ROW_PROJECTION = {
