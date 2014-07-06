@@ -82,7 +82,7 @@ public class PremiumChoiceModeListener extends BaseballCardActionModeCallback {
 
         @Override
         public void onError(SocialAuthError socialAuthError) {
-
+            socialAuthError.printStackTrace();
         }
 
         @Override
