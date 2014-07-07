@@ -155,12 +155,25 @@ public class BaseballCardDetails extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int menuId = item.getItemId();
 
-        if (menuId == R.id.save_menu) {
-            this.onSave();
-            return true;
+        switch (menuId) {
+            case R.id.save_menu:
+                this.onSave();
+                return true;
+
+            case android.R.id.home:
+                this.onHome();
+                return true;
         }
 
         return false;
+    }
+
+    private void onHome() {
+        Fragment list = BaseballCardList.getInstance(null);
+        this.getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_holder, list, FragmentTags.CARD_LIST)
+                .addToBackStack(FragmentTags.CARD_LIST)
+                .commit();
     }
 
     private Spinner populateSpinner(View view, int spinnerId, int araryId) {
