@@ -263,7 +263,8 @@ public class BaseballCardList extends ListFragment {
             if (getListView().isItemChecked(i)) {
                 // Subtract one to compensate for the header view
                 long id = this.adapter.getItemId(i - 1);
-                Uri deleteUri = ContentUris.withAppendedId(this.uri, id);
+                Uri deleteUri = ContentUris.withAppendedId(
+                        BaseballCardContract.getUri(this.getActivity().getPackageName()), id);
                 this.getActivity().getContentResolver().delete(deleteUri, null, null);
             }
         }
@@ -297,7 +298,6 @@ public class BaseballCardList extends ListFragment {
     private static final String TAG = BaseballCardList.class.getName();
     private TextView emptyList = null;
     private BaseballCardAdapter adapter = null;
-    private Uri uri = null;
     private Bundle filterParams = null;
     private BaseballCardMultiChoiceModeListener mCallbacks;
     private LoaderManager.LoaderCallbacks<Cursor> loaderCallbacks;
