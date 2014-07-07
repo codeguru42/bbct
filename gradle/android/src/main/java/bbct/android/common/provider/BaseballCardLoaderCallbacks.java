@@ -20,10 +20,10 @@ public class BaseballCardLoaderCallbacks implements LoaderManager.LoaderCallback
     private final Uri mUri;
     private final CursorAdapter mAdapter;
 
-    public BaseballCardLoaderCallbacks(Context context, Uri uri, CursorAdapter adapter) {
+    public BaseballCardLoaderCallbacks(Context context, CursorAdapter adapter) {
         mContext = context;
-        mUri = uri;
         mAdapter = adapter;
+        mUri = BaseballCardContract.getUri(mContext.getPackageName());
     }
 
     @Override

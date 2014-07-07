@@ -24,6 +24,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
+import android.support.v4.app.LoaderManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -42,11 +43,12 @@ import bbct.android.common.activity.util.BaseballCardMultiChoiceModeListener;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.provider.BaseballCardAdapter;
 import bbct.android.common.provider.BaseballCardContract;
+import bbct.android.common.provider.BaseballCardLoaderCallbacks;
 import bbct.android.common.view.HeaderView;
 
 /**
  * Displays a list of all baseball cards stored in the database.
- *
+ * <p/>
  * TODO: Make list fancier
  */
 public class BaseballCardList extends ListFragment {
@@ -73,11 +75,9 @@ public class BaseballCardList extends ListFragment {
 
         this.adapter = new BaseballCardAdapter(this.getActivity(),
                 R.layout.baseball_card, null, ROW_PROJECTION, ROW_TEXT_VIEWS);
+        this.loaderCallbacks = new BaseballCardLoaderCallbacks(this.getActivity(), this.adapter);
 
         Log.d(TAG, "  adapter=" + this.adapter);
-
-        this.uri = BaseballCardContract.getUri(this.getActivity()
-                .getPackageName());
 
         Bundle args = this.getArguments();
 
@@ -123,7 +123,13 @@ public class BaseballCardList extends ListFragment {
         listView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
         listView.setMultiChoiceModeListener(mCallbacks);
         this.adapter.setActionModeCallback(mCallbacks);
-        this.applyFilter(this.filterParams);
+
+        LoaderManager loaderManager = this.getActivity().getSupportLoaderManager();
+        if (loaderManager.getLoader(LOADER_ID) == null) {
+            loaderManager.initLoader(LOADER_ID, null, this.loaderCallbacks);
+        } else {
+            loaderManager.restartLoader(LOADER_ID, null, this.loaderCallbacks);
+        }
 
         return view;
     }
@@ -194,7 +200,12 @@ public class BaseballCardList extends ListFragment {
             return true;
         } else if (itemId == R.id.clear_filter_menu) {
             this.emptyList.setText(R.string.start);
-            this.applyFilter(null);
+            LoaderManager loaderManager = this.getActivity().getSupportLoaderManager();
+            if (loaderManager.getLoader(LOADER_ID) == null) {
+                loaderManager.initLoader(LOADER_ID, null, this.loaderCallbacks);
+            } else {
+                loaderManager.restartLoader(LOADER_ID, null, this.loaderCallbacks);
+            }
 
             this.getActivity().supportInvalidateOptionsMenu();
 
@@ -269,75 +280,6 @@ public class BaseballCardList extends ListFragment {
         }
     }
 
-    protected void applyFilter(Bundle filterParams) {
-        Log.d(TAG, "applyFilter()");
-
-        this.filterParams = filterParams;
-
-        if (this.filterParams == null) {
-            this.emptyList.setText(R.string.start);
-        } else {
-            this.emptyList.setText(R.string.empty_list);
-        }
-
-        StringBuilder sb = null;
-        String[] args = null;
-
-        if (this.filterParams != null) {
-            sb = new StringBuilder();
-            args = new String[this.filterParams.size()];
-
-            int numQueries = 0;
-            for (String key : this.filterParams.keySet()) {
-                String value = this.filterParams.getString(key);
-
-                if (key.equals(FilterCards.YEAR_EXTRA)) {
-                    sb.append(BaseballCardContract.YEAR_SELECTION);
-                } else if (key.equals(FilterCards.BRAND_EXTRA)) {
-                    sb.append(BaseballCardContract.BRAND_SELECTION);
-                } else if (key.equals(FilterCards.NUMBER_EXTRA)) {
-                    sb.append(BaseballCardContract.NUMBER_SELECTION);
-                } else if (key.equals(FilterCards.PLAYER_NAME_EXTRA)) {
-                    sb.append(BaseballCardContract.PLAYER_NAME_SELECTION);
-                } else if (key.equals(FilterCards.TEAM_EXTRA)) {
-                    sb.append(BaseballCardContract.TEAM_SELECTION);
-                } else {
-                    Log.e(TAG, "Invalid key: " + key);
-                }
-
-                args[numQueries] = value;
-                numQueries++;
-
-                if (numQueries < args.length) {
-                    sb.append(" AND ");
-                }
-            }
-        }
-
-        Cursor cursor = this
-                .getActivity()
-                .getContentResolver()
-                .query(this.uri, BaseballCardContract.PROJECTION,
-                        sb == null ? null : sb.toString(), args, null);
-        this.swapCursor(cursor);
-    }
-
-    @SuppressWarnings("deprecation")
-    private void swapCursor(Cursor newCursor) {
-        Log.d(TAG, "swapCursor()");
-        Cursor oldCursor = this.adapter.getCursor();
-        this.getActivity().stopManagingCursor(oldCursor);
-
-        if (newCursor != null) {
-            this.getActivity().startManagingCursor(newCursor);
-            this.adapter.changeCursor(newCursor);
-        }
-
-        if (oldCursor != null) {
-            oldCursor.close();
-        }
-    }
-
     private static final String[] ROW_PROJECTION = {
             BaseballCardContract.BRAND_COL_NAME,
             BaseballCardContract.YEAR_COL_NAME,
@@ -348,6 +290,8 @@ public class BaseballCardList extends ListFragment {
             R.id.year_text_view, R.id.number_text_view,
             R.id.player_name_text_view};
 
+    private static final int LOADER_ID = 42;
+
     public static final String FILTER_PARAMS = "filterParams";
 
     private static final String TAG = BaseballCardList.class.getName();
@@ -356,5 +300,7 @@ public class BaseballCardList extends ListFragment {
     private Uri uri = null;
     private Bundle filterParams = null;
     private BaseballCardMultiChoiceModeListener mCallbacks;
+    private LoaderManager.LoaderCallbacks<Cursor> loaderCallbacks;
+
 
 }
