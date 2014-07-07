@@ -348,7 +348,7 @@ public class BaseballCardList extends ListFragment {
             R.id.year_text_view, R.id.number_text_view,
             R.id.player_name_text_view};
 
-    private static final String FILTER_PARAMS = "filterParams";
+    public static final String FILTER_PARAMS = "filterParams";
 
     private static final String TAG = BaseballCardList.class.getName();
     private TextView emptyList = null;
