@@ -9,7 +9,6 @@ import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.util.Log;
 import android.widget.CursorAdapter;
-import bbct.android.common.activity.BaseballCardList;
 import bbct.android.common.activity.FilterCards;
 import java.util.Arrays;
 
@@ -31,18 +30,16 @@ public class BaseballCardLoaderCallbacks implements LoaderManager.LoaderCallback
         Log.d(TAG, "onCreateLoader()");
         Log.d(TAG, "  id=" + id);
 
-        Bundle filterParams = args.getBundle(BaseballCardList.FILTER_PARAMS);
-
         StringBuilder sb = null;
         String[] selectionArgs = null;
 
-        if (filterParams != null) {
+        if (args != null) {
             sb = new StringBuilder();
-            selectionArgs = new String[filterParams.size()];
+            selectionArgs = new String[args.size()];
 
             int numQueries = 0;
-            for (String key : filterParams.keySet()) {
-                String value = filterParams.getString(key);
+            for (String key : args.keySet()) {
+                String value = args.getString(key);
 
                 if (key.equals(FilterCards.YEAR_EXTRA)) {
                     sb.append(BaseballCardContract.YEAR_SELECTION);

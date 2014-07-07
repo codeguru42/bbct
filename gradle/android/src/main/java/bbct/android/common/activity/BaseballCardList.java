@@ -126,9 +126,9 @@ public class BaseballCardList extends ListFragment {
 
         LoaderManager loaderManager = this.getActivity().getSupportLoaderManager();
         if (loaderManager.getLoader(LOADER_ID) == null) {
-            loaderManager.initLoader(LOADER_ID, null, this.loaderCallbacks);
+            loaderManager.initLoader(LOADER_ID, this.filterParams, this.loaderCallbacks);
         } else {
-            loaderManager.restartLoader(LOADER_ID, null, this.loaderCallbacks);
+            loaderManager.restartLoader(LOADER_ID, this.filterParams, this.loaderCallbacks);
         }
 
         return view;
@@ -202,9 +202,9 @@ public class BaseballCardList extends ListFragment {
             this.emptyList.setText(R.string.start);
             LoaderManager loaderManager = this.getActivity().getSupportLoaderManager();
             if (loaderManager.getLoader(LOADER_ID) == null) {
-                loaderManager.initLoader(LOADER_ID, null, this.loaderCallbacks);
+                loaderManager.initLoader(LOADER_ID, this.filterParams, this.loaderCallbacks);
             } else {
-                loaderManager.restartLoader(LOADER_ID, null, this.loaderCallbacks);
+                loaderManager.restartLoader(LOADER_ID, this.filterParams, this.loaderCallbacks);
             }
 
             this.getActivity().supportInvalidateOptionsMenu();
