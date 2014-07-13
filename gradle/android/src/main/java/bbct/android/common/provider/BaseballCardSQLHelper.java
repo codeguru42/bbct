@@ -25,8 +25,6 @@ import android.util.Log;
 
 /**
  * Provides helper methods to access the underlying SQLite database.
- *
- * TODO: Write JUnit tests.
  */
 public class BaseballCardSQLHelper extends SQLiteOpenHelper {
 
@@ -37,7 +35,7 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
     /**
      * Current schema version.
      */
-    public static final int SCHEMA_VERSION = 4;
+    public static final int SCHEMA_VERSION = 5;
     /**
      * Original schema version.
      */
@@ -56,6 +54,8 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
      * Schema version which adds Autographed and Condition fields.
      */
     public static final int AUTO_AND_CONDITION_SCHEMA = 4;
+
+    public static final int MULTIPLE_SPORTS_SCHEMA = 5;
 
     /**
      * Create a new {@link BaseballCardSQLHelper} with the given Android
@@ -88,9 +88,7 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
                 + BaseballCardContract.PLAYER_POSITION_COL_NAME + " TEXT,"
                 + BaseballCardContract.AUTOGRAPHED_COL_NAME + " INTEGER,"
                 + BaseballCardContract.CONDITION_COL_NAME + " TEXT,"
-                + "UNIQUE (" + BaseballCardContract.BRAND_COL_NAME + ", "
-                + BaseballCardContract.YEAR_COL_NAME + ", "
-                + BaseballCardContract.NUMBER_COL_NAME + "))";
+                + BaseballCardContract.SPORT_COL_NAME + " TEXT";
 
         db.execSQL(sqlCreate);
     }
@@ -113,6 +111,17 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
                     + BaseballCardContract.CONDITION_COL_NAME + " TEXT";
             db.execSQL(addAutographed);
             db.execSQL(addCondition);
+        }
+
+        if (oldVersion < MULTIPLE_SPORTS_SCHEMA) {
+            String addSport = "ALTER TABLE "
+                    + BaseballCardContract.TABLE_NAME + " ADD COLUMN "
+                    + BaseballCardContract.SPORT_COL_NAME + " TEXT";
+            db.execSQL(addSport);
+
+            String updateSport = "UPDATE " + BaseballCardContract.TABLE_NAME
+                    + " SET " + BaseballCardContract.SPORT_COL_NAME + "=Baseball";
+            db.execSQL(updateSport);
         }
     }
 
