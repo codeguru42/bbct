@@ -169,6 +169,7 @@ public class BaseballCardDetailsEditCardTest extends
     }
 
     private BaseballCard getExpectedCard() {
+        String sport = "Baseball";
         boolean autographed = this.inputMask
                 .contains(BBCTTestUtil.EditTexts.AUTOGRAPHED) ? this.newCard
                 .isAutographed() : this.oldCard.isAutographed();
@@ -193,7 +194,7 @@ public class BaseballCardDetailsEditCardTest extends
         String position = this.inputMask
                 .contains(BBCTTestUtil.EditTexts.PLAYER_POSITION) ? this.newCard
                 .getPlayerPosition() : this.oldCard.getPlayerPosition();
-        return new BaseballCard(autographed, condition, brand, year, number,
+        return new BaseballCard(sport, autographed, condition, brand, year, number,
                 value, count, name, team, position);
     }
 

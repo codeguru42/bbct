@@ -72,7 +72,7 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
 
         // Start Activity
         this.activity = this.getActivity();
-        this.newCard = new BaseballCard(true, "Mint", "Code Guru Apps", 1993,
+        this.newCard = new BaseballCard("Baseball", true, "Mint", "Code Guru Apps", 1993,
                 1, 50000, 1, "Code Guru", "Code Guru Devs", "Catcher");
 
         this.solo = new Solo(this.inst, this.activity);
@@ -340,7 +340,7 @@ public class BaseballCardListWithDataTest <T extends MainActivity> extends
     public void testAddCardNotMatchingCurrentFilter() throws Throwable {
         this.testYearFilter();
 
-        this.newCard = new BaseballCard(false, "Excellent", "Codeguru Apps",
+        this.newCard = new BaseballCard("Baseball", false, "Excellent", "Codeguru Apps",
                 1976, 1, 50000, 1, "Codeguru", "Codeguru Devs", "Catcher");
         BBCTTestUtil.testMenuItem(this.solo, R.id.add_menu, FragmentTags.EDIT_CARD);
         BBCTTestUtil.addCard(this.solo, this.newCard);
