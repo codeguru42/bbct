@@ -103,29 +103,7 @@ public class BaseballCardAdapter extends SimpleCursorAdapter {
     @Override
     public BaseballCard getItem(int index) {
         Cursor cursor = (Cursor) super.getItem(index);
-        boolean autographed = cursor.getInt(cursor
-                .getColumnIndex(BaseballCardContract.AUTOGRAPHED_COL_NAME)) != 0;
-        String condition = cursor.getString(cursor
-                .getColumnIndex(BaseballCardContract.CONDITION_COL_NAME));
-        String brand = cursor.getString(cursor
-                .getColumnIndex(BaseballCardContract.BRAND_COL_NAME));
-        int year = cursor.getInt(cursor
-                .getColumnIndex(BaseballCardContract.YEAR_COL_NAME));
-        int number = cursor.getInt(cursor
-                .getColumnIndex(BaseballCardContract.NUMBER_COL_NAME));
-        int value = cursor.getInt(cursor
-                .getColumnIndex(BaseballCardContract.VALUE_COL_NAME));
-        int count = cursor.getInt(cursor
-                .getColumnIndex(BaseballCardContract.COUNT_COL_NAME));
-        String name = cursor.getString(cursor
-                .getColumnIndex(BaseballCardContract.PLAYER_NAME_COL_NAME));
-        String team = cursor.getString(cursor
-                .getColumnIndex(BaseballCardContract.TEAM_COL_NAME));
-        String position = cursor.getString(cursor
-                .getColumnIndex(BaseballCardContract.PLAYER_POSITION_COL_NAME));
-
-        return new BaseballCard(autographed, condition, brand, year, number,
-                value, count, name, team, position);
+        return BaseballCardContract.getBaseballCardFromCursor(cursor);
     }
 
 }
