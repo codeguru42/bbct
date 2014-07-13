@@ -50,9 +50,9 @@ import bbct.android.common.provider.SingleColumnCursorAdapter;
  */
 public class BaseballCardDetails extends Fragment {
 
-    private static String ID = "id";
-
-    private static String CARD = "card";
+    private static final String SPORT = "sport";
+    private static final String ID = "id";
+    private static final String CARD = "card";
 
     public static BaseballCardDetails getInstance(long id, BaseballCard card) {
         Bundle args = new Bundle();
@@ -83,8 +83,7 @@ public class BaseballCardDetails extends Fragment {
         this.autographCheckBox = (CheckBox) view.findViewById(R.id.autograph);
 
         this.conditionSpinner = this.populateSpinner(view, R.id.condition, R.array.condition);
-        this.conditionAdapter = (ArrayAdapter<CharSequence>) this.conditionSpinner
-                .getAdapter();
+        this.conditionAdapter = (ArrayAdapter<CharSequence>) this.conditionSpinner.getAdapter();
 
         this.brandText = (AutoCompleteTextView) view.findViewById(R.id.brand_text);
         CursorAdapter brandAdapter = new SingleColumnCursorAdapter(getActivity(),
@@ -108,14 +107,17 @@ public class BaseballCardDetails extends Fragment {
 
         this.playerPositionSpinner = this.populateSpinner(view, R.id.player_position_text,
                 R.array.positions);
-        this.positionsAdapter = (ArrayAdapter<CharSequence>) this.playerPositionSpinner
-                .getAdapter();
+        this.positionsAdapter = (ArrayAdapter<CharSequence>) this.playerPositionSpinner.getAdapter();
 
         Bundle args = this.getArguments();
         if (args != null) {
             long id = args.getLong(ID);
             BaseballCard card = (BaseballCard) args.getSerializable(CARD);
-            this.setCard(id, card);
+            this.sport = args.getString(SPORT);
+
+            if (card != null) {
+                this.setCard(id, card);
+            }
         }
 
         this.uri = BaseballCardContract.getUri(this.getActivity().getPackageName());
@@ -224,7 +226,7 @@ public class BaseballCardDetails extends Fragment {
             int count = Integer.parseInt(countStr);
             String team = this.teamText.getText().toString();
             String playerName = this.playerNameText.getText().toString();
-            return new BaseballCard(autographed, condition, brand, year,
+            return new BaseballCard(this.sport, autographed, condition, brand, year,
                     number, (int) (value * 100), count, playerName, team,
                     playerPosition);
         } else {
@@ -325,6 +327,7 @@ public class BaseballCardDetails extends Fragment {
     private Uri uri = null;
     private boolean isUpdating = false;
     private long cardId = -1L;
+    private String sport;
     private static final String TAG = BaseballCardDetails.class.getName();
 
 }
