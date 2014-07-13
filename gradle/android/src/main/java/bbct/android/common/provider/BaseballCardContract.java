@@ -22,7 +22,6 @@ import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
-import android.util.Log;
 import bbct.android.common.data.BaseballCard;
 import java.util.ArrayList;
 import java.util.List;
@@ -75,6 +74,8 @@ public final class BaseballCardContract {
      * The column name for the primary key.
      */
     public static final String ID_COL_NAME = "_id";
+
+    public static final String SPORT_COL_NAME = "sport";
 
     /**
      * The column name for the autograph option.
@@ -130,7 +131,7 @@ public final class BaseballCardContract {
      * Convenience variable that can be used when the {@link ContentResolver}
      * wants every column from the {@link BaseballCardProvider}.
      */
-    public static final String[] PROJECTION = { ID_COL_NAME,
+    public static final String[] PROJECTION = { ID_COL_NAME, SPORT_COL_NAME,
             AUTOGRAPHED_COL_NAME, CONDITION_COL_NAME, BRAND_COL_NAME,
             YEAR_COL_NAME, NUMBER_COL_NAME, VALUE_COL_NAME, COUNT_COL_NAME,
             PLAYER_NAME_COL_NAME, TEAM_COL_NAME, PLAYER_POSITION_COL_NAME };
@@ -151,6 +152,9 @@ public final class BaseballCardContract {
 
     public static final String STRING_SELECTION_FORMAT = "%s LIKE ?";
 
+    public static final String SPORT_SELECTION = String.format(
+            STRING_SELECTION_FORMAT, SPORT_COL_NAME);
+
     /**
      * Convenience variable to select cards with a given brand.
      */
@@ -168,7 +172,6 @@ public final class BaseballCardContract {
      */
     public static final String TEAM_SELECTION = String.format(
             STRING_SELECTION_FORMAT, TEAM_COL_NAME);
-
     /**
      * Convenience method to create a {@link ContentValues} map for the data
      * from the given {@link BaseballCard} object. The returned
@@ -181,6 +184,7 @@ public final class BaseballCardContract {
      */
     public static ContentValues getContentValues(BaseballCard card) {
         ContentValues cv = new ContentValues(7);
+        cv.put(BaseballCardContract.SPORT_COL_NAME, card.getSport());
         cv.put(BaseballCardContract.AUTOGRAPHED_COL_NAME, card.isAutographed());
         cv.put(BaseballCardContract.CONDITION_COL_NAME, card.getCondition());
         cv.put(BaseballCardContract.BRAND_COL_NAME, card.getBrand());
@@ -215,6 +219,8 @@ public final class BaseballCardContract {
      *         given {@link Cursor}.
      */
     public static BaseballCard getBaseballCardFromCursor(Cursor cursor) {
+        String sport = cursor.getString(cursor
+                .getColumnIndex(BaseballCardContract.SPORT_COL_NAME));
         boolean autographed = cursor.getInt(cursor
                 .getColumnIndex(BaseballCardContract.AUTOGRAPHED_COL_NAME)) != 0;
         String condition = cursor.getString(cursor
@@ -236,7 +242,7 @@ public final class BaseballCardContract {
         String position = cursor.getString(cursor
                 .getColumnIndex(BaseballCardContract.PLAYER_POSITION_COL_NAME));
 
-        return new BaseballCard(autographed, condition, brand, year, number,
+        return new BaseballCard(sport, autographed, condition, brand, year, number,
                 value, count, name, team, position);
     }
 
