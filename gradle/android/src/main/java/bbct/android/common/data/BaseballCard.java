@@ -27,34 +27,35 @@ import java.io.Serializable;
  */
 public class BaseballCard implements Serializable {
 
-    /**
-     * Serial Version ID
-     */
-    private static final long serialVersionUID = -4027752761089257290L;
+    private String sport;
+    private final boolean autographed;
+    private final String condition;
+    private final String brand;
+    private final int year;
+    private final int number;
+    private int value;
+    private int count;
+    private final String playerName;
+    private final String team;
+    private final String playerPosition;
 
     /**
      * Create a {@link BaseballCard} with the given values.
      *
-     * @param brand
-     *            The brand name.
-     * @param year
-     *            The year this card was published.
-     * @param number
-     *            The number on this card.
-     * @param value
-     *            The monetary value.
-     * @param count
-     *            The count of copies owned.
-     * @param playerName
-     *            The player on this card.
-     * @param team
-     *            The team for the player on this card.
-     * @param playerPosition
-     *            The position this player played.
+     * @param sport          The sport.
+     * @param brand          The brand name.
+     * @param year           The year this card was published.
+     * @param number         The number on this card.
+     * @param value          The monetary value.
+     * @param count          The count of copies owned.
+     * @param playerName     The player on this card.
+     * @param team           The team for the player on this card.
+     * @param playerPosition The player's position
      */
-    public BaseballCard(boolean autographed, String condition, String brand,
-            int year, int number, int value, int count, String playerName,
-            String team, String playerPosition) {
+    public BaseballCard(String sport, boolean autographed, String condition, String brand,
+                        int year, int number, int value, int count, String playerName,
+                        String team, String playerPosition) {
+        this.sport = sport;
         this.autographed = autographed;
         this.condition = condition;
         this.brand = brand;
@@ -65,6 +66,11 @@ public class BaseballCard implements Serializable {
         this.playerName = playerName;
         this.team = team;
         this.playerPosition = playerPosition;
+    }
+
+
+    public String getSport() {
+        return this.sport;
     }
 
     /**
@@ -124,8 +130,7 @@ public class BaseballCard implements Serializable {
     /**
      * Set the monetary value of this {@link BaseballCard}.
      *
-     * @param value
-     *            The monetary value of this {@link BaseballCard}
+     * @param value The monetary value of this {@link BaseballCard}
      */
     public void setValue(int value) {
         this.value = value;
@@ -143,8 +148,7 @@ public class BaseballCard implements Serializable {
     /**
      * Set the count of copies of this {@link BaseballCard}s owned.
      *
-     * @param count
-     *            The count of copies of this {@link BaseballCard}s owned.
+     * @param count The count of copies of this {@link BaseballCard}s owned.
      */
     public void setCount(int count) {
         this.count = count;
@@ -181,10 +185,9 @@ public class BaseballCard implements Serializable {
      * Compare this {@link BaseballCard} for equality with another given
      * {@link Object}.
      *
-     * @param o
-     *            The {@link Object} to compare with this {@link BaseballCard}.
+     * @param o The {@link Object} to compare with this {@link BaseballCard}.
      * @return True if {@code o} is a {@link BaseballCard} with identical
-     *         values. False, otherwise.
+     * values. False, otherwise.
      */
     @Override
     public boolean equals(Object o) {
@@ -216,6 +219,7 @@ public class BaseballCard implements Serializable {
         // Might throw NPE if any of this.brand, this.playerName, or
         // this.playerPosition is null.
         int hash = 7;
+        hash = 67 * hash + this.sport.hashCode();
         hash = 67 * hash + Boolean.valueOf(this.autographed).hashCode();
         hash = 67 * hash + this.condition.hashCode();
         hash = 67 * hash + this.brand.hashCode();
@@ -235,11 +239,11 @@ public class BaseballCard implements Serializable {
      * debugging purposes.
      *
      * @return A {@link String} representation containing the values of this
-     *         {@link BaseballCard}.
+     * {@link BaseballCard}.
      */
     @Override
     public String toString() {
-        return "BaseballCard{" + "autographed=" + this.autographed
+        return "BaseballCard{" + "sport=" + this.sport + ", autographed=" + this.autographed
                 + ", condition=" + this.condition + ", cardBrand=" + this.brand
                 + ", cardYear=" + this.year + ", cardNumber=" + this.number
                 + ", cardValue=" + this.value + ", cardCount=" + this.count
@@ -247,14 +251,4 @@ public class BaseballCard implements Serializable {
                 + ", playerPosition=" + this.playerPosition + '}';
     }
 
-    private final boolean autographed;
-    private final String condition;
-    private final String brand;
-    private final int year;
-    private final int number;
-    private int value;
-    private int count;
-    private final String playerName;
-    private final String team;
-    private final String playerPosition;
 }
