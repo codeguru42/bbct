@@ -86,7 +86,13 @@
     <string name="card_deleted_message">Cards deleted successfully.</string>
 
     <!-- Strings for position spinner in card details activity -->
-    <string-array name="positions">
+    <array name="sports">
+        <item>Baseball</item>
+        <item>Football</item>
+        <item>Basketball</item>
+    </array>
+
+    <string-array name="baseball_positions">
         <item>Pitcher</item>
         <item>Catcher</item>
         <item>First Base</item>
@@ -97,6 +103,44 @@
         <item>Center Field</item>
         <item>Right Field</item>
     </string-array>
+
+    <array name="football_positions">
+        <item>Center</item>
+        <item>Guard</item>
+        <item>Tackle</item>
+        <item>Quarterback</item>
+        <item>Halfback</item>
+        <item>Full Back</item>
+        <item>Running Back</item>
+        <item>Wide Reciever</item>
+        <item>Slot Back</item>
+        <item>Tight End</item>
+        <item>Defensive Tackle</item>
+        <item>Defensive End</item>
+        <item>Linebacker</item>
+        <item>Cornerback</item>
+        <item>Safety</item>
+        <item>Nickelback</item>
+        <item>Dimeback</item>
+        <item>Kicker</item>
+        <item>Holder</item>
+        <item>Long Snapper</item>
+        <item>Punter</item>
+        <item>Kickoff Specialist</item>
+        <item>Punt Returner</item>
+        <item>Kick Returner</item>
+        <item>Upback</item>
+        <item>Gunner</item>
+        <item>Jammer</item>
+    </array>
+
+    <array name="basketball_positions">
+        <item>Point Guard</item>
+        <item>Shooting Guard</item>
+        <item>Small Forward</item>
+        <item>Power Forward</item>
+        <item>Center</item>
+    </array>
 
     <!-- Strings for card condition -->
     <string-array name="condition">

@@ -41,22 +41,59 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import bbct.android.common.R;
 import bbct.android.common.activity.util.DialogUtil;
+import bbct.android.common.activity.util.ViewUtil;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.provider.BaseballCardContract;
 import bbct.android.common.provider.SingleColumnCursorAdapter;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Allows user to add a new card or view and edit details of an existing card.
  */
 public class BaseballCardDetails extends Fragment {
 
+    private static final String TAG = BaseballCardDetails.class.getName();
     private static final String SPORT = "sport";
     private static final String ID = "id";
     private static final String CARD = "card";
 
-    public static BaseballCardDetails getInstance(long id, BaseballCard card) {
+    private static final String BASEBALL = "Baseball";
+    private static final String FOOTBALL = "Football";
+    private static final String BASKETBALL = "Basketball";
+    private static Map<String, Integer> positions;
+
+    private CheckBox autographCheckBox = null;
+    private Spinner conditionSpinner = null;
+    private AutoCompleteTextView brandText = null;
+    private EditText yearText = null;
+    private EditText numberText = null;
+    private EditText valueText = null;
+    private EditText countText = null;
+    private AutoCompleteTextView playerNameText = null;
+    private AutoCompleteTextView teamText = null;
+    private Spinner playerPositionSpinner = null;
+    private ArrayAdapter<CharSequence> conditionAdapter;
+    private ArrayAdapter<CharSequence> positionsAdapter;
+    private Uri uri = null;
+    private boolean isUpdating = false;
+    private long cardId = -1L;
+    private String sport = BASEBALL;
+
+    public static BaseballCardDetails getInstance(String sport) {
+        Bundle args = new Bundle();
+        args.putString(SPORT, sport);
+
+        BaseballCardDetails details = new BaseballCardDetails();
+        details.setArguments(args);
+
+        return details;
+    }
+
+    public static BaseballCardDetails getInstance(long id, String sport, BaseballCard card) {
         Bundle args = new Bundle();
         args.putLong(ID, id);
+        args.putString(SPORT, sport);
         args.putSerializable(CARD, card);
 
         BaseballCardDetails details = new BaseballCardDetails();
@@ -70,10 +107,27 @@ public class BaseballCardDetails extends Fragment {
         super.onCreate(savedInstanceState);
 
         this.setHasOptionsMenu(true);
+
+        if (positions == null) {
+            positions = new HashMap<String, Integer>();
+
+            positions.put(BASEBALL, R.array.baseball_positions);
+            positions.put(FOOTBALL, R.array.football_positions);
+            positions.put(BASKETBALL, R.array.basketball_positions);
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Bundle args = this.getArguments();
+        long id = -1;
+        BaseballCard card = null;
+        if (args != null) {
+            id = args.getLong(ID);
+            card = (BaseballCard) args.getSerializable(CARD);
+            this.sport = args.getString(SPORT);
+        }
+
         View view = inflater.inflate(R.layout.card_details, container, false);
 
         String cardDetailsTitle = this.getString(R.string.card_details_title);
@@ -82,7 +136,8 @@ public class BaseballCardDetails extends Fragment {
 
         this.autographCheckBox = (CheckBox) view.findViewById(R.id.autograph);
 
-        this.conditionSpinner = this.populateSpinner(view, R.id.condition, R.array.condition);
+        this.conditionSpinner = ViewUtil.populateSpinner(this.getActivity(), view, R.id.condition,
+                R.array.condition);
         this.conditionAdapter = (ArrayAdapter<CharSequence>) this.conditionSpinner.getAdapter();
 
         this.brandText = (AutoCompleteTextView) view.findViewById(R.id.brand_text);
@@ -105,19 +160,12 @@ public class BaseballCardDetails extends Fragment {
                 BaseballCardContract.TEAM_COL_NAME);
         this.teamText.setAdapter(teamAdapter);
 
-        this.playerPositionSpinner = this.populateSpinner(view, R.id.player_position_text,
-                R.array.positions);
+        this.playerPositionSpinner = ViewUtil.populateSpinner(this.getActivity(), view,
+                R.id.player_position_text, positions.get(this.sport));
         this.positionsAdapter = (ArrayAdapter<CharSequence>) this.playerPositionSpinner.getAdapter();
 
-        Bundle args = this.getArguments();
-        if (args != null) {
-            long id = args.getLong(ID);
-            BaseballCard card = (BaseballCard) args.getSerializable(CARD);
-            this.sport = args.getString(SPORT);
-
-            if (card != null) {
-                this.setCard(id, card);
-            }
+        if (card != null) {
+            this.setCard(id, card);
         }
 
         this.uri = BaseballCardContract.getUri(this.getActivity().getPackageName());
@@ -176,16 +224,6 @@ public class BaseballCardDetails extends Fragment {
                 .replace(R.id.fragment_holder, list, FragmentTags.CARD_LIST)
                 .addToBackStack(FragmentTags.CARD_LIST)
                 .commit();
-    }
-
-    private Spinner populateSpinner(View view, int spinnerId, int araryId) {
-        Spinner spinner = (Spinner) view.findViewById(spinnerId);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-                this.getActivity(), araryId, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
-
-        return spinner;
     }
 
     private BaseballCard getBaseballCard() {
@@ -311,23 +349,5 @@ public class BaseballCardDetails extends Fragment {
             }
         }
     }
-
-    private CheckBox autographCheckBox = null;
-    private Spinner conditionSpinner = null;
-    private AutoCompleteTextView brandText = null;
-    private EditText yearText = null;
-    private EditText numberText = null;
-    private EditText valueText = null;
-    private EditText countText = null;
-    private AutoCompleteTextView playerNameText = null;
-    private AutoCompleteTextView teamText = null;
-    private Spinner playerPositionSpinner = null;
-    private ArrayAdapter<CharSequence> conditionAdapter;
-    private ArrayAdapter<CharSequence> positionsAdapter;
-    private Uri uri = null;
-    private boolean isUpdating = false;
-    private long cardId = -1L;
-    private String sport;
-    private static final String TAG = BaseballCardDetails.class.getName();
 
 }

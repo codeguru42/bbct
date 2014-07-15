@@ -88,7 +88,7 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
                 + BaseballCardContract.PLAYER_POSITION_COL_NAME + " TEXT,"
                 + BaseballCardContract.AUTOGRAPHED_COL_NAME + " INTEGER,"
                 + BaseballCardContract.CONDITION_COL_NAME + " TEXT,"
-                + BaseballCardContract.SPORT_COL_NAME + " TEXT";
+                + BaseballCardContract.SPORT_COL_NAME + " TEXT)";
 
         db.execSQL(sqlCreate);
     }

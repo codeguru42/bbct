@@ -33,12 +33,15 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.Checkable;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import bbct.android.common.R;
 import bbct.android.common.activity.util.BaseballCardMultiChoiceModeListener;
+import bbct.android.common.activity.util.ViewUtil;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.provider.BaseballCardAdapter;
 import bbct.android.common.provider.BaseballCardContract;
@@ -96,6 +99,23 @@ public class BaseballCardList extends ListFragment {
         Log.d(TAG, "onCreateView()");
 
         View view = inflater.inflate(R.layout.card_list, container, false);
+
+        this.sportSpinner = (Spinner) view.findViewById(R.id.sport_spinner);
+        if (this.sportSpinner != null) {
+            this.sportSpinner = ViewUtil.populateSpinner(this.getActivity(), view, R.id.sport_spinner,
+                    R.array.sports);
+            this.sportSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                    applyFilter(filterParams);
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+        }
 
         this.emptyList = (TextView) view.findViewById(android.R.id.empty);
 
@@ -177,7 +197,8 @@ public class BaseballCardList extends ListFragment {
         int itemId = item.getItemId();
 
         if (itemId == R.id.add_menu) {
-            BaseballCardDetails details = new BaseballCardDetails();
+            String sport = (String) this.sportSpinner.getSelectedItem();
+            BaseballCardDetails details = BaseballCardDetails.getInstance(sport);
             this.getActivity().getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragment_holder, details, FragmentTags.EDIT_CARD)
@@ -238,8 +259,9 @@ public class BaseballCardList extends ListFragment {
         }
 
         BaseballCard card = BaseballCardList.this.adapter.getItem(position - 1);
+        String sport = (String) BaseballCardList.this.sportSpinner.getSelectedItem();
 
-        Fragment details = BaseballCardDetails.getInstance(id, card);
+        Fragment details = BaseballCardDetails.getInstance(id, sport, card);
         this.getActivity().getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragment_holder, details, FragmentTags.EDIT_CARD)
@@ -280,17 +302,19 @@ public class BaseballCardList extends ListFragment {
             this.emptyList.setText(R.string.empty_list);
         }
 
-        StringBuilder sb = null;
-        String[] args = null;
+        StringBuilder sb = new StringBuilder();
+        sb.append(BaseballCardContract.SPORT_SELECTION);
+        String[] args;
 
-        if (this.filterParams != null) {
-            sb = new StringBuilder();
-            args = new String[this.filterParams.size()];
-
-            int numQueries = 0;
+        if (this.filterParams == null) {
+            args = new String[1];
+        } else {
+            args = new String[this.filterParams.size() + 1];
+            int numQueries = 1;
             for (String key : this.filterParams.keySet()) {
                 String value = this.filterParams.getString(key);
 
+                sb.append(" AND ");
                 if (key.equals(FilterCards.YEAR_EXTRA)) {
                     sb.append(BaseballCardContract.YEAR_SELECTION);
                 } else if (key.equals(FilterCards.BRAND_EXTRA)) {
@@ -307,18 +331,14 @@ public class BaseballCardList extends ListFragment {
 
                 args[numQueries] = value;
                 numQueries++;
-
-                if (numQueries < args.length) {
-                    sb.append(" AND ");
-                }
             }
         }
 
+        args[0] = (String) this.sportSpinner.getSelectedItem();
         Cursor cursor = this
                 .getActivity()
                 .getContentResolver()
-                .query(this.uri, BaseballCardContract.PROJECTION,
-                        sb == null ? null : sb.toString(), args, null);
+                .query(this.uri, BaseballCardContract.PROJECTION, sb.toString(), args, null);
         this.swapCursor(cursor);
     }
 
@@ -356,5 +376,6 @@ public class BaseballCardList extends ListFragment {
     private Uri uri = null;
     private Bundle filterParams = null;
     private BaseballCardMultiChoiceModeListener mCallbacks;
+    private Spinner sportSpinner;
 
 }
