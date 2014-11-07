@@ -46,6 +46,8 @@ import bbct.android.common.provider.BaseballCardAdapter;
 import bbct.android.common.provider.BaseballCardContract;
 import bbct.android.common.provider.BaseballCardLoaderCallbacks;
 import bbct.android.common.view.HeaderView;
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 /**
  * Displays a list of all baseball cards stored in the database.
@@ -53,6 +55,27 @@ import bbct.android.common.view.HeaderView;
  * TODO: Make list fancier
  */
 public class BaseballCardList extends ListFragment {
+
+    private static final String[] ROW_PROJECTION = {
+            BaseballCardContract.BRAND_COL_NAME,
+            BaseballCardContract.YEAR_COL_NAME,
+            BaseballCardContract.NUMBER_COL_NAME,
+            BaseballCardContract.PLAYER_NAME_COL_NAME};
+    private static final int[] ROW_TEXT_VIEWS = {R.id.brand_text_view,
+            R.id.year_text_view, R.id.number_text_view,
+            R.id.player_name_text_view};
+    private static final int LOADER_ID = 42;
+    private static final String FILTER_PARAMS = "filterParams";
+    private static final String TAG = BaseballCardList.class.getName();
+
+    @InjectView(android.R.id.empty) TextView emptyList = null;
+    @InjectView(android.R.id.list) ListView listView;
+
+    private BaseballCardAdapter adapter = null;
+    private Uri uri = null;
+    private Bundle filterParams = null;
+    private BaseballCardMultiChoiceModeListener mCallbacks;
+    private LoaderManager.LoaderCallbacks<Cursor> loaderCallbacks;
 
     public static BaseballCardList getInstance(Bundle filterArgs) {
         BaseballCardList cardList = new BaseballCardList();
@@ -97,18 +120,16 @@ public class BaseballCardList extends ListFragment {
         Log.d(TAG, "onCreateView()");
 
         View view = inflater.inflate(R.layout.card_list, container, false);
+        ButterKnife.inject(this, view);
 
-        this.emptyList = (TextView) view.findViewById(android.R.id.empty);
-
-        final ListView listView = (ListView) view.findViewById(android.R.id.list);
         View headerView = new HeaderView(this.getActivity());
-        CheckBox selectAll = (CheckBox) headerView.findViewById(R.id.select_all);
+        CheckBox selectAll = ButterKnife.findById(headerView, R.id.select_all);
         selectAll.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (!mCallbacks.isStarted()) {
+                if (isChecked && !mCallbacks.isStarted()) {
                     BaseballCardList.this.getActivity().startActionMode(mCallbacks);
-                } else {
+                } else if (mCallbacks.isStarted()) {
                     mCallbacks.finish();
                 }
 
@@ -281,26 +302,73 @@ public class BaseballCardList extends ListFragment {
         }
     }
 
-    private static final String[] ROW_PROJECTION = {
-            BaseballCardContract.BRAND_COL_NAME,
-            BaseballCardContract.YEAR_COL_NAME,
-            BaseballCardContract.NUMBER_COL_NAME,
-            BaseballCardContract.PLAYER_NAME_COL_NAME};
+    protected void applyFilter(Bundle filterParams) {
+        Log.d(TAG, "applyFilter()");
 
-    private static final int[] ROW_TEXT_VIEWS = {R.id.brand_text_view,
-            R.id.year_text_view, R.id.number_text_view,
-            R.id.player_name_text_view};
+        this.filterParams = filterParams;
 
-    private static final int LOADER_ID = 42;
+        if (this.filterParams == null) {
+            this.emptyList.setText(R.string.start);
+        } else {
+            this.emptyList.setText(R.string.empty_list);
+        }
 
-    public static final String FILTER_PARAMS = "filterParams";
+        StringBuilder sb = null;
+        String[] args = null;
 
-    private static final String TAG = BaseballCardList.class.getName();
-    private TextView emptyList = null;
-    private BaseballCardAdapter adapter = null;
-    private Bundle filterParams = null;
-    private BaseballCardMultiChoiceModeListener mCallbacks;
-    private LoaderManager.LoaderCallbacks<Cursor> loaderCallbacks;
+        if (this.filterParams != null) {
+            sb = new StringBuilder();
+            args = new String[this.filterParams.size()];
 
+            int numQueries = 0;
+            for (String key : this.filterParams.keySet()) {
+                String value = this.filterParams.getString(key);
+
+                if (key.equals(FilterCards.YEAR_EXTRA)) {
+                    sb.append(BaseballCardContract.YEAR_SELECTION);
+                } else if (key.equals(FilterCards.BRAND_EXTRA)) {
+                    sb.append(BaseballCardContract.BRAND_SELECTION);
+                } else if (key.equals(FilterCards.NUMBER_EXTRA)) {
+                    sb.append(BaseballCardContract.NUMBER_SELECTION);
+                } else if (key.equals(FilterCards.PLAYER_NAME_EXTRA)) {
+                    sb.append(BaseballCardContract.PLAYER_NAME_SELECTION);
+                } else if (key.equals(FilterCards.TEAM_EXTRA)) {
+                    sb.append(BaseballCardContract.TEAM_SELECTION);
+                } else {
+                    Log.e(TAG, "Invalid key: " + key);
+                }
+
+                args[numQueries] = value;
+                numQueries++;
+
+                if (numQueries < args.length) {
+                    sb.append(" AND ");
+                }
+            }
+        }
+
+        Cursor cursor = this
+                .getActivity()
+                .getContentResolver()
+                .query(this.uri, BaseballCardContract.PROJECTION,
+                        sb == null ? null : sb.toString(), args, null);
+        this.swapCursor(cursor);
+    }
+
+    @SuppressWarnings("deprecation")
+    private void swapCursor(Cursor newCursor) {
+        Log.d(TAG, "swapCursor()");
+        Cursor oldCursor = this.adapter.getCursor();
+        this.getActivity().stopManagingCursor(oldCursor);
+
+        if (newCursor != null) {
+            this.getActivity().startManagingCursor(newCursor);
+            this.adapter.changeCursor(newCursor);
+        }
+
+        if (oldCursor != null) {
+            oldCursor.close();
+        }
+    }
 
 }
