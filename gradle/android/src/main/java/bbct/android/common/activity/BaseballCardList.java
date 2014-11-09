@@ -144,15 +144,18 @@ public class BaseballCardList extends ListFragment {
         listView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
         listView.setMultiChoiceModeListener(mCallbacks);
         this.adapter.setActionModeCallback(mCallbacks);
+        this.startLoader();
 
+        return view;
+    }
+
+    private void startLoader() {
         LoaderManager loaderManager = this.getActivity().getSupportLoaderManager();
         if (loaderManager.getLoader(LOADER_ID) == null) {
             loaderManager.initLoader(LOADER_ID, this.filterParams, this.loaderCallbacks);
         } else {
             loaderManager.restartLoader(LOADER_ID, this.filterParams, this.loaderCallbacks);
         }
-
-        return view;
     }
 
     /**
@@ -221,12 +224,8 @@ public class BaseballCardList extends ListFragment {
             return true;
         } else if (itemId == R.id.clear_filter_menu) {
             this.emptyList.setText(R.string.start);
-            LoaderManager loaderManager = this.getActivity().getSupportLoaderManager();
-            if (loaderManager.getLoader(LOADER_ID) == null) {
-                loaderManager.initLoader(LOADER_ID, null, this.loaderCallbacks);
-            } else {
-                loaderManager.restartLoader(LOADER_ID, null, this.loaderCallbacks);
-            }
+            this.filterParams = null;
+            this.startLoader();
 
             this.getActivity().supportInvalidateOptionsMenu();
 
