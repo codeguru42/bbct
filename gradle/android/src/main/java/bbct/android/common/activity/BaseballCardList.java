@@ -72,7 +72,6 @@ public class BaseballCardList extends ListFragment {
     @InjectView(android.R.id.list) ListView listView;
 
     private BaseballCardAdapter adapter = null;
-    private Uri uri = null;
     private Bundle filterParams = null;
     private BaseballCardMultiChoiceModeListener mCallbacks;
     private LoaderManager.LoaderCallbacks<Cursor> loaderCallbacks;
