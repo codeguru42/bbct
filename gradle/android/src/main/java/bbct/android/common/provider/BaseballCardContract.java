@@ -85,6 +85,16 @@ public final class BaseballCardContract {
      * The column name for the card condition.
      */
     public static final String CONDITION_COL_NAME = "condition";
+	
+    /**
+     * The column name for the path to picture of the front of the card.
+     */
+    public static final String PATH_TO_PICTURE_FRONT = "picture_front_path";
+
+    /**
+     * The column name for the path to picture of the back of the card.
+     */
+    public static final String PATH_TO_PICTURE_BACK = "picture_back_path";
 
     /**
      * The column name for the card brand.
@@ -133,7 +143,8 @@ public final class BaseballCardContract {
     public static final String[] PROJECTION = { ID_COL_NAME,
             AUTOGRAPHED_COL_NAME, CONDITION_COL_NAME, BRAND_COL_NAME,
             YEAR_COL_NAME, NUMBER_COL_NAME, VALUE_COL_NAME, COUNT_COL_NAME,
-            PLAYER_NAME_COL_NAME, TEAM_COL_NAME, PLAYER_POSITION_COL_NAME };
+            PLAYER_NAME_COL_NAME, TEAM_COL_NAME, PLAYER_POSITION_COL_NAME,
+            PATH_TO_PICTURE_FRONT, PATH_TO_PICTURE_BACK };
 
     public static final String INT_SELECTION_FORMAT = "%s = ?";
 
@@ -192,6 +203,10 @@ public final class BaseballCardContract {
         cv.put(BaseballCardContract.TEAM_COL_NAME, card.getTeam());
         cv.put(BaseballCardContract.PLAYER_POSITION_COL_NAME,
                 card.getPlayerPosition());
+        cv.put(BaseballCardContract.PATH_TO_PICTURE_FRONT,
+                card.getPathToPictureFront());
+        cv.put(BaseballCardContract.PATH_TO_PICTURE_BACK,
+                card.getPathToPictureBack());
         return cv;
     }
 
@@ -235,9 +250,13 @@ public final class BaseballCardContract {
                 .getColumnIndex(BaseballCardContract.TEAM_COL_NAME));
         String position = cursor.getString(cursor
                 .getColumnIndex(BaseballCardContract.PLAYER_POSITION_COL_NAME));
+        String pathToFrontPicture = cursor.getString(cursor
+                .getColumnIndex(BaseballCardContract.PATH_TO_PICTURE_FRONT));
+        String pathToBackPicture = cursor.getString(cursor
+                .getColumnIndex(BaseballCardContract.PATH_TO_PICTURE_BACK));
 
         return new BaseballCard(autographed, condition, brand, year, number,
-                value, count, name, team, position);
+                value, count, name, team, position, pathToFrontPicture, pathToBackPicture);
     }
 
     /**

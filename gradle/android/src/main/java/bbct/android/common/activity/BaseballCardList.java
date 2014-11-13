@@ -71,8 +71,7 @@ public class BaseballCardList extends ListFragment {
 
         super.onCreate(savedInstanceState);
 
-        this.adapter = new BaseballCardAdapter(this.getActivity(),
-                R.layout.baseball_card, null, ROW_PROJECTION, ROW_TEXT_VIEWS);
+        fillBaseballCardsListOnCreate();
 
         Log.d(TAG, "  adapter=" + this.adapter);
 
@@ -101,7 +100,7 @@ public class BaseballCardList extends ListFragment {
 
         final ListView listView = (ListView) view.findViewById(android.R.id.list);
         View headerView = new HeaderView(this.getActivity());
-        headerView.findViewById(R.id.select_all)
+        /*headerView.findViewById(R.id.select_all)
                 .setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -114,7 +113,7 @@ public class BaseballCardList extends ListFragment {
                         Checkable ctv = (Checkable) v;
                         BaseballCardList.this.setAllChecked(ctv.isChecked());
                     }
-                });
+                });*/
         listView.addHeaderView(headerView);
         this.setListAdapter(this.adapter);
         this.adapter.setListFragment(this);
@@ -126,6 +125,16 @@ public class BaseballCardList extends ListFragment {
         this.applyFilter(this.filterParams);
 
         return view;
+    }
+
+    /**
+     * Creates an adapter and fills the rows with values. This
+     * method should be overridden and called from onCreate to
+     * query and display any extra fields.
+     */
+    protected void fillBaseballCardsListOnCreate() {
+        this.adapter = new BaseballCardAdapter(this.getActivity(), R.layout.row, null,
+                ROW_PROJECTION, ROW_TEXT_VIEWS);
     }
 
     /**
@@ -352,7 +361,7 @@ public class BaseballCardList extends ListFragment {
 
     private static final String TAG = BaseballCardList.class.getName();
     private TextView emptyList = null;
-    private BaseballCardAdapter adapter = null;
+    protected BaseballCardAdapter adapter = null;
     private Uri uri = null;
     private Bundle filterParams = null;
     private BaseballCardMultiChoiceModeListener mCallbacks;

@@ -21,6 +21,7 @@ package bbct.android.common.activity;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.SQLException;
 import android.net.Uri;
 import android.os.Bundle;
@@ -37,6 +38,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 import bbct.android.common.R;
@@ -50,9 +52,9 @@ import bbct.android.common.provider.SingleColumnCursorAdapter;
  */
 public class BaseballCardDetails extends Fragment {
 
-    private static String ID = "id";
+    protected static String ID = "id";
 
-    private static String CARD = "card";
+    protected static String CARD = "card";
 
     public static BaseballCardDetails getInstance(long id, BaseballCard card) {
         Bundle args = new Bundle();
@@ -110,12 +112,20 @@ public class BaseballCardDetails extends Fragment {
                 R.array.positions);
         this.positionsAdapter = (ArrayAdapter<CharSequence>) this.playerPositionSpinner
                 .getAdapter();
+        this.imageCardDetailsFront = (ImageView) view.findViewById(R.id.image_card_details_front);
+        this.imageCardDetailsBack = (ImageView) view.findViewById(R.id.image_card_details_back);
+        this.imageCardDetailsFront.setOnClickListener(this.onImageCardDetailsFrontClick);
+        this.imageCardDetailsBack.setOnClickListener(this.onImageCardDetailsBackClick);
 
         Bundle args = this.getArguments();
         if (args != null) {
+            boolean isUpdating = false;
             long id = args.getLong(ID);
             BaseballCard card = (BaseballCard) args.getSerializable(CARD);
-            this.setCard(id, card);
+            if (id > 0) {
+               isUpdating = true;
+            }
+            this.setCard(id, card, isUpdating);
         }
 
         this.uri = BaseballCardContract.getUri(this.getActivity().getPackageName());
@@ -123,8 +133,8 @@ public class BaseballCardDetails extends Fragment {
         return view;
     }
 
-    private void setCard(long cardId, BaseballCard card) {
-        this.isUpdating = true;
+    private void setCard(long cardId, BaseballCard card, boolean isUpdating) {
+        this.isUpdating = isUpdating;
         this.cardId = cardId;
         this.autographCheckBox.setChecked(card.isAutographed());
 
@@ -133,11 +143,23 @@ public class BaseballCardDetails extends Fragment {
         this.conditionSpinner.setSelection(selectedCondition);
 
         this.brandText.setText(card.getBrand());
-        this.yearText.setText(Integer.toString(card.getYear()));
-        this.numberText.setText(Integer.toString(card.getNumber()));
-        this.valueText
-                .setText(Double.toString(card.getValue() / 100.0));
-        this.countText.setText(Integer.toString(card.getCount()));
+        int year = card.getYear();
+        if (year > 0) {
+            this.yearText.setText(Integer.toString(year));
+        }
+        int number = card.getNumber();
+        if (number > 0) {
+            this.numberText.setText(Integer.toString(number));
+        }
+        double value = card.getValue();
+        if (value > 0.0) {
+            this.valueText
+                    .setText(Double.toString(value / 100.0));
+        }
+        int count = card.getCount();
+        if (count > 0) {
+            this.countText.setText(Integer.toString(card.getCount()));
+        }
         this.playerNameText.setText(card.getPlayerName());
         this.teamText.setText(card.getTeam());
 
@@ -186,7 +208,7 @@ public class BaseballCardDetails extends Fragment {
         return spinner;
     }
 
-    private BaseballCard getBaseballCard() {
+    protected BaseballCard getBaseballCard() {
         Log.d(TAG, "getBaseballCard()");
 
         EditText[] allEditTexts = { this.brandText, this.yearText,
@@ -226,10 +248,45 @@ public class BaseballCardDetails extends Fragment {
             String playerName = this.playerNameText.getText().toString();
             return new BaseballCard(autographed, condition, brand, year,
                     number, (int) (value * 100), count, playerName, team,
-                    playerPosition);
+                    playerPosition, "", "");
         } else {
             return null;
         }
+    }
+
+    protected BaseballCard getLocalBaseballCard() {
+        Log.d(TAG, "getCurrentBaseballCard()");
+
+        boolean autographed = this.autographCheckBox.isChecked();
+        String condition = (String) this.conditionSpinner.getSelectedItem();
+        String playerPosition = (String) this.playerPositionSpinner
+                .getSelectedItem();
+        String brand = this.brandText.getText().toString();
+        String yearStr = this.yearText.getText().toString();
+        int year = -1;
+        if(yearStr.equals("") == false) {
+            year = Integer.parseInt(yearStr);
+        }
+        String numberStr = this.numberText.getText().toString();
+        int number = -1;
+        if(numberStr.equals("") == false) {
+            number = Integer.parseInt(numberStr);
+        }
+        String valueStr = this.valueText.getText().toString();
+        double value = -1;
+        if(valueStr.equals("") == false) {
+            value = Double.parseDouble(valueStr);
+        }
+        String countStr = this.countText.getText().toString();
+        int count = -1;
+        if(countStr.equals("") == false) {
+            count = Integer.parseInt(countStr);
+        }
+        String team = this.teamText.getText().toString();
+        String playerName = this.playerNameText.getText().toString();
+        return new BaseballCard(autographed, condition, brand, year,
+                number, (int) (value * 100), count, playerName, team,
+                playerPosition, "", "");
     }
 
     /**
@@ -278,21 +335,34 @@ public class BaseballCardDetails extends Fragment {
         this.teamText.setText("");
         this.playerPositionSpinner.setSelection(-1);
     }
-
-    private void onSave() {
+    
+    /**
+     * Default listener to handle save button click event
+     */
+    protected void onSave() {
+            BaseballCard card = getBaseballCard();
+            saveCard(card);
+    };
+    
+    /**
+    * Saves the given {@link BaseballCard} card object and
+    * notifies the result in the given view {@link View}
+    * @param card
+    *            The card {@link BaseballCard} object to be saved.
+    */
+    protected void saveCard(BaseballCard card) {
         ContentResolver resolver = this.getActivity().getContentResolver();
-        BaseballCard newCard = this.getBaseballCard();
-
-        if (newCard != null) {
+        
+		if (card != null) {
             if (this.isUpdating) {
                 Uri uri = ContentUris.withAppendedId(this.uri, this.cardId);
                 resolver.update(uri,
-                        BaseballCardContract.getContentValues(newCard), null,
+                        BaseballCardContract.getContentValues(card), null,
                         null);
             } else {
                 try {
                     ContentValues values = BaseballCardContract
-                            .getContentValues(newCard);
+                            .getContentValues(card);
                     resolver.insert(this.uri, values);
 
                     this.resetInput();
@@ -310,16 +380,50 @@ public class BaseballCardDetails extends Fragment {
         }
     }
 
-    private CheckBox autographCheckBox = null;
-    private Spinner conditionSpinner = null;
-    private AutoCompleteTextView brandText = null;
-    private EditText yearText = null;
-    private EditText numberText = null;
-    private EditText valueText = null;
-    private EditText countText = null;
-    private AutoCompleteTextView playerNameText = null;
-    private AutoCompleteTextView teamText = null;
-    private Spinner playerPositionSpinner = null;
+    /**
+     * Shows the notification to upgrade to premium version.
+     *
+     * @param context
+     *            The context {@link Context} object on which the user should be notified
+     */
+    private void handleTakePictureonClick(Context context) {
+        Toast.makeText(context, R.string.card_upgrade_premium, Toast.LENGTH_LONG).show();
+    }
+
+    /**
+     * Default listener to handle front image click event
+     */
+    private View.OnClickListener onImageCardDetailsFrontClick = new View.OnClickListener() {
+
+        @Override
+        public void onClick(View v) {
+            handleTakePictureonClick(v.getContext());
+        }
+    };
+
+    /**
+     * Default listener to handle back image click event
+     */
+    private View.OnClickListener onImageCardDetailsBackClick = new View.OnClickListener() {
+
+        @Override
+        public void onClick(View v) {
+            handleTakePictureonClick(v.getContext());
+        }
+    };
+
+    protected ImageView imageCardDetailsFront = null;
+    protected ImageView imageCardDetailsBack = null;
+    protected CheckBox autographCheckBox = null;
+    protected Spinner conditionSpinner = null;
+    protected AutoCompleteTextView brandText = null;
+    protected EditText yearText = null;
+    protected EditText numberText = null;
+    protected EditText valueText = null;
+    protected EditText countText = null;
+    protected AutoCompleteTextView playerNameText = null;
+    protected AutoCompleteTextView teamText = null;
+    protected Spinner playerPositionSpinner = null;
     private ArrayAdapter<CharSequence> conditionAdapter;
     private ArrayAdapter<CharSequence> positionsAdapter;
     private Uri uri = null;

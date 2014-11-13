@@ -18,15 +18,7 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <!-- Dimensions used in card list rows -->
-    <dimen name="brand_col_width">40dp</dimen>
-    <dimen name="year_col_width">25dp</dimen>
-    <dimen name="number_col_width">40dp</dimen>
-    <dimen name="player_name_col_width">60dp</dimen>
-    
-    <!-- Text size used in filter cards activity -->
-    <dimen name="option_size">15sp</dimen>
-
-    <!-- Dimensions used in card details -->
-    <dimen name="image_width">120dp</dimen>
+    <string name="authorities">bbct.android.premium.provider</string>
+    <string name="read_permission">bbct.android.premium.permission.READ</string>
+    <string name="write_permisson">bbct.android.premium.permission.WRITE</string>
 </resources>

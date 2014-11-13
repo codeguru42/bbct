@@ -18,15 +18,10 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
 <resources>
-    <!-- Dimensions used in card list rows -->
-    <dimen name="brand_col_width">40dp</dimen>
-    <dimen name="year_col_width">25dp</dimen>
-    <dimen name="number_col_width">40dp</dimen>
-    <dimen name="player_name_col_width">60dp</dimen>
-    
-    <!-- Text size used in filter cards activity -->
-    <dimen name="option_size">15sp</dimen>
 
-    <!-- Dimensions used in card details -->
-    <dimen name="image_width">120dp</dimen>
+    <string name="import_message">Importando dados da Edição Lite.</string>
+    <string name="import_error">Não conseguiu importar dados da Edição Lite. %1$s</string>
+    <string name="lite_update_message">Por favor atualize a &lt;a href="market://details?id=bbct.android"&gt;Edição Lite&lt;/a&gt;.</string>
+    <string name="lite_not_installed_message">Edição Lite não instalada.</string>
+
 </resources>

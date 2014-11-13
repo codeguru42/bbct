@@ -21,14 +21,17 @@ package bbct.android.common.provider;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Checkable;
 import android.widget.CheckedTextView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import bbct.android.common.BbctPictureHelper;
 import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardList;
 import bbct.android.common.activity.util.BaseballCardMultiChoiceModeListener;
@@ -123,9 +126,32 @@ public class BaseballCardAdapter extends SimpleCursorAdapter {
                 .getColumnIndex(BaseballCardContract.TEAM_COL_NAME));
         String position = cursor.getString(cursor
                 .getColumnIndex(BaseballCardContract.PLAYER_POSITION_COL_NAME));
+        String pathToFrontPicture = cursor.getString(cursor
+                .getColumnIndex(BaseballCardContract.PATH_TO_PICTURE_FRONT));
+        String pathToBackPicture = cursor.getString(cursor
+                .getColumnIndex(BaseballCardContract.PATH_TO_PICTURE_BACK));
 
         return new BaseballCard(autographed, condition, brand, year, number,
-                value, count, name, team, position);
+                value, count, name, team, position, pathToFrontPicture, pathToBackPicture);
     }
-
+	
+	/**
+     * Called by bindView() to set the image for an ImageView but only
+     * if there is no existing ViewBinder or if the existing ViewBinder
+     * cannot handle binding to an ImageView. By default, the value will
+     * be treated as an image resource. If the value cannot be used as an
+     * image resource, the value is used as an image Uri. So this method is overridden
+     * to treat value as the path to the image.
+     *
+     * @param view
+     *          ImageView to receive an image
+     * @param value
+     *          The value retrieved from the data set
+     */
+    @Override
+    public void setViewImage(ImageView view, String value) {
+        BbctPictureHelper pictureHelper = new BbctPictureHelper();
+        Bitmap imageBitmap = pictureHelper.GetScaledImageFromPath(value, view.getWidth(), view.getHeight());
+        view.setImageBitmap(imageBitmap);
+    }
 }

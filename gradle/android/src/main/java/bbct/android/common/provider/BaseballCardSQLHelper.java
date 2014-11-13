@@ -58,6 +58,11 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
     public static final int AUTO_AND_CONDITION_SCHEMA = 4;
 
     /**
+     * Schema versions to add the path to the picture of the card.
+     */
+    public static final int PICTURE_PATH_SCHEMA = 5;
+
+    /**
      * Create a new {@link BaseballCardSQLHelper} with the given Android
      * {@link Context}.
      *
@@ -78,6 +83,8 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
                 + BaseballCardContract.TABLE_NAME + "("
                 + BaseballCardContract.ID_COL_NAME
                 + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + BaseballCardContract.PATH_TO_PICTURE_FRONT + " TEXT, "
+                + BaseballCardContract.PATH_TO_PICTURE_BACK + " TEXT, "
                 + BaseballCardContract.BRAND_COL_NAME + " TEXT, "
                 + BaseballCardContract.YEAR_COL_NAME + " INTEGER, "
                 + BaseballCardContract.NUMBER_COL_NAME + " INTEGER, "
@@ -113,6 +120,15 @@ public class BaseballCardSQLHelper extends SQLiteOpenHelper {
                     + BaseballCardContract.CONDITION_COL_NAME + " TEXT";
             db.execSQL(addAutographed);
             db.execSQL(addCondition);
+        }
+        
+        if (oldVersion < PICTURE_PATH_SCHEMA) {
+            String sqlAlterString = "ALTER TABLE "
+                    + BaseballCardContract.TABLE_NAME + " ADD COLUMN ";
+            String sqlUpgrade = sqlAlterString + BaseballCardContract.PATH_TO_PICTURE_FRONT + " TEXT";                              
+            db.execSQL(sqlUpgrade);
+            sqlUpgrade = sqlAlterString + BaseballCardContract.PATH_TO_PICTURE_BACK + " TEXT";
+            db.execSQL(sqlUpgrade);
         }
     }
 
