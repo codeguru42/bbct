@@ -59,7 +59,6 @@ public class FilterCardsPartialInputTest extends
     private Solo solo = null;
     private Instrumentation inst = null;
     private DatabaseUtil dbUtil = null;
-    @InjectView(android.R.id.list) ListView listView = null;
 
     public static Test suite() {
         TestSuite suite = new TestSuite();
@@ -104,7 +103,6 @@ public class FilterCardsPartialInputTest extends
         this.dbUtil.populateTable(this.allCards);
 
         activity = this.getActivity();
-        ButterKnife.inject(this, activity);
         this.solo = new Solo(this.inst, activity);
     }
 
