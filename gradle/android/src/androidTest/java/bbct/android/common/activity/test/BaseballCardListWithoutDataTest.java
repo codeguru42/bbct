@@ -51,11 +51,9 @@ public class BaseballCardListWithoutDataTest<T extends MainActivity> extends
 
     private Solo solo = null;
     private Instrumentation inst = null;
-    private Activity activity = null;
+    private MainActivity activity = null;
     private BaseballCardCsvFileReader cardInput = null;
     private DatabaseUtil dbUtil = null;
-
-    @InjectView(android.R.id.list) ListView listView;
 
     /**
      * Create instrumented test cases for {@link MainActivity}.
@@ -76,9 +74,7 @@ public class BaseballCardListWithoutDataTest<T extends MainActivity> extends
         super.setUp();
 
         this.inst = this.getInstrumentation();
-
         this.activity = this.getActivity();
-
         this.solo = new Solo(this.inst, this.activity);
 
         InputStream cardInputStream = this.inst.getContext().getAssets()
@@ -145,9 +141,7 @@ public class BaseballCardListWithoutDataTest<T extends MainActivity> extends
         cards.add(card);
 
         this.inst.waitForIdleSync();
-        ButterKnife.inject(this, this.activity);
-        Assert.assertNotNull("ListView not found", listView);
-        BBCTTestUtil.assertListViewContainsItems(cards, listView);
+        BBCTTestUtil.assertListViewContainsItems(cards, activity);
     }
 
     /**
@@ -170,8 +164,7 @@ public class BaseballCardListWithoutDataTest<T extends MainActivity> extends
 
         this.solo.clickOnActionBarHomeButton();
         this.inst.waitForIdleSync();
-        ButterKnife.inject(this, this.activity);
-        BBCTTestUtil.assertListViewContainsItems(cards, listView);
+        BBCTTestUtil.assertListViewContainsItems(cards, activity);
     }
 
 }

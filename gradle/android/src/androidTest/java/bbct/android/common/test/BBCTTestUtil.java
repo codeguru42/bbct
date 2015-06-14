@@ -37,7 +37,10 @@ import android.widget.ScrollView;
 import android.widget.Spinner;
 import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardDetails;
+import bbct.android.common.activity.BaseballCardList;
 import bbct.android.common.activity.FilterCards;
+import bbct.android.common.activity.FragmentTags;
+import bbct.android.common.activity.MainActivity;
 import bbct.android.common.data.BaseballCard;
 import bbct.android.common.provider.BaseballCardSQLHelper;
 import butterknife.ButterKnife;
@@ -61,15 +64,19 @@ final public class BBCTTestUtil {
      *
      * @param expectedItems
      *            A List of the expected {@link BaseballCard} data.
-     * @param listView
-     *            The List view to check for {@link BaseballCard} data.
+     * @param activity
+     *            The activity containing the list view to check for {@link BaseballCard} data.
      */
     public static void assertListViewContainsItems(List<BaseballCard> expectedItems,
-                                                   ListView listView) {
-        // Add 1 to the number of expected cards to account for the header View
-        Assert.assertEquals(expectedItems.size() + 1, listView.getAdapter().getCount());
-
+                                                   MainActivity activity) {
+        BaseballCardList listFragment = (BaseballCardList) activity.getSupportFragmentManager()
+                .findFragmentByTag(FragmentTags.CARD_LIST);
+        ListView listView = listFragment.getListView();
         Adapter adapter = listView.getAdapter();
+
+        // Add 1 to the number of expected cards to account for the header View
+        Assert.assertEquals(expectedItems.size() + 1, adapter.getCount());
+
         for (int i = 0; i < expectedItems.size(); ++i) {
             Assert.assertEquals(expectedItems.get(i), adapter.getItem(i + 1));
         }

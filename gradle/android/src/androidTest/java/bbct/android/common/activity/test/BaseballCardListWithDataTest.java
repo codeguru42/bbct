@@ -59,7 +59,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
 
     private List<BaseballCard> expectedCards;
     private Solo solo = null;
-    private Activity activity = null;
+    private MainActivity activity;
     private BaseballCard newCard = null;
 
     @InjectView(android.R.id.list) ListView listView;
@@ -120,7 +120,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
 
         this.solo.waitForFragmentByTag(FragmentTags.CARD_LIST);
         Assert.assertNotNull(listView);
-        BBCTTestUtil.assertListViewContainsItems(this.allCards, listView);
+        BBCTTestUtil.assertListViewContainsItems(allCards, activity);
     }
 
     /**
@@ -170,7 +170,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
 
         this.inst.waitForIdleSync();
         ButterKnife.inject(this, this.solo.getCurrentActivity());
-        BBCTTestUtil.assertListViewContainsItems(this.allCards, listView);
+        BBCTTestUtil.assertListViewContainsItems(allCards, activity);
     }
 
     /**
@@ -188,7 +188,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
 
         this.inst.waitForIdleSync();
         ButterKnife.inject(this, this.activity);
-        BBCTTestUtil.assertListViewContainsItems(this.expectedCards, listView);
+        BBCTTestUtil.assertListViewContainsItems(expectedCards, activity);
     }
 
     /**
@@ -208,7 +208,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
 
         this.inst.waitForIdleSync();
         ButterKnife.inject(this, this.activity);
-        BBCTTestUtil.assertListViewContainsItems(this.allCards, listView);
+        BBCTTestUtil.assertListViewContainsItems(allCards, activity);
     }
 
     /**
@@ -219,7 +219,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
         this.inst.callActivityOnRestart(this.activity);
         this.inst.waitForIdleSync();
         ButterKnife.inject(this, this.activity);
-        BBCTTestUtil.assertListViewContainsItems(this.allCards, listView);
+        BBCTTestUtil.assertListViewContainsItems(allCards, activity);
     }
 
     /**
@@ -234,7 +234,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
         this.inst.callActivityOnRestart(this.activity);
         this.inst.waitForIdleSync();
         ButterKnife.inject(this, this.activity);
-        BBCTTestUtil.assertListViewContainsItems(this.expectedCards, listView);
+        BBCTTestUtil.assertListViewContainsItems(expectedCards, activity);
     }
 
     /**
@@ -251,7 +251,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
         this.inst.callActivityOnRestart(this.activity);
         this.inst.waitForIdleSync();
         ButterKnife.inject(this, this.activity);
-        BBCTTestUtil.assertListViewContainsItems(this.allCards, listView);
+        BBCTTestUtil.assertListViewContainsItems(allCards, activity);
     }
 
     /**
@@ -318,7 +318,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
         this.allCards.add(this.newCard);
         this.inst.waitForIdleSync();
         ButterKnife.inject(this, this.activity);
-        BBCTTestUtil.assertListViewContainsItems(this.allCards, listView);
+        BBCTTestUtil.assertListViewContainsItems(allCards, activity);
     }
 
     /**
@@ -339,7 +339,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
         this.expectedCards.add(this.newCard);
         this.inst.waitForIdleSync();
         ButterKnife.inject(this, this.activity);
-        BBCTTestUtil.assertListViewContainsItems(this.expectedCards, listView);
+        BBCTTestUtil.assertListViewContainsItems(expectedCards, activity);
     }
 
     /**
@@ -360,7 +360,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
         this.solo.goBack();
         this.inst.waitForIdleSync();
         ButterKnife.inject(this, this.activity);
-        BBCTTestUtil.assertListViewContainsItems(this.expectedCards, listView);
+        BBCTTestUtil.assertListViewContainsItems(expectedCards, activity);
     }
 
     /**
@@ -380,7 +380,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
         this.allCards.add(this.newCard);
         this.inst.waitForIdleSync();
         ButterKnife.inject(this, this.activity);
-        BBCTTestUtil.assertListViewContainsItems(this.allCards, listView);
+        BBCTTestUtil.assertListViewContainsItems(allCards, activity);
     }
 
     /**
@@ -468,7 +468,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
         deleteCards();
 
         ButterKnife.inject(this, this.activity);
-        BBCTTestUtil.assertListViewContainsItems(this.expectedCards, listView);
+        BBCTTestUtil.assertListViewContainsItems(expectedCards, activity);
     }
 
     private void deleteCards() {
@@ -497,7 +497,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
         Assert.assertTrue(this.solo.waitForView(R.id.delete_menu));
 
         deleteCards();
-        BBCTTestUtil.assertListViewContainsItems(this.expectedCards, listView);
+        BBCTTestUtil.assertListViewContainsItems(expectedCards, activity);
     }
 
     /**
@@ -549,7 +549,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
         BBCTTestUtil.testMenuItem(this.solo, R.id.clear_filter_menu, FragmentTags.CARD_LIST);
         this.inst.waitForIdleSync();
         ButterKnife.inject(this, this.activity);
-        BBCTTestUtil.assertListViewContainsItems(this.allCards, listView);
+        BBCTTestUtil.assertListViewContainsItems(allCards, activity);
     }
 
     /**
@@ -571,7 +571,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
         this.expectedCards = BBCTTestUtil.filterList(this.allCards, filterPred);
         this.inst.waitForIdleSync();
         ButterKnife.inject(this, this.activity);
-        BBCTTestUtil.assertListViewContainsItems(this.expectedCards, listView);
+        BBCTTestUtil.assertListViewContainsItems(expectedCards, activity);
 
         Assert.assertTrue(this.solo.waitForView(R.id.clear_filter_menu));
     }

@@ -53,6 +53,7 @@ public class FilterCardsPartialInputTest extends
     private static final String TEST_NAME = "testFilterCombination";
     private final Set<BBCTTestUtil.EditTexts> inputFieldsMask;
 
+    private MainActivity activity;
     private List<BaseballCard> allCards;
     private BaseballCard testCard;
     private Solo solo = null;
@@ -102,7 +103,7 @@ public class FilterCardsPartialInputTest extends
         this.dbUtil = new DatabaseUtil(this.inst.getTargetContext());
         this.dbUtil.populateTable(this.allCards);
 
-        Activity activity = this.getActivity();
+        activity = this.getActivity();
         ButterKnife.inject(this, activity);
         this.solo = new Solo(this.inst, activity);
     }
@@ -159,7 +160,7 @@ public class FilterCardsPartialInputTest extends
 
         this.inst.waitForIdleSync();
         List<BaseballCard> expectedCards = BBCTTestUtil.filterList(this.allCards, filterPred);
-        BBCTTestUtil.assertListViewContainsItems(expectedCards, this.listView);
+        BBCTTestUtil.assertListViewContainsItems(expectedCards, activity);
     }
 
 }
