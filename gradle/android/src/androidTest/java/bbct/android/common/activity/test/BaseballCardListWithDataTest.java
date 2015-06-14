@@ -176,11 +176,8 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
     /**
      * Test that a {@link BaseballCardList} activity with an active filter will
      * be correctly restored after it is destroyed.
-     *
-     * @throws Throwable If an error occurs while the portion of the test on the UI
-     *                   thread runs.
      */
-    public void testStateDestroyWithFilter() throws Throwable {
+    public void testStateDestroyWithFilter() {
         this.testYearFilter();
         this.activity.finish();
         Assert.assertTrue(this.activity.isFinishing());
@@ -196,11 +193,8 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
      * will be correctly restored after it is destroyed. This tests differs from
      * {@link #testStateDestroyWithoutFilter()} because a filter is applied and
      * then cleared before the activity is destroyed.
-     *
-     * @throws Throwable If an error occurs while the portion of the test on the UI
-     *                   thread runs.
      */
-    public void testStateDestroyClearFilter() throws Throwable {
+    public void testStateDestroyClearFilter() {
         this.testClearFilter();
         this.activity.finish();
         Assert.assertTrue(this.activity.isFinishing());
@@ -225,11 +219,8 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
     /**
      * Test that a {@link BaseballCardList} activity with an active filter will
      * be correctly restored after it is paused.
-     *
-     * @throws Throwable If an error occurs while the portion of the test on the UI
-     *                   thread runs.
      */
-    public void testStatePauseWithFilter() throws Throwable {
+    public void testStatePauseWithFilter() {
         this.testYearFilter();
         this.inst.callActivityOnRestart(this.activity);
         this.inst.waitForIdleSync();
@@ -242,11 +233,8 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
      * will be correctly restored after it is destroyed. This tests differs from
      * {@link #testStatePauseWithoutFilter()} because a filter is applied and
      * then cleared before the activity is paused.
-     *
-     * @throws Throwable If an error occurs while the portion of the test on the UI
-     *                   thread runs.
      */
-    public void testStatePauseClearFilter() throws Throwable {
+    public void testStatePauseClearFilter() {
         this.testClearFilter();
         this.inst.callActivityOnRestart(this.activity);
         this.inst.waitForIdleSync();
@@ -259,11 +247,8 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
      * {@link BaseballCardList} activity, a {@link BaseballCardDetails} activity
      * is launched with its {@link EditText} views populated with the correct
      * data.
-     *
-     * @throws Throwable If an error occurs while the portion of the test on the UI
-     *                   thread runs.
      */
-    public void testOnListItemClick() throws Throwable {
+    public void testOnListItemClick() {
         Log.d(TAG, "testOnListItemClick()");
 
         int cardIndex = 3;
@@ -285,10 +270,8 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
      *
      * @throws IOException If an error occurs while reading baseball card data from an
      *                     asset file.
-     * @throws Throwable   If an error occurs while the portion of the test on the UI
-     *                     thread runs.
      */
-    public void testAddDuplicateCard() throws Throwable {
+    public void testAddDuplicateCard() throws IOException, InterruptedException {
         InputStream cardInputStream = this.inst.getContext().getAssets().open(CARD_DATA);
         BaseballCardCsvFileReader cardInput = new BaseballCardCsvFileReader(
                 cardInputStream, true);
@@ -305,11 +288,8 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
     /**
      * Test that baseball card data is correctly added to the database when it
      * already contains data for other cards.
-     *
-     * @throws Throwable If an error occurs while the portion of the test on the UI
-     *                   thread runs.
      */
-    public void testAddCardToPopulatedDatabase() throws Throwable {
+    public void testAddCardToPopulatedDatabase() throws InterruptedException {
         BBCTTestUtil.testMenuItem(this.solo, R.id.add_menu, FragmentTags.EDIT_CARD);
         BBCTTestUtil.addCard(this.solo, this.newCard);
         BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);
@@ -324,11 +304,8 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
     /**
      * Test that the {@link ListView} is updated when the user adds a new card
      * which matches the current filter.
-     *
-     * @throws Throwable If an error occurs while the portion of the test on the UI
-     *                   thread runs.
      */
-    public void testAddCardMatchingCurrentFilter() throws Throwable {
+    public void testAddCardMatchingCurrentFilter() throws InterruptedException {
         this.testYearFilter();
 
         BBCTTestUtil.testMenuItem(this.solo, R.id.add_menu, FragmentTags.EDIT_CARD);
@@ -345,11 +322,8 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
     /**
      * Test that the {@link ListView} is not updated when the user adds a new
      * card which does not match the current filter.
-     *
-     * @throws Throwable If an error occurs while the portion of the test on the UI
-     *                   thread runs.
      */
-    public void testAddCardNotMatchingCurrentFilter() throws Throwable {
+    public void testAddCardNotMatchingCurrentFilter() throws InterruptedException {
         this.testYearFilter();
 
         this.newCard = new BaseballCard(false, "Excellent", "Codeguru Apps",
@@ -366,11 +340,8 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
     /**
      * Test that the {@link ListView} is updated when the user adds a new card
      * after an active filter was cleared.
-     *
-     * @throws Throwable If an error occurs while the portion of the test on the UI
-     *                   thread runs.
      */
-    public void testAddCardAfterClearFilter() throws Throwable {
+    public void testAddCardAfterClearFilter() throws InterruptedException {
         this.testClearFilter();
         BBCTTestUtil.testMenuItem(this.solo, R.id.add_menu, FragmentTags.EDIT_CARD);
         BBCTTestUtil.addCard(this.solo, this.newCard);
@@ -424,7 +395,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
         }
     }
 
-    public void testDeleteAll() throws Throwable {
+    public void testDeleteAll() {
         this.markAll();
         deleteCards();
         Assert.assertNotNull(listView);
@@ -432,7 +403,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
         this.solo.waitForView(android.R.id.empty);
     }
 
-    public void testUnmarkAll() throws Throwable {
+    public void testUnmarkAll() {
         this.markAll();
         this.solo.clickOnCheckBox(SELECT_ALL);
 
@@ -446,7 +417,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
      * Test that the {@link ListView} displays updated card list, when user
      * deletes cards with applied filter.
      */
-    public void testDeleteCardUsingFilter() throws Throwable {
+    public void testDeleteCardUsingFilter() {
         this.testYearFilter();
 
         int cardIndex = 0;
@@ -486,7 +457,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
      * Test that the {@link ListView} displays updated card list, when user
      * deletes cards without any applied filter.
      */
-    public void testDeleteCardNoFilter() throws Throwable {
+    public void testDeleteCardNoFilter() {
         int cardIndex = 0;
 
         this.expectedCards = new ArrayList<BaseballCard>(this.allCards);
@@ -504,7 +475,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
      * Test that the state of {@link CheckedTextView} is maintained when the
      * {@link BaseballCardList} activity changes orientation.
      */
-    public void testSelectionAfterSaveInstanceState() throws Throwable {
+    public void testSelectionAfterSaveInstanceState() {
         Log.d(TAG, "testSelectionAfterSaveInstanceState()");
 
         int index = 1;

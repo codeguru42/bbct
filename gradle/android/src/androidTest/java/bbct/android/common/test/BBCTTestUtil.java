@@ -108,12 +108,8 @@ final public class BBCTTestUtil {
      * @param card
      *            The {@link BaseballCard} object holding the data to add to the
      *            database.
-     *
-     * @throws Throwable
-     *             If an error occurs while the portion of the test on the UI
-     *             thread runs.
      */
-    public static void addCard(Solo solo, BaseballCard card) throws Throwable {
+    public static void addCard(Solo solo, BaseballCard card) throws InterruptedException {
         BBCTTestUtil.sendKeysToCardDetails(solo, card);
         solo.clickOnActionBarItem(R.id.save_menu);
     }

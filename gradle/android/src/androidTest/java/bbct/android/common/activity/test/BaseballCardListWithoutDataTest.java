@@ -125,10 +125,8 @@ public class BaseballCardListWithoutDataTest<T extends MainActivity> extends
      *
      * @throws IOException If an error occurs while reading baseball card data from the
      *                     asset file.
-     * @throws Throwable   If an error occurs while the portion of the test on the UI
-     *                     thread runs.
      */
-    public void testAddCardToEmptyDatabase() throws Throwable {
+    public void testAddCardToEmptyDatabase() throws IOException, InterruptedException {
         BaseballCard card = this.cardInput.getNextBaseballCard();
 
         BBCTTestUtil.addCard(this.solo, card);
@@ -150,10 +148,8 @@ public class BaseballCardListWithoutDataTest<T extends MainActivity> extends
      *
      * @throws IOException If an error occurs while reading baseball card data from the
      *                     asset file.
-     * @throws Throwable   If an error occurs while the portion of the test on the UI
-     *                     thread runs.
      */
-    public void testAddMultipleCards() throws Throwable {
+    public void testAddMultipleCards() throws IOException, InterruptedException {
         BBCTTestUtil.testMenuItem(this.solo, R.id.add_menu, FragmentTags.EDIT_CARD);
         List<BaseballCard> cards = this.cardInput.getAllBaseballCards();
 
