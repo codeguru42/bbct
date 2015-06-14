@@ -55,7 +55,6 @@ import butterknife.InjectView;
  * TODO: Make list fancier
  */
 public class BaseballCardList extends ListFragment {
-
     private static final String[] ROW_PROJECTION = {
             BaseballCardContract.BRAND_COL_NAME,
             BaseballCardContract.YEAR_COL_NAME,
@@ -73,7 +72,7 @@ public class BaseballCardList extends ListFragment {
 
     private BaseballCardAdapter adapter = null;
     private Bundle filterParams = null;
-    private BaseballCardMultiChoiceModeListener mCallbacks;
+    private BaseballCardMultiChoiceModeListener choiceModeCallbacks;
     private LoaderManager.LoaderCallbacks<Cursor> loaderCallbacks;
 
     public static BaseballCardList getInstance(Bundle filterArgs) {
@@ -126,10 +125,10 @@ public class BaseballCardList extends ListFragment {
         selectAll.setOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked && !mCallbacks.isStarted()) {
-                    BaseballCardList.this.getActivity().startActionMode(mCallbacks);
-                } else if (mCallbacks.isStarted()) {
-                    mCallbacks.finish();
+                if (isChecked && !choiceModeCallbacks.isStarted()) {
+                    BaseballCardList.this.getActivity().startActionMode(choiceModeCallbacks);
+                } else if (choiceModeCallbacks.isStarted()) {
+                    choiceModeCallbacks.finish();
                 }
 
                 BaseballCardList.this.setAllChecked(isChecked);
@@ -139,10 +138,10 @@ public class BaseballCardList extends ListFragment {
         this.setListAdapter(this.adapter);
         this.adapter.setListFragment(this);
 
-        mCallbacks = new BaseballCardMultiChoiceModeListener(this);
+        choiceModeCallbacks = new BaseballCardMultiChoiceModeListener(this);
         listView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
-        listView.setMultiChoiceModeListener(mCallbacks);
-        this.adapter.setActionModeCallback(mCallbacks);
+        listView.setMultiChoiceModeListener(choiceModeCallbacks);
+        this.adapter.setActionModeCallback(choiceModeCallbacks);
         this.startLoader();
 
         return view;
