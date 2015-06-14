@@ -13,7 +13,6 @@ import bbct.android.common.activity.FilterCards;
 import java.util.Arrays;
 
 public class BaseballCardLoaderCallbacks implements LoaderManager.LoaderCallbacks<Cursor> {
-
     private static final String TAG = BaseballCardLoaderCallbacks.class.getName();
     private Context mContext;
     private final Uri mUri;
@@ -41,16 +40,22 @@ public class BaseballCardLoaderCallbacks implements LoaderManager.LoaderCallback
             for (String key : args.keySet()) {
                 String value = args.getString(key);
 
-                if (key.equals(FilterCards.YEAR_EXTRA)) {
-                    sb.append(BaseballCardContract.YEAR_SELECTION);
-                } else if (key.equals(FilterCards.BRAND_EXTRA)) {
-                    sb.append(BaseballCardContract.BRAND_SELECTION);
-                } else if (key.equals(FilterCards.NUMBER_EXTRA)) {
-                    sb.append(BaseballCardContract.NUMBER_SELECTION);
-                } else if (key.equals(FilterCards.PLAYER_NAME_EXTRA)) {
-                    sb.append(BaseballCardContract.PLAYER_NAME_SELECTION);
-                } else {
-                    sb.append(BaseballCardContract.TEAM_SELECTION);
+                switch (key) {
+                    case FilterCards.YEAR_EXTRA:
+                        sb.append(BaseballCardContract.YEAR_SELECTION);
+                        break;
+                    case FilterCards.BRAND_EXTRA:
+                        sb.append(BaseballCardContract.BRAND_SELECTION);
+                        break;
+                    case FilterCards.NUMBER_EXTRA:
+                        sb.append(BaseballCardContract.NUMBER_SELECTION);
+                        break;
+                    case FilterCards.PLAYER_NAME_EXTRA:
+                        sb.append(BaseballCardContract.PLAYER_NAME_SELECTION);
+                        break;
+                    default:
+                        sb.append(BaseballCardContract.TEAM_SELECTION);
+                        break;
                 }
 
                 selectionArgs[numQueries] = value;
