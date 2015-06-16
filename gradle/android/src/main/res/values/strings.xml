@@ -84,6 +84,10 @@
     <!-- Card details toasts -->
     <string name="card_added_message">Card added successfully.</string>
     <string name="card_deleted_message">Cards deleted successfully.</string>
+    <string name="card_upgrade_premium">Upgrade to premium version to take picture</string>
+    <string name="image_front_desc">Front Image</string>
+    <string name="image_back_desc">Back Image</string>
+    <string name="image_desc">Card Image</string>
 
     <!-- Strings for position spinner in card details activity -->
     <string-array name="positions">
