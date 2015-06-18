@@ -21,6 +21,7 @@ package bbct.android.common.activity;
 import android.content.ContentResolver;
 import android.content.ContentUris;
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.SQLException;
 import android.net.Uri;
 import android.os.Bundle;
@@ -37,6 +38,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
 import android.widget.CursorAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 import bbct.android.common.R;
@@ -117,6 +119,10 @@ public class BaseballCardDetails extends Fragment {
 
         this.positionsAdapter = this.populateSpinnerAdapter(R.array.positions);
         this.playerPositionSpinner.setAdapter(this.positionsAdapter);
+        this.imageCardDetailsFront = (ImageView) view.findViewById(R.id.image_card_details_front);
+        this.imageCardDetailsBack = (ImageView) view.findViewById(R.id.image_card_details_back);
+        this.imageCardDetailsFront.setOnClickListener(this.onImageCardDetailsFrontClick);
+        this.imageCardDetailsBack.setOnClickListener(this.onImageCardDetailsBackClick);
 
         Bundle args = this.getArguments();
         if (args != null) {
@@ -315,4 +321,38 @@ public class BaseballCardDetails extends Fragment {
         }
     }
 
+    /**
+     * Shows the notification to upgrade to premium version.
+     *
+     * @param context
+     *            The context {@link Context} object on which the user should be notified
+     */
+    private void handleTakePictureonClick(Context context) {
+        Toast.makeText(context, R.string.card_upgrade_premium, Toast.LENGTH_LONG).show();
+    }
+
+    /**
+     * Default listener to handle front image click event
+     */
+    private View.OnClickListener onImageCardDetailsFrontClick = new View.OnClickListener() {
+
+        @Override
+        public void onClick(View v) {
+            handleTakePictureonClick(v.getContext());
+        }
+    };
+
+    /**
+     * Default listener to handle back image click event
+     */
+    private View.OnClickListener onImageCardDetailsBackClick = new View.OnClickListener() {
+
+        @Override
+        public void onClick(View v) {
+            handleTakePictureonClick(v.getContext());
+        }
+    };
+
+    protected ImageView imageCardDetailsFront = null;
+    protected ImageView imageCardDetailsBack = null;
 }
