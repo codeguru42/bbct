@@ -46,7 +46,7 @@ public class PremiumCardDetails
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
-        
+
         this.imageCardDetailsFront = (ImageView) view.findViewById(R.id.image_card_details_front);
         this.imageCardDetailsBack = (ImageView) view.findViewById(R.id.image_card_details_back);
         this.imageCardDetailsFront.setOnClickListener(this.onImageCardDetailsFrontClick);
@@ -56,8 +56,8 @@ public class PremiumCardDetails
     }
 
     /**
-     * Initiates the camera activity and sets the 
-     * path of the image. 
+     * Initiates the camera activity and sets the
+     * path of the image.
      *
      * @param frontPicture
      *            true if the picture to be changed is the front picture,
@@ -121,16 +121,16 @@ public class PremiumCardDetails
                 imageCardDetails = imageCardDetailsBack;
                 photoPath = mCurrentBackPhotoPath;
             }
-            
+
             if (photoPath.equals("")) {
                 imageCardDetails.setImageResource(R.drawable.no_card_image);
             } else {
                 Bitmap scaledBitmap = BbctPictureHelper.GetScaledImageFromPath( photoPath, imageCardDetails.getWidth(), imageCardDetails.getHeight());
-                imageCardDetails.setImageBitmap(scaledBitmap);  
+                imageCardDetails.setImageBitmap(scaledBitmap);
             }
         }
     }
-    
+
     /**
      * Default listener to handle front image click event
      */
@@ -141,12 +141,12 @@ public class PremiumCardDetails
             TakePicture(true);
         }
     };
-    
+
     /**
      * Default listener to handle back image click event
      */
     private View.OnClickListener onImageCardDetailsBackClick = new View.OnClickListener() {
-        
+
         @Override
         public void onClick(View v) {
             TakePicture(false);

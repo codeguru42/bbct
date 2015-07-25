@@ -20,13 +20,13 @@ public class BbctPictureHelper {
         File storageDir = Environment.getExternalStorageDirectory();
         File picFile = new File(storageDir.getAbsolutePath() + "/DCIM");
         File image = File.createTempFile(
-            imageFileName,  /* prefix */
-            ".jpg",         /* suffix */
-            picFile      /* directory */
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                picFile      /* directory */
         );
         return image;
-     }
-    
+    }
+
     public static Bitmap GetScaledImageFromPath(String imagePath, int widthToScale, int heightToScale) {
         // Get the dimensions of the bitmap
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
@@ -34,7 +34,7 @@ public class BbctPictureHelper {
         BitmapFactory.decodeFile(imagePath, bmOptions);
         int photoW = bmOptions.outWidth;
         int photoH = bmOptions.outHeight;
-        
+
         ExifInterface exif = null;
         int orientation = 0;
         try {
@@ -43,7 +43,7 @@ public class BbctPictureHelper {
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
-        }        
+        }
         // Determine how much to scale down the image
         if (widthToScale > 0 && heightToScale > 0) {
             int scaleFactor = Math.max(photoW/widthToScale, photoH/heightToScale);
@@ -65,7 +65,7 @@ public class BbctPictureHelper {
         }
         return null;
     }
-    
+
     public static Bitmap GetImageFromPath(String imagePath) {
         ExifInterface exif = null;
         int orientation = 0;
@@ -77,7 +77,7 @@ public class BbctPictureHelper {
             e.printStackTrace();
             String message = e.toString();
 
-        }        
+        }
         // Determine how much to scale down the image
         Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
         if(orientation == 6) {
