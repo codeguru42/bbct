@@ -237,7 +237,7 @@ public class BaseballCardDetails extends Fragment {
             String playerName = this.playerNameText.getText().toString();
             return new BaseballCard(autographed, condition, brand, year,
                     number, (int) (value * 100), count, playerName, team,
-                    playerPosition);
+                    playerPosition, "", "");
         } else {
             return null;
         }

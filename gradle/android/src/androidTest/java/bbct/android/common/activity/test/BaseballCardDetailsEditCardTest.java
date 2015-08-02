@@ -194,7 +194,7 @@ public class BaseballCardDetailsEditCardTest extends
                 .contains(BBCTTestUtil.EditTexts.PLAYER_POSITION) ? this.newCard
                 .getPlayerPosition() : this.oldCard.getPlayerPosition();
         return new BaseballCard(autographed, condition, brand, year, number,
-                value, count, name, team, position);
+                value, count, name, team, position, "", "");
     }
 
     private final Set<BBCTTestUtil.EditTexts> inputMask;

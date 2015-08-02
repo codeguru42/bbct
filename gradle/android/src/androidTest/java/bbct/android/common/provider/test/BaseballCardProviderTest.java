@@ -42,19 +42,19 @@ public class BaseballCardProviderTest extends
     private static final List<BaseballCard> CARDS = new ArrayList<BaseballCard>();
     static {
         CARDS.add(new BaseballCard(false, "Excellent", "Topps", 1991, 278,
-                10000, 1, "Alex Fernandez", "White Sox", "Pitcher"));
+                10000, 1, "Alex Fernandez", "White Sox", "Pitcher", "", ""));
         CARDS.add(new BaseballCard(false, "Excellent", "Topps", 1974, 175,
-                10000, 1, "Bob Stanley", "Red Sox", "Pitcher"));
+                10000, 1, "Bob Stanley", "Red Sox", "Pitcher", "", ""));
         CARDS.add(new BaseballCard(false, "Excellent", "Topps", 1985, 201,
-                10000, 1, "Vince Coleman", "Cardinals", "Left Field"));
+                10000, 1, "Vince Coleman", "Cardinals", "Left Field", "", ""));
         CARDS.add(new BaseballCard(false, "Excellent", "TMG", 1993, 5, 10000,
-                1, "Ken Griffey Jr.", "All-Star", "Center Field"));
+                1, "Ken Griffey Jr.", "All-Star", "Center Field", "", ""));
         CARDS.add(new BaseballCard(false, "Excellent", "Upper Deck", 1993, 18,
-                10000, 1, "Dave Hollins", "Phillies", "Third Base"));
+                10000, 1, "Dave Hollins", "Phillies", "Third Base", "", ""));
         CARDS.add(new BaseballCard(false, "Excellent", "Upper Deck", 1990, 189,
-                10000, 1, "Tom Browning", "Reds", "Pitcher"));
+                10000, 1, "Tom Browning", "Reds", "Pitcher", "", ""));
         CARDS.add(new BaseballCard(false, "Excellent", "Topps", 1982, 121,
-                10000, 1, "Ed Lynch", "Mets", "Pitcher"));
+                10000, 1, "Ed Lynch", "Mets", "Pitcher", "", ""));
     }
 
     private ContentResolver resolver = null;
@@ -127,7 +127,7 @@ public class BaseballCardProviderTest extends
      */
     public void testInsert() {
         BaseballCard newCard = new BaseballCard(true, "Mint", "Code Guru Apps",
-                2013, 1, 25, 1, "Code Guru", "Code Guru Devs", "Pitcher");
+                2013, 1, 25, 1, "Code Guru", "Code Guru Devs", "Pitcher", "", "");
         Uri result = this.resolver.insert(BaseballCardContract.CONTENT_URI,
                 BaseballCardContract.getContentValues(newCard));
         Assert.assertNotNull(result);

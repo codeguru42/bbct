@@ -87,7 +87,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
         this.activity = this.getActivity();
         ButterKnife.inject(this, this.activity);
         this.newCard = new BaseballCard(true, "Mint", "Code Guru Apps", 1993,
-                1, 50000, 1, "Code Guru", "Code Guru Devs", "Catcher");
+                1, 50000, 1, "Code Guru", "Code Guru Devs", "Catcher", "", "");
 
         this.solo = new Solo(this.inst, this.activity);
     }
@@ -353,7 +353,7 @@ abstract public class BaseballCardListWithDataTest <T extends MainActivity> exte
         this.testYearFilter();
 
         this.newCard = new BaseballCard(false, "Excellent", "Codeguru Apps",
-                1976, 1, 50000, 1, "Codeguru", "Codeguru Devs", "Catcher");
+                1976, 1, 50000, 1, "Codeguru", "Codeguru Devs", "Catcher", "", "");
         BBCTTestUtil.testMenuItem(this.solo, R.id.add_menu, FragmentTags.EDIT_CARD);
         BBCTTestUtil.addCard(this.solo, this.newCard);
         BBCTTestUtil.waitForToast(this.solo, BBCTTestUtil.ADD_MESSAGE);

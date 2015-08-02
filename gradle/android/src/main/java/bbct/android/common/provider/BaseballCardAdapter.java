@@ -124,9 +124,13 @@ public class BaseballCardAdapter extends SimpleCursorAdapter {
                 .getColumnIndex(BaseballCardContract.TEAM_COL_NAME));
         String position = cursor.getString(cursor
                 .getColumnIndex(BaseballCardContract.PLAYER_POSITION_COL_NAME));
+        String pathToFrontPicture = cursor.getString(cursor
+                .getColumnIndex(BaseballCardContract.PATH_TO_PICTURE_FRONT));
+        String pathToBackPicture = cursor.getString(cursor
+                .getColumnIndex(BaseballCardContract.PATH_TO_PICTURE_BACK));
 
         return new BaseballCard(autographed, condition, brand, year, number,
-                value, count, name, team, position);
+                value, count, name, team, position, pathToFrontPicture, pathToBackPicture);
     }
 
 }

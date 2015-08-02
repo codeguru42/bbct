@@ -75,7 +75,7 @@ public class BaseballCardCsvFileReader {
         String playerPosition = data[7];
 
         return new BaseballCard(autographed, condition, brand, year, number,
-                value, count, playerName, team, playerPosition);
+                value, count, playerName, team, playerPosition, "", "");
     }
 
     /**
