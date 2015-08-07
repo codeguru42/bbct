@@ -46,7 +46,15 @@ public class MainActivity extends ActionBarActivity {
         this.setContentView(R.layout.main);
 
         if (savedInstanceState == null) {
-            Uri uri = BaseballCardContract.getUri(this.getPackageName());
+
+            setHolderActivity();
+
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+	}
+
+	protected void setHolderActivity() {
+	      Uri uri = BaseballCardContract.getUri(this.getPackageName());
             Cursor cursor = this.getContentResolver().query(uri,
                     BaseballCardContract.PROJECTION, null, null, null);
 
@@ -57,9 +65,6 @@ public class MainActivity extends ActionBarActivity {
                 ft.add(R.id.fragment_holder, new BaseballCardList(), FragmentTags.CARD_LIST);
             }
             ft.commit();
-
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
     }
 
     @Override
