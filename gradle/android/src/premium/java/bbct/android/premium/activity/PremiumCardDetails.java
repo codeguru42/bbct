@@ -55,6 +55,17 @@ public class PremiumCardDetails
         return view;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int menuId = item.getItemId();
+
+        if (menuId == R.id.save_menu) {
+            this.onSave();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
     /**
      * Initiates the camera activity and sets the
      * path of the image.
@@ -152,7 +163,44 @@ public class PremiumCardDetails
             TakePicture(false);
         }
     };
+    /**
+    *
+    * Returns the current {@link BaseballCard} object.
+    *
+    * @return {@link BaseballCard} object
+    */
+    @Override
+    public BaseballCard getBaseballCard() {
+        BaseballCard card = super.getBaseballCard();
+        if (card!=null) {
+            card.setPathToPictureFront(mCurrentFrontPhotoPath);
+            card.setPathToPictureBack(mCurrentBackPhotoPath);
+        }
+        return card;
+    }
 
+    /**
+    *
+    * Resets the input to default values.
+    */
+    private void resetInput() {
+        mCurrentBackPhotoPath = "";
+        mCurrentFrontPhotoPath = "";
+        imageCardDetailsFront.setImageResource(R.drawable.no_card_image);
+        imageCardDetailsBack.setImageResource(R.drawable.no_card_image);
+    }
+
+    /**
+    *
+    * Handles the save menu click event.
+    *
+    */
+    @Override
+    protected void onSave() {
+            BaseballCard card = getBaseballCard();
+            saveCard(card);
+            resetInput();
+    }
     private ImageView imageCardDetailsFront = null;
     private ImageView imageCardDetailsBack = null;
     private String mCurrentFrontPhotoPath = "";

@@ -197,7 +197,7 @@ public class BaseballCardDetails extends Fragment {
         return adapter;
     }
 
-    private BaseballCard getBaseballCard() {
+    protected BaseballCard getBaseballCard() {
         Log.d(TAG, "getBaseballCard()");
 
         EditText[] allEditTexts = { this.brandText, this.yearText,
@@ -290,20 +290,33 @@ public class BaseballCardDetails extends Fragment {
         this.playerPositionSpinner.setSelection(-1);
     }
 
-    private void onSave() {
-        ContentResolver resolver = this.getActivity().getContentResolver();
-        BaseballCard newCard = this.getBaseballCard();
+    /**
+     * Default listener to handle save button click event
+     */
+    protected void onSave() {
+            BaseballCard card = getBaseballCard();
+            saveCard(card);
+    };
 
-        if (newCard != null) {
+    /**
+    * Saves the given {@link BaseballCard} card object and
+    * notifies the result in the given view {@link View}
+    * @param card
+    *            The card {@link BaseballCard} object to be saved.
+    */
+    protected void saveCard(BaseballCard card) {
+        ContentResolver resolver = this.getActivity().getContentResolver();
+
+		if (card != null) {
             if (this.isUpdating) {
                 Uri uri = ContentUris.withAppendedId(this.uri, this.cardId);
                 resolver.update(uri,
-                        BaseballCardContract.getContentValues(newCard), null,
+                        BaseballCardContract.getContentValues(card), null,
                         null);
             } else {
                 try {
                     ContentValues values = BaseballCardContract
-                            .getContentValues(newCard);
+                            .getContentValues(card);
                     resolver.insert(this.uri, values);
 
                     this.resetInput();
