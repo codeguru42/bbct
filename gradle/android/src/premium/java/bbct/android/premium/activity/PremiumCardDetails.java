@@ -201,6 +201,7 @@ public class PremiumCardDetails
             saveCard(card);
             resetInput();
     }
+
     private ImageView imageCardDetailsFront = null;
     private ImageView imageCardDetailsBack = null;
     private String mCurrentFrontPhotoPath = "";

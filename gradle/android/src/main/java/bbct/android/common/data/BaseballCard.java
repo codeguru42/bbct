@@ -52,7 +52,7 @@ public class BaseballCard implements Serializable {
      * @param playerPosition
      *            The position this player played.
      */
-    public BaseballCard(boolean autographed, String condition, String brand, 
+    public BaseballCard(boolean autographed, String condition, String brand,
 	        int year, int number, int value, int count, String playerName,
             String team, String playerPosition,
             String pathToPictureFront, String pathToPictureBack) {
@@ -287,7 +287,7 @@ public class BaseballCard implements Serializable {
                 + ", cardYear=" + this.year + ", cardNumber=" + this.number
                 + ", cardValue=" + this.value + ", cardCount=" + this.count
                 + ", playerName=" + this.playerName + ", team=" + this.team
-                + ", playerPosition=" + this.playerPosition 
+                + ", playerPosition=" + this.playerPosition
                 + ", pathToPictureFront=" + this.pathToPictureFront
                 + ", pathToPictureBack=" + this.pathToPictureBack + '}';
     }
