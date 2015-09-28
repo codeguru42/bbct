@@ -54,8 +54,8 @@ import butterknife.InjectView;
  */
 public class BaseballCardDetails extends Fragment {
 
-    private static final String ID = "id";
-    private static final String CARD = "card";
+    protected static final String ID = "id";
+    protected static final String CARD = "card";
     private static final String TAG = BaseballCardDetails.class.getName();
 
     @InjectView(R.id.autograph) CheckBox autographCheckBox = null;
@@ -68,6 +68,8 @@ public class BaseballCardDetails extends Fragment {
     @InjectView(R.id.player_name_text) AutoCompleteTextView playerNameText = null;
     @InjectView(R.id.team_text) AutoCompleteTextView teamText = null;
     @InjectView(R.id.player_position_text) Spinner playerPositionSpinner = null;
+    @InjectView(R.id.image_card_details_front) protected ImageView imageCardDetailsFront = null;
+    @InjectView(R.id.image_card_details_back) protected ImageView imageCardDetailsBack = null;
 
     private ArrayAdapter<CharSequence> conditionAdapter;
     private ArrayAdapter<CharSequence> positionsAdapter;
@@ -181,7 +183,7 @@ public class BaseballCardDetails extends Fragment {
         return false;
     }
 
-    private void onHome() {
+    protected void onHome() {
         Fragment list = BaseballCardList.getInstance(null);
         this.getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_holder, list, FragmentTags.CARD_LIST)
@@ -365,7 +367,4 @@ public class BaseballCardDetails extends Fragment {
             handleTakePictureonClick(v.getContext());
         }
     };
-
-    protected ImageView imageCardDetailsFront = null;
-    protected ImageView imageCardDetailsBack = null;
 }

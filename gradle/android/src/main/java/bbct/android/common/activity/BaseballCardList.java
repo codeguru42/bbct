@@ -62,13 +62,13 @@ public class BaseballCardList extends ListFragment {
     private static final int[] ROW_TEXT_VIEWS = {R.id.brand_text_view,
             R.id.year_text_view, R.id.number_text_view,
             R.id.player_name_text_view};
-    private static final String FILTER_PARAMS = "filterParams";
+    protected static final String FILTER_PARAMS = "filterParams";
     private static final String TAG = BaseballCardList.class.getName();
 
     @InjectView(android.R.id.empty) TextView emptyList = null;
     @InjectView(android.R.id.list) ListView listView;
 
-    private BaseballCardAdapter adapter = null;
+    protected BaseballCardAdapter adapter = null;
     private Uri uri = null;
     private Bundle filterParams = null;
     private BaseballCardMultiChoiceModeListener mCallbacks;
@@ -93,8 +93,7 @@ public class BaseballCardList extends ListFragment {
 
         super.onCreate(savedInstanceState);
 
-        this.adapter = new BaseballCardAdapter(this.getActivity(),
-                R.layout.baseball_card, null, ROW_PROJECTION, ROW_TEXT_VIEWS);
+        fillBaseballCardsListOnCreate();
 
         Log.d(TAG, "  adapter=" + this.adapter);
 
@@ -145,6 +144,16 @@ public class BaseballCardList extends ListFragment {
         this.applyFilter(this.filterParams);
 
         return view;
+    }
+
+    /**
+     * Creates an adapter and fills the rows with values. This
+     * method should be overridden and called from onCreate to
+     * query and display any extra fields.
+     */
+    protected void fillBaseballCardsListOnCreate() {
+        this.adapter = new BaseballCardAdapter(this.getActivity(), R.layout.row, null,
+                ROW_PROJECTION, ROW_TEXT_VIEWS);
     }
 
     /**

@@ -18,12 +18,15 @@
  */
 package bbct.android.premium.activity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.os.Build;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.ViewGroup;
-import android.widget.Button;
-
+import android.view.ViewTreeObserver;
+import bbct.android.common.activity.FragmentTags;
 import bbct.android.common.data.BaseballCard;
 import android.view.View;
 import bbct.android.common.R;
@@ -43,6 +46,17 @@ public class PremiumCardDetails
         extends bbct.android.common.activity.BaseballCardDetails {
     private static final int REQUEST_IMAGE_CAPTURE = 1;
 
+    public static PremiumCardDetails getInstance(long id, BaseballCard card) {
+        Bundle args = new Bundle();
+        args.putLong(ID, id);
+        args.putSerializable(CARD, card);
+
+        PremiumCardDetails details = new PremiumCardDetails();
+        details.setArguments(args);
+
+        return details;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
@@ -52,7 +66,55 @@ public class PremiumCardDetails
         this.imageCardDetailsFront.setOnClickListener(this.onImageCardDetailsFrontClick);
         this.imageCardDetailsBack.setOnClickListener(this.onImageCardDetailsBackClick);
 
+        Bundle args = this.getArguments();
+        if (args != null) {
+            long id = args.getLong(ID);
+            BaseballCard card = (BaseballCard) args.getSerializable(CARD);
+            //this.setCard(id, card);
+            this.mCurrentFrontPhotoPath = card.getPathToPictureFront();
+            this.mCurrentBackPhotoPath = card.getPathToPictureBack();
+            listenerFront = new ViewTreeObserver.OnGlobalLayoutListener() {
+
+                @Override
+                public void onGlobalLayout() {
+                    int width = 120;//imageCardDetailsFront.getWidth();
+                    int height = 120;//imageCardDetailsFront.getHeight();
+                    if (mCurrentFrontPhotoPath != "") {
+                        Bitmap frontImage = BbctPictureHelper.GetScaledImageFromPath(mCurrentFrontPhotoPath, width, height);
+                        imageCardDetailsFront.setImageBitmap(frontImage);
+                    }
+                    removeGlobalLayoutListener(imageCardDetailsFront.getViewTreeObserver(), this);
+                }
+            };
+            this.imageCardDetailsFront.getViewTreeObserver().addOnGlobalLayoutListener(listenerFront);
+
+            listenerBack = new ViewTreeObserver.OnGlobalLayoutListener(){
+
+                @Override
+                public void onGlobalLayout() {
+                    int width = 120;//imageCardDetailsBack.getWidth();
+                    int height = 120;//imageCardDetailsBack.getHeight();
+                    if (mCurrentBackPhotoPath != "") {
+                        Bitmap backImage = BbctPictureHelper.GetScaledImageFromPath(mCurrentBackPhotoPath, width, height);
+                        imageCardDetailsBack.setImageBitmap(backImage);
+                    }
+                    removeGlobalLayoutListener(imageCardDetailsBack.getViewTreeObserver(), listenerBack);
+                }
+            };
+            this.imageCardDetailsBack.getViewTreeObserver().addOnGlobalLayoutListener(listenerBack);
+        }
+
         return view;
+    }
+
+    @SuppressLint("NewApi")
+    public void removeGlobalLayoutListener(ViewTreeObserver observer, ViewTreeObserver.OnGlobalLayoutListener listener) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+            observer.removeGlobalOnLayoutListener(listener);
+        }
+        else {
+            observer.removeOnGlobalLayoutListener(listener);
+        }
     }
 
     @Override
@@ -163,6 +225,16 @@ public class PremiumCardDetails
             TakePicture(false);
         }
     };
+
+    @Override
+    protected void onHome() {
+        Fragment list = PremiumCardList.getInstance(null);
+        this.getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_holder, list, FragmentTags.CARD_LIST)
+                .addToBackStack(FragmentTags.CARD_LIST)
+                .commit();
+    }
+
     /**
     *
     * Returns the current {@link BaseballCard} object.
@@ -207,5 +279,7 @@ public class PremiumCardDetails
     private String mCurrentFrontPhotoPath = "";
     private String mCurrentBackPhotoPath = "";
     private boolean isFrontPicture = true;
+    private ViewTreeObserver.OnGlobalLayoutListener listenerFront = null;
+    private ViewTreeObserver.OnGlobalLayoutListener listenerBack = null;
     private static final String TAG = PremiumCardDetails.class.getName();
 }
