@@ -63,15 +63,48 @@ public class ChangeCardImage extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.change_picture_image, container, false);
         card = null;
         Bundle args = this.getArguments();
         if(args != null) {
             card = (BaseballCard)args.getSerializable("card");
+            frontImage = args.getBoolean("frontimage");
+            if (frontImage == true) {
+                image_path = card.getPathToPictureFront();
+            }
+            else {
+                image_path = card.getPathToPictureBack();
+            }
         }
 
+        card_Image = (ImageView)view.findViewById(R.id.card_image_view);
+                
+        listenerImage = new ViewTreeObserver.OnGlobalLayoutListener(){
+            
+            @Override
+            public void onGlobalLayout() {
+                if (image_path != "") {
+                    Bitmap cardImageBmp = BitmapFactory.decodeFile(image_path);
+                    card_Image.setImageBitmap(cardImageBmp);
+                }
+                removeGlobalLayoutListener(card_Image.getViewTreeObserver(), listenerImage);
+            }
+        };
+        this.card_Image.getViewTreeObserver().addOnGlobalLayoutListener(listenerImage);
 
-        return super.onCreateView(inflater, container, savedInstanceState);
+        return view;
     }
+    
+    @SuppressLint("NewApi")
+    public void removeGlobalLayoutListener(ViewTreeObserver observer, ViewTreeObserver.OnGlobalLayoutListener listener) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+            observer.removeGlobalOnLayoutListener(listener);
+        }
+        else {
+            observer.removeOnGlobalLayoutListener(listener);
+        }
+    }
+
     /**
      * Respond to the user selecting a menu item.
      * If change picture is selected, a new camera intent is
@@ -92,6 +125,10 @@ public class ChangeCardImage extends Fragment {
             return super.onOptionsItemSelected(item);
         }
     }
+    private String image_path = "";
     private BaseballCard card = null;
+    private boolean frontImage = true;
+    private ImageView card_Image = null;
+    private ViewTreeObserver.OnGlobalLayoutListener listenerImage = null;
     private static final String TAG = ChangeCardImage.class.getName();
 }
