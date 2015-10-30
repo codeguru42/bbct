@@ -8,9 +8,12 @@ import android.support.v4.app.FragmentTransaction;
 import bbct.android.common.R;
 import bbct.android.common.activity.FragmentTags;
 import bbct.android.common.activity.MainActivity;
+import bbct.android.common.data.BaseballCard;
 import bbct.android.common.provider.BaseballCardContract;
+import bbct.android.premium.extra.ChangeCardImageInterface;
 
-public class PremiumActivity extends MainActivity {
+public class PremiumActivity extends MainActivity
+                             implements ChangeCardImageInterface {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -32,4 +35,33 @@ public class PremiumActivity extends MainActivity {
         }
         ft.commit();
     }
+    public void onChangeCardSelected(boolean frontImage, BaseballCard card) {
+        String CARD = "card";
+        String FRONTIMAGE = "frontimage";
+        Bundle args = new Bundle();
+        //args.putString(getString(R.string.image_path_extra), imagePath);
+        args.putBoolean(FRONTIMAGE, frontImage);
+        args.putSerializable(CARD, card);
+        ChangeCardImage changeImage = new ChangeCardImage();
+        changeImage.setArguments(args);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_holder, changeImage)
+                .addToBackStack(CHANGE_CARD)
+                .commit();
+    }
+
+    public void onChangeCardClosed(BaseballCard card) {
+        PremiumCardDetails details = PremiumCardDetails.getInstance(-1, card);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_holder, details)
+                .addToBackStack(CARD_DETAILS)
+                .commit();
+
+    }
+
+    private PremiumCardDetails currentDetailsFrag = null;
+    private static final String CHANGE_CARD = "ChangeCards";
+    private static final String CARD_DETAILS = "cardDetails";
 }

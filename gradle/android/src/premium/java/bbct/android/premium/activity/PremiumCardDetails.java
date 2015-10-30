@@ -129,6 +129,21 @@ public class PremiumCardDetails
         return super.onOptionsItemSelected(item);
     }
     /**
+    * Initiates the ChangeCardImage activity and sets the
+    * path of the image.
+    *
+    * @param frontPicture
+    *            true if the picture to be changed is the front picture,
+    *            false if it is back picture.
+    */
+    private void ChangePicture(boolean frontPicture) {
+        isFrontPicture = frontPicture;
+        BaseballCard card = getBaseballCard();
+        ((PremiumActivity)this.getActivity()).onChangeCardSelected(frontPicture, card);
+
+    }
+
+     /**
      * Initiates the camera activity and sets the
      * path of the image.
      *
@@ -211,7 +226,12 @@ public class PremiumCardDetails
 
         @Override
         public void onClick(View v) {
-            TakePicture(true);
+            if (mCurrentFrontPhotoPath.equals("")) {
+                TakePicture(true);
+            }
+            else {
+                ChangePicture(true);
+            }
         }
     };
 
@@ -222,7 +242,13 @@ public class PremiumCardDetails
 
         @Override
         public void onClick(View v) {
-            TakePicture(false);
+            if (mCurrentBackPhotoPath.equals("")) {
+                TakePicture(false);
+            }
+            else {
+                ChangePicture(false);
+            }
+
         }
     };
 
