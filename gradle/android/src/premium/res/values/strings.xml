@@ -30,6 +30,10 @@
     <string name="write_permission_label">BBCT Write</string>
     <string name="write_permission_desc">Write Baseball Card data to BBCT Premium database</string>
 
+    <!--  Menu Options for Changing Card Image -->
+    <string name="change_picture_menu">Change Picture</string>
+    <string name="remove_picture_menu">Remove Picture</string>
+
     <!-- Column headings for card list -->
     <string name="select_all_col">Select all cards</string>
     <string name="deselect_all_col">Deselect all cards</string>

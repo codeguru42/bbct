@@ -72,6 +72,7 @@
     <string name="delete_menu">Delete</string>
     <string name="save_menu">Save</string>
 
+
     <!-- Text in About activity -->
     <string name="version_text">Version %1$s</string>
     <string name="version_number">0.6.2</string>

@@ -65,6 +65,8 @@ public class ChangeCardImage extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.change_picture_image, container, false);
         card = null;
+        frontImage = true;
+        image_path = "";
         Bundle args = this.getArguments();
         if(args != null) {
             card = (BaseballCard)args.getSerializable("card");
@@ -104,7 +106,18 @@ public class ChangeCardImage extends Fragment {
             observer.removeOnGlobalLayoutListener(listener);
         }
     }
-
+    
+    /**
+     * Create the options menu. This is simply inflated from the
+     * {@code change_picture_option.xml} resource file.
+     *
+     * @param menu
+     *            The options menu in which new menu items are placed.
+     */
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.change_picture_option, menu);
+    }
     /**
      * Respond to the user selecting a menu item.
      * If change picture is selected, a new camera intent is
