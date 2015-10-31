@@ -54,6 +54,8 @@ import android.os.Bundle;
 import android.app.Activity;
 
 public class ChangeCardImage extends Fragment {
+
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,6 +120,36 @@ public class ChangeCardImage extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.change_picture_option, menu);
     }
+    
+    /*
+     * A new file is created for the new picture and the camera intent
+     * is initiated.
+     */
+    private void ChangePicture() {
+        BbctPictureHelper picHelper = new BbctPictureHelper();
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(this.getActivity().getPackageManager()) != null) {
+         // Create the File where the photo should go
+            File photoFile = null;
+            try {
+                photoFile = picHelper.createImageFile();
+            } catch (IOException ex) {
+                // Error occurred while creating the File
+                Log.d(TAG, "Take Picture IO Exception: ", ex);
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                image_path = photoFile.getAbsolutePath();
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
+                        Uri.fromFile(photoFile));
+                startActivityForResult(takePictureIntent, 
+                        REQUEST_IMAGE_CAPTURE);
+            }
+
+        }
+    }
+
+    
     /**
      * Respond to the user selecting a menu item.
      * If change picture is selected, a new camera intent is
@@ -131,13 +163,54 @@ public class ChangeCardImage extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
-        if (itemId == android.R.id.home) {
+        if (itemId == R.id.change_picture_menu) {
+            ChangePicture();
+            if (frontImage ==true) {
+                card.setPathToPictureFront(image_path);
+            } else {
+                card.setPathToPictureBack(image_path);
+            }
+            return true;
+        } else if (itemId == R.id.remove_picture_menu) {
+            image_path = "";
+            if (frontImage ==true) {
+                card.setPathToPictureFront(image_path);
+            } else {
+                card.setPathToPictureBack(image_path);
+            }
+            ((PremiumActivity)getActivity()).onChangeCardClosed(card);
+            return true;
+        } else if (itemId == android.R.id.home) {
             ((PremiumActivity)getActivity()).onChangeCardClosed(card);
             return true;
         } else {
             return super.onOptionsItemSelected(item);
         }
     }
+    
+    /**
+     * Respond to the result of a child activity by setting the 
+     * path to the image and the imageView.
+     *
+     * @param requestCode
+     *            The integer request code originally supplied to
+     *            startActivityForResult(), allowing you to identify
+     *            who this result came from.
+     * @param resultCode
+     *            The integer result code returned by the child activity through
+     *            its setResult().
+     * @param data
+     *            An Intent with the data returned by the child activity.
+     */
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
+            BbctPictureHelper pictureHelper = new BbctPictureHelper();
+            Bitmap cardImageBmp = pictureHelper.GetImageFromPath(image_path);
+            card_Image.setImageBitmap(cardImageBmp);
+        }
+    }
+
     private String image_path = "";
     private BaseballCard card = null;
     private boolean frontImage = true;
