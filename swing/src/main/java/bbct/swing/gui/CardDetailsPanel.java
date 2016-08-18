@@ -18,8 +18,8 @@
  */
 package bbct.swing.gui;
 
-import bbct.common.data.BaseballCard;
 import bbct.common.exceptions.InputException;
+import bbct.data.BaseballCard;
 import bbct.swing.BBCTStringResources;
 import bbct.swing.BBCTStringResources.TitleResources;
 import bbct.swing.FontResources;
@@ -161,7 +161,10 @@ public class CardDetailsPanel extends JPanel {
         }
         String playerPosition = (String) this.playerPositionComboBox.getSelectedItem();
 
-        return new BaseballCard(brand, year, number, value, count, playerName, playerPosition);
+        boolean autographed = false;
+        String condition = null;
+        String team = null;
+        return new BaseballCard(autographed, condition, brand, year, number, value, count, playerName, team, playerPosition);
     }
 
     /**
@@ -432,7 +435,10 @@ public class CardDetailsPanel extends JPanel {
         String name = "Alex Fernandez";
         String pos = "Pitcher";
 
-        return new BaseballCard(brand, year, num, val, count, name, pos);
+        boolean autographed = false;
+        String condition = null;
+        String team = null;
+        return new BaseballCard(autographed, condition, brand, year, num, val, count, name, team, pos);
     }
 
     /**

@@ -19,6 +19,7 @@
 package bbct.common.data;
 
 import bbct.common.exceptions.BBCTIOException;
+import bbct.data.BaseballCard;
 import java.util.List;
 
 /**

@@ -18,10 +18,10 @@
  */
 package bbct.swing.gui;
 
-import bbct.common.data.BaseballCard;
 import bbct.common.data.BaseballCardIO;
 import bbct.common.data.JDBCBaseballCardIO;
 import bbct.common.exceptions.BBCTIOException;
+import bbct.data.BaseballCard;
 import bbct.swing.BBCTStringResources;
 import bbct.swing.FontResources;
 import java.awt.BorderLayout;
@@ -191,7 +191,10 @@ public class BBCTFrame extends JFrame {
                 int count = 1;
                 String playerName = data[3];
                 String playerPosition = data[4];
-                BaseballCard card = new BaseballCard(brand, year, number, value, count, playerName, playerPosition);
+                boolean autographed = false;
+                String condition = null;
+                String team = null;
+                BaseballCard card = new BaseballCard(autographed, condition, brand, year, number, value, count, playerName, team, playerPosition);
 
                 cards.add(card);
             }

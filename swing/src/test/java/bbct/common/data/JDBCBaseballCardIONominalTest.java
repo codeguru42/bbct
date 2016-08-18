@@ -19,6 +19,8 @@
 package bbct.common.data;
 
 import bbct.common.exceptions.BBCTIOException;
+import bbct.data.BaseballCard;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -149,6 +151,8 @@ public class JDBCBaseballCardIONominalTest {
     }
 
     private BaseballCard createBaseballCard() {
+        boolean autographed = false;
+        String condition = "Excellent";
         String brand = "Topps";
         int year = 1991;
         int num = 278;
@@ -156,8 +160,9 @@ public class JDBCBaseballCardIONominalTest {
         int count = 1;
         String name = "Alex Fernandez";
         String pos = "Pitcher";
+        String team = "White Sox";
 
-        return new BaseballCard(brand, year, num, val, count, name, pos);
+        return new BaseballCard(autographed, condition, brand, year, num, val, count, name, team, pos);
     }
 
     /**

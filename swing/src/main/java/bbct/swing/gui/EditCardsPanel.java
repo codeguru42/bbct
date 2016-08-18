@@ -18,10 +18,10 @@
  */
 package bbct.swing.gui;
 
-import bbct.common.data.BaseballCard;
 import bbct.common.data.BaseballCardIO;
 import bbct.common.exceptions.BBCTIOException;
 import bbct.common.exceptions.InputException;
+import bbct.data.BaseballCard;
 import bbct.swing.BBCTStringResources;
 import bbct.swing.gui.event.SetDefaultButtonAncestorListener;
 import bbct.swing.gui.event.UpdateTitleAncestorListener;

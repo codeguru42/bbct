@@ -20,6 +20,7 @@ package bbct.common.data;
 
 import bbct.common.BBCTStringResources;
 import bbct.common.exceptions.BBCTIOException;
+import bbct.data.BaseballCard;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -323,14 +324,17 @@ public class JDBCBaseballCardIO extends AbstractBaseballCardIO {
         List<BaseballCard> cards = new ArrayList<>();
 
         while (rs.next()) {
+            boolean autographed = false;
+            String condition = null;
             String brand = rs.getString(BRAND_COL_NAME);
             int year = rs.getInt(YEAR_COL_NAME);
             int num = rs.getInt(NUMBER_COL_NAME);
             int val = rs.getInt(VALUE_COL_NAME);
             int count = rs.getInt(COUNT_COL_NAME);
             String name = rs.getString(NAME_COL_NAME);
+            String team = null;
             String pos = rs.getString(POSITION_COL_NAME);
-            BaseballCard card = new BaseballCard(brand, year, num, val, count, name, pos);
+            BaseballCard card = new BaseballCard(autographed, condition, brand, year, num, val, count, name, team, pos);
 
             cards.add(card);
         }

@@ -18,9 +18,9 @@
  */
 package bbct.swing.gui;
 
-import bbct.common.data.BaseballCard;
 import bbct.common.exceptions.BBCTIOException;
 import bbct.common.exceptions.InputException;
+import bbct.data.BaseballCard;
 import java.util.List;
 import javax.swing.JPanel;
 import javax.swing.event.AncestorEvent;
