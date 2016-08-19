@@ -41,7 +41,6 @@ import org.junit.Test;
  * cards
  */
 public class JDBCBaseballCardIONominalTest {
-
     private String url = "jdbc:hsqldb:mem:baseball_cards.db";
     private JDBCBaseballCardIO instance = null;
     private Connection conn = null;
@@ -171,7 +170,7 @@ public class JDBCBaseballCardIONominalTest {
     public void testGetBaseballCardsByYear() throws BBCTIOException {
         this.instance.insertBaseballCard(this.card);
 
-        List<BaseballCard> expResult = new ArrayList<BaseballCard>();
+        List<BaseballCard> expResult = new ArrayList<>();
         expResult.add(this.card);
 
         List<BaseballCard> result = instance.getBaseballCardsByYear(this.card
@@ -189,7 +188,7 @@ public class JDBCBaseballCardIONominalTest {
     public void testGetBaseballCardsByNumber() throws BBCTIOException {
         this.instance.insertBaseballCard(this.card);
 
-        List<BaseballCard> expResult = new ArrayList<BaseballCard>();
+        List<BaseballCard> expResult = new ArrayList<>();
         expResult.add(this.card);
 
         List<BaseballCard> result = instance.getBaseballCardsByNumber(this.card
@@ -208,7 +207,7 @@ public class JDBCBaseballCardIONominalTest {
     public void testGetBaseballCardsByYearAndNumber() throws BBCTIOException {
         this.instance.insertBaseballCard(this.card);
 
-        List<BaseballCard> expResult = new ArrayList<BaseballCard>();
+        List<BaseballCard> expResult = new ArrayList<>();
         expResult.add(this.card);
 
         List<BaseballCard> result = instance.getBaseballCardsByYearAndNumber(
@@ -226,7 +225,7 @@ public class JDBCBaseballCardIONominalTest {
     public void testGetBaseballCardsByPlayerName() throws BBCTIOException {
         this.instance.insertBaseballCard(this.card);
 
-        List<BaseballCard> expResult = new ArrayList<BaseballCard>();
+        List<BaseballCard> expResult = new ArrayList<>();
         expResult.add(this.card);
 
         List<BaseballCard> result = instance
@@ -271,7 +270,7 @@ public class JDBCBaseballCardIONominalTest {
 
     /**
      * Test for
-     * {@link JDBCBaseballCardIO#removeupdateBaseballCard(BaseballCard)}. Actual
+     * {@link JDBCBaseballCardIO#removeBaseballCard(BaseballCard)}. Actual
      * result is a boolean indicating whether the current pointer in ResultSet
      * is positioned after the last row (false value if it is). Expected result
      * is therefore a boolean value of false, which indicates that no rows were

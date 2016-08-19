@@ -38,6 +38,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
+
 /**
  * {@link FindCardsByPlayerNamePanel} allows the user to input the player's
  * name. This value is used as the parameters when searching the underlying
@@ -47,6 +49,9 @@ import javax.swing.JTextField;
  */
 @SuppressWarnings("serial")
 public class FindCardsByPlayerNamePanel extends FindCardsByPanel {
+    private JTextField playerNameTextField;
+    private BaseballCardIO bcio = null;
+    private InputVerifier notEmptyVerifier = new NotEmptyInputVerifier();
 
     /**
      * Creates a new {@link FindCardsByPlayerNamePanel}.
@@ -110,9 +115,6 @@ public class FindCardsByPlayerNamePanel extends FindCardsByPanel {
         this.add(inputPanel, BorderLayout.PAGE_START);
         this.addAncestorListener(new UpdateTitleAncestorListener(BBCTStringResources.TitleResources.FIND_CARDS_BY_PLAYER_NAME_PANEL_TITLE));
     }
-    private JTextField playerNameTextField;
-    private BaseballCardIO bcio = null;
-    private InputVerifier notEmptyVerifier = new NotEmptyInputVerifier();
 
     /**
      * This is a test function for {@link FindCardsByPlayerNamePanel}. It simply
@@ -123,7 +125,7 @@ public class FindCardsByPlayerNamePanel extends FindCardsByPanel {
     public static void main(String[] args) {
         JFrame frame = new JFrame("FindCardsByPlayerNamePanel Test");
         frame.add(new FindCardsByPlayerNamePanel(null));
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
         frame.setSize(400, 425);
         frame.setVisible(true);
     }

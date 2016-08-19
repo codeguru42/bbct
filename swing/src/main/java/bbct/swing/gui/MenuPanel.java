@@ -25,12 +25,12 @@ import bbct.swing.gui.event.ShowCardActionListener;
 import bbct.swing.gui.event.UpdateInstructionsAncestorListener;
 import bbct.swing.gui.event.UpdateTitleAncestorListener;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
 /**
  * {@link MenuPanel} contains buttons that specify the primary actions a user
@@ -72,12 +72,7 @@ public class MenuPanel extends JPanel {
 
         JButton exitButton = new JButton(BBCTStringResources.ButtonResources.EXIT_BUTTON);
         exitButton.setFont(FontResources.MENU_BUTTON_FONT);
-        exitButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                System.exit(0);
-            }
-        });
+        exitButton.addActionListener(evt -> System.exit(0));
         this.add(exitButton);
 
         this.addAncestorListener(new UpdateTitleAncestorListener(BBCTStringResources.TitleResources.MAIN_PANEL_TITLE));
@@ -93,7 +88,7 @@ public class MenuPanel extends JPanel {
      */
     public static void main(String[] args) {
         JFrame f = new JFrame("MenuPanel Test");
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.setDefaultCloseOperation(EXIT_ON_CLOSE);
         f.add(new MenuPanel());
         f.pack();
         f.setVisible(true);

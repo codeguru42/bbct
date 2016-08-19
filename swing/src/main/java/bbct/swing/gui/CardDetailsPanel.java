@@ -33,8 +33,6 @@ import java.awt.CardLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.text.ParseException;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -53,6 +51,8 @@ import javax.swing.border.TitledBorder;
 import javax.swing.event.AncestorEvent;
 import javax.swing.event.AncestorListener;
 
+import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
+
 /**
  * {@link CardDetailsPanel} contains labels and text fields for the data stored
  * in a {@link bbct.data.BaseballCard} model object. This panel can be used in
@@ -60,7 +60,7 @@ import javax.swing.event.AncestorListener;
  * {@link #CardDetailsPanel()} or {@link #CardDetailsPanel(boolean)} with a
  * value of {@code true}, allows editing of all of the text fields. The second
  * mode, set with {@link #CardDetailsPanel(boolean)} or
- * {@link #CardDetailsPanel(bbct.data.BaseballCard, boolean)} with a value of
+ * {@link #CardDetailsPanel(BaseballCard, boolean)} with a value of
  * {@code false} for the {@code boolean } parameter, only allows editing of the
  * value and count text fields.
  *
@@ -352,7 +352,7 @@ public class CardDetailsPanel extends JPanel {
         gbc.insets = bottomLeftInsets;
         playerDetailsInputPanel.add(playerPositionLabel, gbc);
 
-        this.playerPositionComboBox = new JComboBox<String>(BBCTStringResources.ComboBoxResources.POSITIONS);
+        this.playerPositionComboBox = new JComboBox<>(BBCTStringResources.ComboBoxResources.POSITIONS);
         this.playerPositionComboBox.setEditable(this.allEditable);
         this.playerPositionComboBox.setFont(FontResources.DEFAULT_FONT);
         this.playerPositionComboBox.addFocusListener(new UpdateInstructionsFocusListener(BBCTStringResources.InstructionResources.PLAYER_POSITION_INSTRUCTIONS));
@@ -446,7 +446,7 @@ public class CardDetailsPanel extends JPanel {
         // TODO: Add a way to test getBaseballCard()
 
         final JFrame frame = new JFrame("CardDetailsPanel Test");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         final JPanel cardPanel = new JPanel();
         final CardLayout cl = new CardLayout();
@@ -460,29 +460,21 @@ public class CardDetailsPanel extends JPanel {
         JPanel buttonPanel = new JPanel();
         JButton nextButton = new JButton("Next");
 
-        nextButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                cl.next(cardPanel);
-            }
-        });
+        nextButton.addActionListener(ae -> cl.next(cardPanel));
 
         buttonPanel.add(nextButton);
 
         JButton getCardButton = new JButton("Get Card");
 
-        getCardButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                try {
-                    // TODO: How do I get the currently visible CardDetailsPanel?
+        getCardButton.addActionListener(ae -> {
+            try {
+                // TODO: How do I get the currently visible CardDetailsPanel?
 //                    CardDetailsPanel panel = (CardDetailsPanel)cl.
-                    BaseballCard card = editablePanel.getBaseballCard();
+                BaseballCard card = editablePanel.getBaseballCard();
 
-                    JOptionPane.showMessageDialog(frame, card, "Baseball Card", JOptionPane.INFORMATION_MESSAGE);
-                } catch (InputException ex) {
-                    JOptionPane.showMessageDialog(frame, ex, "Input Error", JOptionPane.ERROR_MESSAGE);
-                }
+                JOptionPane.showMessageDialog(frame, card, "Baseball Card", JOptionPane.INFORMATION_MESSAGE);
+            } catch (InputException ex) {
+                JOptionPane.showMessageDialog(frame, ex, "Input Error", JOptionPane.ERROR_MESSAGE);
             }
         });
 

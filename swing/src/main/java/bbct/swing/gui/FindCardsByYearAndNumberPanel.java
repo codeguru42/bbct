@@ -43,6 +43,8 @@ import javax.swing.JPanel;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.NumberFormatter;
 
+import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
+
 /**
  * {@link FindCardsByYearAndNumberPanel} allows the user to input a card number
  * and year. These values are used as the parameters when searching the
@@ -50,6 +52,11 @@ import javax.swing.text.NumberFormatter;
  */
 @SuppressWarnings("serial")
 public class FindCardsByYearAndNumberPanel extends FindCardsByPanel {
+    private JFormattedTextField numberTextField;
+    private JFormattedTextField yearTextField;
+    private BaseballCardIO bcio = null;
+    private InputVerifier yearVerifier = new YearInputVerifier();
+    private InputVerifier numberVerifier = new PositiveIntegerInputVerifier();
 
     /**
      * Creates a new {@link FindCardsByYearAndNumberPanel} with two JLabels and
@@ -173,11 +180,6 @@ public class FindCardsByYearAndNumberPanel extends FindCardsByPanel {
         this.add(inputPanel, BorderLayout.PAGE_START);
         this.addAncestorListener(new UpdateTitleAncestorListener(BBCTStringResources.TitleResources.FIND_CARDS_BY_YEAR_AND_NUMBER_PANEL_TITLE));
     }
-    private JFormattedTextField numberTextField;
-    private JFormattedTextField yearTextField;
-    private BaseballCardIO bcio = null;
-    private InputVerifier yearVerifier = new YearInputVerifier();
-    private InputVerifier numberVerifier = new PositiveIntegerInputVerifier();
 
     /**
      * This is a test function for {@link FindCardsByYearAndNumberPanel}. It
@@ -189,7 +191,7 @@ public class FindCardsByYearAndNumberPanel extends FindCardsByPanel {
     public static void main(String[] args) {
         JFrame frame = new JFrame("FindCardsByNumberPanel Test");
         frame.add(new FindCardsByYearAndNumberPanel(null));
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
         frame.setSize(400, 425);
         frame.setVisible(true);
     }

@@ -42,6 +42,8 @@ import javax.swing.JPanel;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.NumberFormatter;
 
+import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
+
 /**
  * {@link FindCardsByNumberPanel} allows the user to input a card number. This
  * value is used as the parameters when searching the underlying storage
@@ -49,6 +51,9 @@ import javax.swing.text.NumberFormatter;
  */
 @SuppressWarnings("serial")
 public class FindCardsByNumberPanel extends FindCardsByPanel {
+    private JFormattedTextField numberTextField;
+    private BaseballCardIO bcio = null;
+    private InputVerifier numberVerifier = new PositiveIntegerInputVerifier();
 
     /**
      * Creates a new {@link FindCardsByNumberPanel}.
@@ -130,9 +135,6 @@ public class FindCardsByNumberPanel extends FindCardsByPanel {
         this.add(inputPanel, BorderLayout.PAGE_START);
         this.addAncestorListener(new UpdateTitleAncestorListener(BBCTStringResources.TitleResources.FIND_CARDS_BY_NUMBER_PANEL_TITLE));
     }
-    private JFormattedTextField numberTextField;
-    private BaseballCardIO bcio = null;
-    private InputVerifier numberVerifier = new PositiveIntegerInputVerifier();
 
     /**
      * This is a test function for {@link FindCardsByNumberPanel}. It simply
@@ -143,7 +145,7 @@ public class FindCardsByNumberPanel extends FindCardsByPanel {
     public static void main(String[] args) {
         JFrame frame = new JFrame("FindCardsByNumberPanel Test");
         frame.add(new FindCardsByNumberPanel(null));
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
         frame.setSize(400, 425);
         frame.setVisible(true);
     }

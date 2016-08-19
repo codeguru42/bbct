@@ -42,6 +42,8 @@ import javax.swing.JPanel;
 import javax.swing.text.DefaultFormatterFactory;
 import javax.swing.text.NumberFormatter;
 
+import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
+
 /**
  * {@link FindCardsByYearPanel} allows the user to input a card year. This value
  * is used as the parameters when searching the underlying storage mechanism for
@@ -49,6 +51,9 @@ import javax.swing.text.NumberFormatter;
  */
 @SuppressWarnings("serial")
 public class FindCardsByYearPanel extends FindCardsByPanel {
+    private JFormattedTextField yearTextField;
+    private BaseballCardIO bcio = null;
+    private InputVerifier yearVerifier = new YearInputVerifier();
 
     /**
      * Creates a new {@link FindCardsByYearPanel}.
@@ -128,9 +133,6 @@ public class FindCardsByYearPanel extends FindCardsByPanel {
         this.add(inputPanel, BorderLayout.PAGE_START);
         this.addAncestorListener(new UpdateTitleAncestorListener(BBCTStringResources.TitleResources.FIND_CARDS_BY_YEAR_PANEL_TITLE));
     }
-    private JFormattedTextField yearTextField;
-    private BaseballCardIO bcio = null;
-    private InputVerifier yearVerifier = new YearInputVerifier();
 
     /**
      * This is a test function for {@link FindCardsByYearPanel}. It simply
@@ -141,7 +143,7 @@ public class FindCardsByYearPanel extends FindCardsByPanel {
     public static void main(String[] args) {
         JFrame frame = new JFrame("FindCardsByYearPanel Test");
         frame.add(new FindCardsByYearPanel(null));
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
         frame.setSize(400, 425);
         frame.setVisible(true);
     }

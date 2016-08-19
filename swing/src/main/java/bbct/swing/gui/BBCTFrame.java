@@ -31,7 +31,6 @@ import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
@@ -133,7 +132,7 @@ public class BBCTFrame extends JFrame {
             }
         });
 
-        this.mainPanel = new MainPanel(this.bcio);
+        MainPanel mainPanel = new MainPanel(this.bcio);
         this.getContentPane().add(mainPanel, BorderLayout.CENTER);
 
         JPanel instructionPanel = new JPanel();
@@ -154,7 +153,6 @@ public class BBCTFrame extends JFrame {
     }
     private static final String ICON_PATH = "res/baseball.png";
     private JLabel instructionLabel;
-    private MainPanel mainPanel;
     private BaseballCardIO bcio = null;
     /**
      * Tests for {@link BBCTFrame}. Creates a
@@ -163,19 +161,19 @@ public class BBCTFrame extends JFrame {
      *
      * @param args Command-line arguments. (ignored)
      */
-    public static void main(String[] args) throws BBCTIOException, FileNotFoundException, IOException {
+    public static void main(String[] args) throws BBCTIOException, IOException {
         final String db_url = "jdbc:hsqldb:mem:db/bbct.db";
         final String fileName = "util/cards.csv";
-        BaseballCardIO bbcio = new JDBCBaseballCardIO(db_url);
-        bbcio.insertBaseballCards(BBCTFrame.readCards(fileName));
+        BaseballCardIO bcio = new JDBCBaseballCardIO(db_url);
+        bcio.insertBaseballCards(BBCTFrame.readCards(fileName));
 
         // TODO: Figure out how to give some indication that this is a test, possibly in the title.
-        JFrame f = new BBCTFrame(bbcio);
+        JFrame f = new BBCTFrame(bcio);
         f.setVisible(true);
     }
 
-    private static List<BaseballCard> readCards(String fileName) throws FileNotFoundException, IOException {
-        List<BaseballCard> cards = new ArrayList<BaseballCard>();
+    private static List<BaseballCard> readCards(String fileName) throws IOException {
+        List<BaseballCard> cards = new ArrayList<>();
         BufferedReader in = null;
 
         try {
