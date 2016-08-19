@@ -18,10 +18,17 @@
  */
 package bbct.swing.gui;
 
+import bbct.common.data.BaseballCardIO;
+import bbct.common.exceptions.BBCTIOException;
+import bbct.swing.BBCTStringResources;
+import bbct.swing.FontResources;
+import bbct.swing.gui.event.ShowCardActionListener;
+import bbct.swing.gui.event.UpdateInstructionsAncestorListener;
+import bbct.swing.gui.event.UpdateTitleAncestorListener;
+import bbct.swing.model.CardTableModel;
 import java.awt.BorderLayout;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -30,15 +37,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.WindowConstants;
 import javax.swing.table.TableModel;
-
-import bbct.common.data.BaseballCardIO;
-import bbct.common.exceptions.BBCTIOException;
-import bbct.swing.BBCTStringResources;
-import bbct.swing.FontResources;
-import bbct.swing.gui.event.ShowCardActionListener;
-import bbct.swing.gui.event.UpdateInstructionsAncestorListener;
-import bbct.swing.gui.event.UpdateTitleAncestorListener;
-import bbct.swing.gui.model.CardTableModel;
 
 /**
  * Shows a list of all baseball cards. Can be filtered.
@@ -62,8 +60,7 @@ public class CardListPanel extends JPanel {
         this.setLayout(new BorderLayout());
 
         try {
-            TableModel model = null;
-            model = new CardTableModel(this.bcio);
+            TableModel model = new CardTableModel(this.bcio);
             JTable table = new JTable(model);
             JScrollPane tableScroller = new JScrollPane(table);
             table.setFillsViewportHeight(true);
