@@ -53,8 +53,11 @@ public class BaseballCardLoaderCallbacks implements LoaderManager.LoaderCallback
                     case FilterCards.PLAYER_NAME_EXTRA:
                         sb.append(BaseballCardContract.PLAYER_NAME_SELECTION);
                         break;
-                    default:
+                    case FilterCards.TEAM_EXTRA:
                         sb.append(BaseballCardContract.TEAM_SELECTION);
+                        break;
+                    default:
+                        Log.e(TAG, "Invalid key: " + key);
                         break;
                 }
 

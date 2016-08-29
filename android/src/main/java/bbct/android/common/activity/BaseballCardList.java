@@ -41,11 +41,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 import bbct.android.common.R;
 import bbct.android.common.activity.util.BaseballCardMultiChoiceModeListener;
-import bbct.android.common.data.BaseballCard;
 import bbct.android.common.provider.BaseballCardAdapter;
 import bbct.android.common.provider.BaseballCardContract;
 import bbct.android.common.provider.BaseballCardLoaderCallbacks;
 import bbct.android.common.view.HeaderView;
+import bbct.data.BaseballCard;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
@@ -298,5 +298,4 @@ public class BaseballCardList extends ListFragment {
             listView.setItemChecked(i, checked);
         }
     }
-
 }

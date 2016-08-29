@@ -18,7 +18,7 @@
  */
 package bbct.android.common.test;
 
-import bbct.android.common.data.BaseballCard;
+import bbct.data.BaseballCard;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -54,7 +54,7 @@ public class BaseballCardCsvFileReader {
     }
 
     /**
-     * Reads baseball card data from the next line of comma-spearated values.
+     * Reads baseball card data from the next line of comma-separated values.
      *
      * @return A {@link BaseballCard} containing the data from the input stream.
      * @throws IOException
