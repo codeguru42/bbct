@@ -26,12 +26,12 @@
         bbct:showAsAction="ifRoom" />
     <item
         android:id="@+id/filter_menu"
-        android:icon="@drawable/ic_menu_find"
+        android:icon="@android:drawable/ic_menu_search"
         android:title="@string/filter_menu"
         bbct:showAsAction="ifRoom" />
     <item
         android:id="@+id/clear_filter_menu"
-        android:icon="@drawable/ic_menu_block"
+        android:icon="@android:drawable/ic_menu_close_clear_cancel"
         android:title="@string/clear_filter_menu"
         bbct:showAsAction="ifRoom" />
 </menu>
