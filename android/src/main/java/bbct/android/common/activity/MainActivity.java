@@ -144,13 +144,16 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
 
-        if (itemId == R.id.about_menu) {
-            this.getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_holder, new About(), FragmentTags.ABOUT)
-                    .addToBackStack(FragmentTags.ABOUT)
-                    .commit();
-            return true;
+        switch (itemId) {
+            case R.id.about_menu:
+                this.getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragment_holder, new About(), FragmentTags.ABOUT)
+                        .addToBackStack(FragmentTags.ABOUT)
+                        .commit();
+                return true;
+            case R.id.settings_menu:
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
