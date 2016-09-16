@@ -165,19 +165,23 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int itemId = item.getItemId();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 
         switch (itemId) {
             case R.id.about_menu:
-                this.getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.fragment_holder, new About(), FragmentTags.ABOUT)
-                        .addToBackStack(FragmentTags.ABOUT)
-                        .commit();
-                return true;
+                fragmentTransaction.replace(R.id.fragment_holder, new About(), FragmentTags.ABOUT)
+                        .addToBackStack(FragmentTags.ABOUT);
+                break;
             case R.id.settings_menu:
-                return true;
+                fragmentTransaction.replace(R.id.fragment_holder, new Settings(), FragmentTags.SETTINGS)
+                        .addToBackStack(FragmentTags.SETTINGS);
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
         }
 
-        return super.onOptionsItemSelected(item);
+        fragmentTransaction.commit();
+
+        return true;
     }
 }

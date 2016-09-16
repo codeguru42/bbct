@@ -19,10 +19,9 @@
 package bbct.android.common.activity;
 
 public interface FragmentTags {
-
     String EDIT_CARD = "Edit Card";
     String FILTER_CARDS = "Filter Cards";
     String CARD_LIST = "Card List";
     String ABOUT = "About";
-
+    String SETTINGS = "Settings";
 }
