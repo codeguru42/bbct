@@ -18,6 +18,7 @@
  */
 package bbct.android.common.activity.test;
 
+import android.content.Context;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -33,7 +34,10 @@ import static android.support.test.InstrumentationRegistry.getTargetContext;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu;
 import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static org.hamcrest.CoreMatchers.containsString;
 
 @RunWith(AndroidJUnit4.class)
 public abstract class MenuTest<T extends MainActivity> {
@@ -46,9 +50,13 @@ public abstract class MenuTest<T extends MainActivity> {
 
     @Test
     public void testAboutMenu() throws Exception {
-        String aboutStr = getTargetContext().getString(R.string.about_menu);
+        Context context = getTargetContext();
+        String aboutMenu = context.getString(R.string.about_menu);
+        String aboutTitle = context.getString(R.string.about_title);
         openActionBarOverflowOrOptionsMenu(getInstrumentation().getTargetContext());
-        onView(withText(aboutStr))
+        onView(withText(aboutMenu))
                 .perform(click());
+        onView(withText(containsString(aboutTitle)))
+                .check(matches(isDisplayed()));
     }
 }
