@@ -43,7 +43,10 @@ public class Settings extends PreferenceFragmentCompat {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        String settingsTitle = this.getString(R.string.settings_title);
+        String title = this.getString(R.string.bbct_title, settingsTitle);
+        this.getActivity().setTitle(title);
+
         return inflater.inflate(R.layout.settings, container, false);
     }
 }
