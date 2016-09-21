@@ -59,4 +59,16 @@ public abstract class MenuTest<T extends MainActivity> {
         onView(withText(containsString(aboutTitle)))
                 .check(matches(isDisplayed()));
     }
+
+    @Test
+    public void testSettingsMenu() throws Exception {
+        Context context = getTargetContext();
+        String settingsMenu = context.getString(R.string.settings_menu);
+        String settingsTitle = context.getString(R.string.settings_title);
+        openActionBarOverflowOrOptionsMenu(getInstrumentation().getTargetContext());
+        onView(withText(settingsMenu))
+                .perform(click());
+        onView(withText(containsString(settingsTitle)))
+                .check(matches(isDisplayed()));
+    }
 }
