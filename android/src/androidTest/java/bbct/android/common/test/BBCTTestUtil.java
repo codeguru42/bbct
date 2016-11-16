@@ -28,6 +28,7 @@ import android.util.Log;
 import bbct.android.common.R;
 import bbct.android.common.provider.BaseballCardSQLHelper;
 import bbct.data.BaseballCard;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.HashSet;
@@ -226,14 +227,15 @@ final public class BBCTTestUtil {
      *            The target context.
      */
     public static void assertDatabaseCreated(Context targetContext) {
-        DatabaseUtil dbUtil = new DatabaseUtil(targetContext);
-        SQLiteDatabase db = dbUtil.getDatabase();
+        File dbFile = targetContext.getDatabasePath(BaseballCardSQLHelper.DATABASE_NAME);
+        Assert.assertTrue(dbFile.exists());
+        SQLiteDatabase db = SQLiteDatabase.openDatabase(dbFile.getAbsolutePath(), null,
+                SQLiteDatabase.OPEN_READONLY);
         Assert.assertNotNull(db);
-        Assert.assertEquals(BaseballCardSQLHelper.SCHEMA_VERSION,
-                db.getVersion());
-
+        Assert.assertEquals(BaseballCardSQLHelper.SCHEMA_VERSION, db.getVersion());
         // TODO How do I check that a table exists in the database?
         // TODO How do I check that a table has the correct columns?
+        db.close();
     }
 
     public static void sendKeysToFilterCards(BaseballCard testCard, Set<FilterOption> fieldFlags) {
