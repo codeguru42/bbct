@@ -31,11 +31,12 @@ import java.util.List;
  * Utility class for accessing a SQLite database during tests.
  */
 public class DatabaseUtil {
-    private SQLiteDatabase db = null;
-    private Context context = null;
     private static final String DB_NAME = BaseballCardSQLHelper.DATABASE_NAME;
     private static final String TABLE_NAME = BaseballCardContract.TABLE_NAME;
     private static final String TAG = DatabaseUtil.class.getName();
+
+    private SQLiteDatabase db = null;
+    private Context context = null;
 
     /**
      * Create a {@link DatabaseUtil} object for the given Android package.
