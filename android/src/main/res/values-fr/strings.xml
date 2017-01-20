@@ -22,7 +22,6 @@
 
     <!-- Activity titles -->
     <string name="card_details_title">Détails de la Carte</string>
-    <string name="player_details_title">Détails du Joueur</string>
     <string name="filter_cards_title">Options de Filtrage</string>
     <string name="about_title">À propos</string>
     <string name="input_error_title">Erreur de saisie</string>
@@ -41,21 +40,6 @@
     <string name="team_label">Équipe:</string>
     <string name="player_position_label">Position du Joueur:</string>
 
-    <!-- Column headings for card list -->
-    <string name="brand_col">Marque</string>
-    <string name="year_col">Anée</string>
-    <string name="number_col">#</string>
-    <string name="value_col">Valeur</string>
-    <string name="count_col">Nombre</string>
-    <string name="player_name_col">Nom du Joueur</string>
-    <string name="player_position_col">Position du Joueur</string>
-
-    <!-- Button text -->
-    <string name="save_button">Sauver</string>
-    <string name="ok_button">OK</string>
-    <string name="cancel_button">Annuler</string>
-    <string name="done_button">Terminé</string>
-
     <!-- Hints for TextEdit widgets -->
     <string name="brand_hint">Entrez la marque de la carte.</string>
     <string name="year_hint">Entrez l\'anée de la carte.</string>
@@ -65,13 +49,6 @@
     <string name="player_name_hint">Entrez le nom du joueur.</string>
     <string name="team_hint">Entrez l\'équipe du joueur.</string>
     <string name="player_position_hint">Entrez la position du joueur.</string>
-
-    <!-- Filter cards TextView labels -->
-    <string name="year_option">Anée</string>
-    <string name="number_option">Numéro</string>
-    <string name="brand_option">Marque</string>
-    <string name="player_name_option">Nom</string>
-    <string name="team_option">Équipe</string>
 
     <!-- Menu text -->
     <string name="add_menu">Ajouter des Cartes</string>
@@ -112,7 +89,6 @@
     </string-array>
 
     <!-- Error messages -->
-    <string name="no_radio_button_error">Selectionnez une option s\'il vous plaît.</string>
     <string name="brand_input_error">Entrez une marque s\'il vous plaît.</string>
     <string name="year_input_error">Entrez une anée s\'il vous plaît.</string>
     <string name="number_input_error">Entrez un numéro de carte s\'il vous plaît.</string>
@@ -125,5 +101,9 @@
     <string name="database_error">Une erreur s\'est produite lors de la connexion à la base de données.</string>
     <string name="duplicate_card_error">La carte de baseball existe déjà. Mettre à jour sa quantité, s\'il vous plaît.</string>
     <string name="sponsor">Fier Commanditaire de:</string>
+    <string name="save_menu">Sauver</string>
+    <string name="value">Valeur</string>
+    <string name="year">Anée</string>
+    <string name="brand">Marque</string>
 
 </resources>

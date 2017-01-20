@@ -45,7 +45,7 @@
     <!-- Column headings for card list -->
     <string name="brand">Brand</string>
     <string name="year">Year</string>
-    <string name="number_col">#</string>
+    <string name="number_col" translatable="false">#</string>
     <string name="number">Number</string>
     <string name="value">Value</string>
     <string name="count">Count</string>

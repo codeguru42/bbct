@@ -43,7 +43,6 @@
     <!-- Column headings for card list -->
     <string name="brand">Marke</string>
     <string name="year">Jahr</string>
-    <string name="number_col">#</string>
     <string name="value">Wert</string>
     <string name="count">Anzahl</string>
     <string name="player_name">Spielerame</string>
@@ -94,7 +93,6 @@
 
 
     <!-- Error messages -->
-    <string name="no_radio_button_error">Bitte wählen Sie eine Option.</string>
     <string name="brand_input_error">Bitte geben Sie einen Markennamen ein.</string>
     <string name="year_input_error">Bitte geben Sie ein Jahr ein.</string>
     <string name="number_input_error">Bitte geben Sie eine Kartennummer ein.</string>

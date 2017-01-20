@@ -22,7 +22,6 @@
 
     <!-- Activity titles -->
     <string name="card_details_title">Detalhes da Carta</string>
-    <string name="player_details_title">Detalhes do Jogador</string>
     <string name="filter_cards_title">Opções de Filtro</string>
     <string name="about_title">Sobre</string>
     <string name="input_error_title">Erro de Entrada</string>
@@ -45,17 +44,8 @@
     <!--Column headings for card list-->
     <string name="brand">Marca</string>
     <string name="year">Ano</string>
-    <string name="number_col">#</string>
-    <string name="value_col">Valor</string>
-    <string name="count_col">Quantidade</string>
     <string name="player_position">Posição</string>
     <string name="team">Equipe</string>
-
-    <!-- Button text -->
-    <string name="save_button">Salvar</string>
-    <string name="ok_button">OK</string>
-    <string name="cancel_button">Cancelar</string>
-    <string name="done_button">Concluído</string>
 
     <!-- Hints for TextEdit widgets -->
     <string name="brand_hint">Informe o nome da marca da carta.</string>
@@ -66,13 +56,6 @@
     <string name="player_name_hint">Informe o nome do jogador.</string>
     <string name="team_hint">Informe a equipe do jogador.</string>
     <string name="player_position_hint">Informe a posição do jogador.</string>
-
-    <!-- Filter cards TextView labels -->
-    <string name="year_option">Ano</string>
-    <string name="number_option">Número</string>
-    <string name="brand_option">Marca</string>
-    <string name="player_name_option">Nome</string>
-    <string name="team_option">Equipe</string>
 
     <!-- Menu text -->
     <string name="add_menu">Incluir Cartas</string>
@@ -117,7 +100,6 @@
     </string-array>
 
     <!--Error messages-->
-    <string name="no_radio_button_error">Por favor selecione uma opção.</string>
     <string name="brand_input_error">Por favor informe uma marca.</string>
     <string name="year_input_error">Por favor informe um ano.</string>
     <string name="number_input_error">Por favor informe um número de carta.</string>
@@ -130,4 +112,5 @@
     <string name="database_error">Ocorreu erro ao conectar ao banco de dados.</string>
     <string name="duplicate_card_error">A carta de beisebol já existe. Por favor atualize a sua quantidade.</string>
     <string name="sponsor">Patrocinador Orgulhoso:</string>
+    <string name="value">Valor</string>
 </resources>
