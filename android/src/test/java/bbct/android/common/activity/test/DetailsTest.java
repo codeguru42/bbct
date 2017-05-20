@@ -32,4 +32,10 @@ import static org.robolectric.shadows.support.v4.SupportFragmentTestUtil.startFr
 @RunWith(RobolectricTestRunner.class)
 @Config(constants = BuildConfig.class)
 public class DetailsTest {
+    @Test
+    public void createFragment() {
+        BaseballCardDetails details = new BaseballCardDetails();
+        startFragment(details);
+        assertNotNull(details);
+    }
 }
