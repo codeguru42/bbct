@@ -20,6 +20,7 @@ package bbct.android.common.activity.test;
 
 import android.view.View;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
@@ -36,19 +37,24 @@ import static org.robolectric.shadows.support.v4.SupportFragmentTestUtil.startFr
 @RunWith(RobolectricTestRunner.class)
 @Config(constants = BuildConfig.class)
 public class DetailsTest {
+    private BaseballCardDetails details;
+    private View rootView;
+
+    @Before
+    public void setUp() throws Exception {
+        details = new BaseballCardDetails();
+        startFragment(details);
+        rootView = details.getView();
+    }
+
     @Test
     public void createFragment() {
-        BaseballCardDetails details = new BaseballCardDetails();
-        startFragment(details);
+        assertNotNull(rootView);
         assertNotNull(details);
     }
 
     @Test
     public void brandHasFocus() {
-        BaseballCardDetails details = new BaseballCardDetails();
-        startFragment(details);
-        View rootView = details.getView();
-        assertNotNull(rootView);
         View brandEdit = rootView.findViewById(R.id.brand_text);
         assertTrue(brandEdit.hasFocus());
     }
