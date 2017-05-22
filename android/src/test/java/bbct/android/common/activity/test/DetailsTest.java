@@ -18,15 +18,19 @@
  */
 package bbct.android.common.activity.test;
 
+import android.view.View;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
 import bbct.android.common.BuildConfig;
+import bbct.android.common.R;
 import bbct.android.common.activity.BaseballCardDetails;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static org.robolectric.shadows.support.v4.SupportFragmentTestUtil.startFragment;
 
 @RunWith(RobolectricTestRunner.class)
@@ -37,5 +41,15 @@ public class DetailsTest {
         BaseballCardDetails details = new BaseballCardDetails();
         startFragment(details);
         assertNotNull(details);
+    }
+
+    @Test
+    public void brandHasFocus() {
+        BaseballCardDetails details = new BaseballCardDetails();
+        startFragment(details);
+        View rootView = details.getView();
+        assertNotNull(rootView);
+        View brandEdit = rootView.findViewById(R.id.brand_text);
+        assertTrue(brandEdit.hasFocus());
     }
 }
