@@ -1,6 +1,9 @@
 language: android
 
-script: "./gradlew --no-daemon assembleDebug"
+script: "./gradlew android:connectedLiteDebugAndroidTest
+ -Pandroid.testInstrumentationRunnerArguments.class=bbct.android.lite.suite.GoodTests
+  && ./gradlew android:connectedPremiumDebugAndroidTest
+   -Pandroid.testInstrumentationRunnerArguments.class=bbct.android.premium.suite.GoodTests"
 
 jdk:
     - oraclejdk8
