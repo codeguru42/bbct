@@ -98,13 +98,6 @@ public class BaseballCardDetails extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        this.setHasOptionsMenu(true);
-    }
-
-    @Override
     public View onCreateView(
             @NonNull LayoutInflater inflater,
             ViewGroup container,

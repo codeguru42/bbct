@@ -20,12 +20,15 @@ package bbct.android.common.activity;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 
 import com.crashlytics.android.Crashlytics;
@@ -40,6 +43,8 @@ import bbct.android.common.BuildConfig;
 import bbct.android.common.R;
 import bbct.android.common.SharedPreferenceKeys;
 import bbct.android.common.activity.util.DialogUtil;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import io.fabric.sdk.android.Fabric;
 
 public class MainActivity extends AppCompatActivity implements FragmentManager.OnBackStackChangedListener {
@@ -52,6 +57,40 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
     private SharedPreferences prefs;
     private FragmentManager fragmentManager;
 
+    @BindView(R.id.drawer_layout)
+    DrawerLayout drawerLayout;
+    @BindView(R.id.nav_view)
+    NavigationView navView;
+
+    private NavigationView.OnNavigationItemSelectedListener navigationListener = new NavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+            switch (item.getItemId()) {
+                case R.id.menu_home:
+                    fragmentManager.popBackStack(FragmentTags.CARD_LIST, 0);
+                    break;
+
+                case R.id.menu_search:
+                    fragmentTransaction
+                        .replace(R.id.fragment_holder, new FilterCards(), FragmentTags.FILTER_CARDS)
+                        .addToBackStack(FragmentTags.FILTER_CARDS);
+                    break;
+
+                case R.id.menu_about:
+                    fragmentTransaction
+                        .replace(R.id.fragment_holder, new About(), FragmentTags.ABOUT)
+                        .addToBackStack(FragmentTags.ABOUT);
+                    break;
+            }
+
+            fragmentTransaction.commit();
+            drawerLayout.closeDrawers();
+            return true;
+        }
+    };
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +100,8 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
         }
 
         this.setContentView(R.layout.main);
+        ButterKnife.bind(this);
+        navView.setNavigationItemSelectedListener(navigationListener);
         fragmentManager = getSupportFragmentManager();
 
         if (savedInstanceState == null) {
@@ -148,32 +189,9 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        this.getMenuInflater().inflate(R.menu.main, menu);
-
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
     public boolean onSupportNavigateUp() {
         this.onBackPressed();
         return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int menuId = item.getItemId();
-        switch (menuId) {
-            case R.id.menu_about:
-                fragmentManager
-                    .beginTransaction()
-                    .replace(R.id.fragment_holder, new About(), FragmentTags.ABOUT)
-                    .addToBackStack(FragmentTags.ABOUT)
-                    .commit();
-                return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
