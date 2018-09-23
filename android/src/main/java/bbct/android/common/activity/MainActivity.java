@@ -164,7 +164,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
     public boolean onOptionsItemSelected(MenuItem item) {
         int menuId = item.getItemId();
         switch (menuId) {
-            case R.id.about_menu:
+            case R.id.menu_about:
                 fragmentManager
                     .beginTransaction()
                     .replace(R.id.fragment_holder, new About(), FragmentTags.ABOUT)

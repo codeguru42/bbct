@@ -17,11 +17,20 @@
  You should have received a copy of the GNU General Public License
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 -->
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-      xmlns:bbct="http://schemas.android.com/apk/res-auto">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/about_menu"
+        android:id="@+id/menu_home"
+        android:icon="@drawable/home"
+        android:title="@string/menu_home"
+    />
+    <item
+        android:id="@+id/menu_search"
+        android:icon="@drawable/search"
+        android:title="@string/menu_search"
+    />
+    <item
+        android:id="@+id/menu_about"
         android:icon="@drawable/ic_menu_about"
-        android:title="@string/about_menu"
-        bbct:showAsAction="never" />
+        android:title="@string/menu_about"
+    />
 </menu>

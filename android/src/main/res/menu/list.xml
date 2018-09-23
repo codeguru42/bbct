@@ -27,6 +27,6 @@
     <item
         android:id="@+id/clear_filter_menu"
         android:icon="@drawable/ic_menu_block"
-        android:title="@string/clear_filter_menu"
+        android:title="@string/menu_clear_search"
         bbct:showAsAction="ifRoom" />
 </menu>
