@@ -28,6 +28,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 
@@ -57,6 +58,8 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
     private SharedPreferences prefs;
     private FragmentManager fragmentManager;
 
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
     @BindView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
     @BindView(R.id.nav_view)
@@ -101,6 +104,7 @@ public class MainActivity extends AppCompatActivity implements FragmentManager.O
 
         this.setContentView(R.layout.main);
         ButterKnife.bind(this);
+        setSupportActionBar(toolbar);
         navView.setNavigationItemSelectedListener(navigationListener);
         fragmentManager = getSupportFragmentManager();
 

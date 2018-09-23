@@ -28,7 +28,15 @@
         android:id="@+id/fragment_holder"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-    />
+    >
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:background="?android:attr/colorPrimary"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        />
+    </FrameLayout>
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
