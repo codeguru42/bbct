@@ -140,6 +140,7 @@ if (propFile.canRead()) {
 ext {
     appcompatVersion = '1.1.0-alpha02'
     archCompVersion = '1.1.1'
+    drawerlayoutVersion = '1.0.0'
     roomVersion = '2.1.0-alpha04'
     lifecycleVersion = '2.1.0-alpha02'
     butterknifeVersion = '10.0.0'
@@ -154,6 +155,7 @@ dependencies {
     implementation project(':lib')
     implementation "androidx.appcompat:appcompat:${appcompatVersion}"
     implementation "com.google.android.material:material:1.0.0-beta01"
+    implementation "androidx.drawerlayout:drawerlayout:$drawerlayoutVersion"
     implementation 'androidx.recyclerview:recyclerview-selection:1.0.0'
     implementation "androidx.room:room-runtime:${roomVersion}"
     implementation "androidx.lifecycle:lifecycle-livedata:${lifecycleVersion}"
